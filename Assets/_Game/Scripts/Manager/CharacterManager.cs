@@ -8,8 +8,8 @@ public class CharacterManager : Singleton<CharacterManager>
     [SerializeField] private int maxBotCountInLevel = 50;
     [SerializeField] private int maxBotCountRuntime = 10;
 
-    private List<Bot> botActiveList = new List<Bot>();
-    private List<Bot> botDeactiveList = new List<Bot>();
+    private List<CharacterBase> charActiveList = new List<CharacterBase>();
+    private List<CharacterBase> charDeactiveList = new List<CharacterBase>();
 
     public void OnInit() {
 
@@ -18,21 +18,21 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public void OnDespawn() {
 
-        botActiveList.Clear();
-        botDeactiveList.Clear();
+        charActiveList.Clear();
+        charDeactiveList.Clear();
     }
 
     private void Update() {
 
-        int botActiveTotal = botActiveList.Count;
-        int botDeactiveTotal = botDeactiveList.Count;
+        int botActiveTotal = charActiveList.Count;
+        int botDeactiveTotal = charDeactiveList.Count;
         int botTotal = botActiveTotal + botActiveTotal;
 
-        if (botTotal < maxBotCountInLevel) {
+        if (botTotal <= maxBotCountInLevel) {
             // Total character can't over 50 (includes player)
 
             if (botActiveTotal < maxBotCountRuntime) {
-                // If not enough bot on field
+                // If not enough character on field
 
                 //SpawnBot()
             }
@@ -43,6 +43,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
         CharacterBase player = SimplePool.Spawn<CharacterBase>(PoolType.Character, spawnPos, Quaternion.identity);
 
+        charActiveList.Add(player);
+
         player.OnInit();
     }
     
@@ -50,6 +52,9 @@ public class CharacterManager : Singleton<CharacterManager>
 
         player.OnDespawn();
         SimplePool.Despawn(player);
+
+        charActiveList.Remove(player);
+        charDeactiveList.Add(player);
     }
 
     private void SpawnBot(Vector3 spawnPos) {
@@ -60,7 +65,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
         bot.OnInit();
 
-        botActiveList.Add(bot as Bot);
+        charActiveList.Add(bot);
     }
 
     public void DespawnBot(Bot bot) {
@@ -68,6 +73,11 @@ public class CharacterManager : Singleton<CharacterManager>
         bot.OnDespawn();
         SimplePool.Despawn(bot);
 
-        botDeactiveList.Add(bot);
+        charActiveList.Remove(bot);
+        charDeactiveList.Add(bot);
+    }
+
+    public List<CharacterBase> GetActiveCharacterList() {
+        return charActiveList;
     }
 }

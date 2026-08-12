@@ -5,12 +5,13 @@ using UnityEngine;
 public class CharacterBase : PoolUnit
 {
     [SerializeField] protected ICharacterAnimator charAnimator;
-    [SerializeField] protected Transform charTF;
+    [SerializeField] protected float attackRange;
 
     [Header("Attack Behavior")]
     [SerializeField] protected float attackDelayTime;
 
     private Coroutine IEAttack;
+    protected CharacterBase attackTarget;
 
     private IEnumerator AttackCoroutine(Action callback) {
 
@@ -65,5 +66,13 @@ public class CharacterBase : PoolUnit
     public virtual bool IsMoving() {
         Debug.LogError("TRIGGER BASE CHARACTER!!");
         return true;
+    }
+
+    public float GetCurrentAttackRange() {
+        return this.attackRange;
+    }
+
+    public void SetAttackTarget() {
+
     }
 }

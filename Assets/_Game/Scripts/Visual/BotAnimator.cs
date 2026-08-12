@@ -11,6 +11,7 @@ public class BotAnimator : MonoBehaviour, ICharacterAnimator {
     }
 
     public void HandleIdleAnim() {
+
     }
 
     public void ResetAnim() {

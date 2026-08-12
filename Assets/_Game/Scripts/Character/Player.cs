@@ -54,12 +54,12 @@ public class Player : CharacterBase
             }
         }
 
-        charTF.position += moveDir * moveSpeed * Time.deltaTime;
+        UnitTF.position += moveDir * moveSpeed * Time.deltaTime;
 
         // Rotate
         if (IsMoving()) {
             Quaternion targetLookAt = Quaternion.LookRotation(moveDir);
-            charTF.rotation = Quaternion.RotateTowards(charTF.rotation, targetLookAt, rotateSpeed * Time.deltaTime);
+            UnitTF.rotation = Quaternion.RotateTowards(UnitTF.rotation, targetLookAt, rotateSpeed * Time.deltaTime);
         }
     }
 
