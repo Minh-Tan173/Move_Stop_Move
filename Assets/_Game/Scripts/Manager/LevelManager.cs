@@ -1,16 +1,44 @@
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public enum LevelState {
+    Start,
+    Playing,
+    Finish,
+    Complete
+}
+
+public class LevelManager : Singleton<LevelManager>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    private LevelState currentState;
+    
+    private void OnInit() { 
+    
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnDespawn() {
+
+    }
+
+    private void LoadLevel() {
+
+    }
+    
+    private void OnPlay() {
+
+        ChangeLevelState(LevelState.Playing);
+    }
+
+    private void OnComplete() {
+
+    }
+
+    private void ChangeLevelState(LevelState levelState) {
+
+        this.currentState = levelState;
+    }
+
+    public bool IsGamePlaying() {
+        return this.currentState == LevelState.Playing;
     }
 }

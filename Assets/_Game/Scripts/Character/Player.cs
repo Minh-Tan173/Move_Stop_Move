@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : BaseCharacter
+public class Player : CharacterBase
 {
     [Header("Player's Info")]
     [SerializeField] private float moveSpeed;
@@ -65,7 +65,6 @@ public class Player : BaseCharacter
 
     private void HandleAttackBehavior() {
 
-
         if (!IsMoving()) {
             // When player is not moving
 
@@ -87,7 +86,16 @@ public class Player : BaseCharacter
     private void ScanTarget() {
 
     }
-    
+
+    public override void OnInit() {
+        
+        // TODO: Load player data from Data Manager
+    }
+
+    public override void OnDespawn() {
+
+    }
+
     public override bool IsMoving() {
         return isMoving;
     }

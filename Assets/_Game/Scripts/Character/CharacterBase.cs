@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class BaseCharacter : MonoBehaviour
+public class CharacterBase : PoolUnit
 {
+    [SerializeField] protected ICharacterAnimator charAnimator;
     [SerializeField] protected Transform charTF;
 
     [Header("Attack Behavior")]

@@ -34,6 +34,7 @@ public class ObstacleFade : MonoBehaviour
         float fadeRadius = Mathf.Max(fadeBounds.extents.x, fadeBounds.extents.z);
 
         foreach (var pair in obstacleDict) {
+
             Collider objectColl = pair.Key;
             Obstacle obstacle = pair.Value;
 
