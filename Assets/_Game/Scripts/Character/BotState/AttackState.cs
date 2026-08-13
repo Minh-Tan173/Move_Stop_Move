@@ -7,6 +7,7 @@ public static class AttackState
     public static void OnEnter(Bot bot, CharacterAnimatorBase botAnimator) {
 
         bot.ResetAttackCD();
+        bot.RollMaxAttackCount();
         bot.LookAttackTarget();
     }
 
@@ -25,11 +26,21 @@ public static class AttackState
             if (bot.IsOverAttackCD()) {
 
                 bot.ResetAttackCD();
+
+                bot.LookAttackTarget();
                 bot.Attack();
+
+                bot.IncreaseAttackCount();
+                if (bot.IsOverMaxAttackCount()) {
+
+                    bot.IgnoreCurrentAttackTarget();
+                    bot.ChangeBotStateTo(BotStates.Patrol);
+                }
             }
 
         }
         else {
+            bot.SetAttackTarget(null);
             bot.ChangeBotStateTo(BotStates.Patrol);
         }
     }

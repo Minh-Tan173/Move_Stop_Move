@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +16,13 @@ public class Bot : CharacterBase
     private Vector3 moveTarget;
     #endregion
 
+    #region Attack Behavior
+    private int attackCount;
+    private int maxAttackCount;
+    private CharacterBase ignoredAttackTarget;
+    private bool canAttackCurrentTarget;
+    #endregion
+
     public override void OnInit() {
 
         ActiveNavMesh();
@@ -24,18 +31,25 @@ public class Bot : CharacterBase
         attackTarget = null;
 
         isGamePlaying = false;
+        isDead = false;
+
+        charAnimator.ResetAnim();
 
         ChangeBotStateTo(BotStates.Idle);
     }
 
     public override void OnGamePlaying() {
 
-        Debug.Log("Switch to Patrol");
-
         ChangeBotStateTo(BotStates.Patrol);
     }
 
     public override void OnDespawn() {
+
+        isDead = true;
+
+        currentState?.OnExit(this, charAnimator);
+        currentState = null;
+
         DeactiveNavMesh();
     }
 
@@ -95,6 +109,12 @@ public class Bot : CharacterBase
         indexFindType = UnityEngine.Random.Range(0, totalFindType);
     }
 
+    public void RollMaxAttackCount() {
+
+        attackCount = 0;
+        maxAttackCount = UnityEngine.Random.Range(2, 4);
+    }
+
     public FindDestinationType GetFindType() {
         return (FindDestinationType)indexFindType;
     }
@@ -124,19 +144,56 @@ public class Bot : CharacterBase
         return this.moveTarget;
     }
 
+    public bool CanAttackCurrentTarget() {
+        return canAttackCurrentTarget;
+    }
+
     public void LookAttackTarget() {
 
-        if (attackTarget == null) return;
+        if (attackTarget == null) { return;}
 
         Vector3 direction = attackTarget.UnitTF.position - UnitTF.position;
         direction.y = 0f;
 
-        if (direction.sqrMagnitude <= 0.001f) return;
+        if (direction.sqrMagnitude <= 0.2f * 0.2f) { return; }
 
         UnitTF.rotation = Quaternion.LookRotation(direction);
     }
 
     public override bool IsMoving() {
         return currentState == BotStates.Patrol;
+    }
+
+    public override bool CanSelectAttackTarget(CharacterBase target) {
+
+        return target != this && target != ignoredAttackTarget;
+    }
+
+    public override void SetAttackTarget(CharacterBase target) {
+
+        attackTarget = target;
+
+        if (target != null) {
+
+            canAttackCurrentTarget = UnityEngine.Random.value < 0.6f;
+
+            if (target != ignoredAttackTarget) {
+                ignoredAttackTarget = null;
+            }
+        }
+    }
+
+    public void IncreaseAttackCount() {
+        attackCount++;
+    }
+
+    public bool IsOverMaxAttackCount() {
+        return attackCount >= maxAttackCount;
+    }
+
+    public void IgnoreCurrentAttackTarget() {
+
+        ignoredAttackTarget = attackTarget;
+        attackTarget = null;
     }
 }

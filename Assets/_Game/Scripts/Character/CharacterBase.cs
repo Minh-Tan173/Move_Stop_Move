@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CharacterBase : PoolUnit
 {
@@ -16,6 +17,8 @@ public class CharacterBase : PoolUnit
 
     protected CharacterBase attackTarget;
 
+    protected bool isDead;
+
     public virtual void OnInit() {
         Debug.LogError("TRIGGER BASE CHARACTER!!");
     }
@@ -26,6 +29,14 @@ public class CharacterBase : PoolUnit
 
     public virtual void OnDespawn() {
         Debug.LogError("TRIGGER BASE CHARACTER!!");
+    }
+
+    public virtual bool CanSelectAttackTarget(CharacterBase target) {
+        return target != this;
+    }
+
+    public virtual void SetAttackTarget(CharacterBase target) {
+        attackTarget = target;
     }
 
     #region Skin Method
@@ -47,7 +58,13 @@ public class CharacterBase : PoolUnit
     public void Throw() {
 
         BulletBase bullet = SimplePool.Spawn<BulletBase>(PoolType.Knife, shootingPoint.position, shootingPoint.rotation);
-        bullet.ActiveMovement();
+        bullet.ActiveMovement(this);
+    }
+
+    public void OnDead() {
+
+        charAnimator.TriggerDeadAnim();
+        OnDespawn();
     }
 
     public virtual bool IsMoving() {
@@ -71,10 +88,6 @@ public class CharacterBase : PoolUnit
         return this.attackRange * multiply;
     }
 
-    public void SetAttackTarget(CharacterBase target) {
-        attackTarget = target;
-    }
-
     public bool IsAttackTargetValid() {
 
         if (attackTarget == null) { return false; }
@@ -92,6 +105,10 @@ public class CharacterBase : PoolUnit
 
     public bool CanScanTarget() {
         return IsMoving() && !IsAttackTargetValid();
+    }
+
+    public bool IsDead() {
+        return isDead;
     }
 
     public Transform GetAttackTarget() {

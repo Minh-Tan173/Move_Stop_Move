@@ -20,7 +20,7 @@ public class BulletBase : PoolUnit
         CharacterManager.Instance.DeadCharacter(character);
     }
 
-    public virtual void OnInit(Transform target, float attackRange) {
+    public virtual void OnInit(CharacterBase bulletOwner) {
 
     }
 
@@ -28,7 +28,7 @@ public class BulletBase : PoolUnit
 
     }
 
-    public virtual void ActiveMovement(Transform target, float attackRange) {
+    public virtual void ActiveMovement(CharacterBase bulletOwner) {
         Debug.LogError("Trigger Bullet Base");
     }
 }

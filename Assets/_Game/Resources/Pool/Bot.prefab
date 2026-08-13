@@ -125,7 +125,7 @@ MonoBehaviour:
   poolType: 1
   charAnimator: {fileID: 2320559466662988195}
   attackRange: 4
-  attackCD: 0.4
+  attackCD: 1
   shootingPoint: {fileID: 8077340295940514469}
   weaponType: 0
   navMeshAgent: {fileID: 5887153715476655363}

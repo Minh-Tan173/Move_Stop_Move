@@ -14,7 +14,9 @@ public class Knife : BulletBase
         CharacterBase character = LevelCache<Collider, CharacterBase>.GetValueWithKey(other);
         if (character == null) { return; }
 
-        
+        if (character.IsDead()) { return; }
+
+        CharacterManager.Instance.DeadCharacter(character); 
         OnDespawn();
     }
 
@@ -30,15 +32,15 @@ public class Knife : BulletBase
         }
     }
 
-    public override void OnInit(Transform target, float attackRange) {
+    public override void OnInit(CharacterBase bulletOwner) {
 
         startPosition = this.UnitTF.position;
 
-        moveDir = target.position - startPosition;
+        moveDir = bulletOwner.UnitTF.forward;
         moveDir.y = 0f;
         moveDir.Normalize();
 
-        sqrAttackRange = attackRange * attackRange;
+        sqrAttackRange = bulletOwner.GetTrueAttackRange() * bulletOwner.GetTrueAttackRange();
 
         StartMove();
 
@@ -52,9 +54,9 @@ public class Knife : BulletBase
         SimplePool.Despawn(this);
     }
 
-    public override void ActiveMovement(Transform target, float attackRange) {
+    public override void ActiveMovement(CharacterBase bulletOwner) {
 
-        OnInit(target, attackRange);
+        OnInit(bulletOwner);
 
     }
 }

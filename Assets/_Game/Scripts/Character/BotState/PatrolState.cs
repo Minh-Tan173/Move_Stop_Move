@@ -78,8 +78,9 @@ public static class PatrolState
 
         if (bot.HasMoveTarget()) {
             // On moving to moveTarget
-
-            if (bot.HasAttackTarget()) {
+          
+            if (bot.IsAttackTargetValid() && bot.CanAttackCurrentTarget()) {
+                // 60% attack chance
 
                 bot.ChangeBotStateTo(BotStates.Attack);
                 return;

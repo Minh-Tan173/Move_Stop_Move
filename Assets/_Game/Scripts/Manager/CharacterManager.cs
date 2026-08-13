@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CharacterManager : Singleton<CharacterManager>
 {
@@ -43,8 +44,6 @@ public class CharacterManager : Singleton<CharacterManager>
             if (botActiveTotal < maxBotCountRuntime) {
                 // If not enough character on field
 
-                Debug.Log("Can Spawn Bot");
-
                if (currentLevel.TryGetRandomSpawnPoint(out Vector3 spawnPos)) {
 
                     SpawnBot(spawnPos);
@@ -65,8 +64,6 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private void SpawnBot(Vector3 spawnPos) {
 
-        Debug.Log("SPAWN BOT");
-
         float randomYRot = Random.Range(0f, 180f);
         Quaternion botRot = Quaternion.Euler(0f, randomYRot, 0f);
         CharacterBase bot = SimplePool.Spawn<CharacterBase>(PoolType.Character, spawnPos, botRot);
@@ -77,10 +74,23 @@ public class CharacterManager : Singleton<CharacterManager>
         charActiveList.Add(bot);
     }
 
+    private void DespawnCharacter(CharacterBase character) {
+        SimplePool.Despawn(character);
+    }
+
+    private IEnumerator IEDespawnCharacter(CharacterBase character) {
+
+        yield return new WaitForSeconds(1.1f);
+
+        SimplePool.Despawn(character);
+    }
+
     public void DeadCharacter(CharacterBase character) {
 
-        character.OnDespawn();
-        SimplePool.Despawn(character);
+        character.OnDead();
+
+        StartCoroutine(IEDespawnCharacter(character));
+        //SimplePool.Despawn(character);
 
         charActiveList.Remove(character);
         charDeactiveList.Add(character);

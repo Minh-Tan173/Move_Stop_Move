@@ -55,6 +55,9 @@ public class CharacterScan : MonoBehaviour
         foreach (Collider coll in collArray) {
 
             CharacterBase target = LevelCache<Collider, CharacterBase>.GetValueWithKey(coll);
+
+            if (!character.CanSelectAttackTarget(target)) continue;
+
             float sqrDistance = (target.UnitTF.position - character.UnitTF.position).sqrMagnitude;
 
             if (sqrDistance <= nearestDistance) {
