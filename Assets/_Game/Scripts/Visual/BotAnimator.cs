@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BotAnimator : MonoBehaviour, ICharacterAnimator {
+public class BotAnimator : CharacterAnimatorBase {
 
     [SerializeField] private Bot bot;
     [SerializeField] private Animator animator;
@@ -10,16 +10,16 @@ public class BotAnimator : MonoBehaviour, ICharacterAnimator {
         
     }
 
-    public void HandleIdleAnim() {
+    public override void HandleIdleAnim() {
 
     }
 
-    public void ResetAnim() {
+    public override void ResetAnim() {
     }
 
-    public void TriggerAttackAnim() {
+    public override void TriggerAttackAnim() {
     }
 
-    public void TriggerDeadAnim() {
+    public override void TriggerDeadAnim() {
     }
 }

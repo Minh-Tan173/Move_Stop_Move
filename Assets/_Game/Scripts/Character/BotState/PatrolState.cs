@@ -62,13 +62,13 @@ public static class PatrolState
         return null;
     }
 
-    public static void OnEnter(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnEnter(Bot bot, CharacterAnimatorBase botAnimator) {
 
         bot.RollFindType();
 
     }
 
-    public static void OnExcute(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnExcute(Bot bot, CharacterAnimatorBase botAnimator) {
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
@@ -104,7 +104,7 @@ public static class PatrolState
                     bot.RollFindType();
 
                     Transform newMoveTarget = GetTargetByType(bot.GetFindType(), bot);
-                    bot.SetMoveTarget(newMoveTarget.position);
+                    bot.MoveToDestination(newMoveTarget.position);
                 }
 
             }
@@ -113,16 +113,15 @@ public static class PatrolState
         else {
             // If dont having move target
 
-
             bot.RollFindType();
 
             Transform newMoveTarget = GetTargetByType(bot.GetFindType(), bot);
-            bot.SetMoveTarget(newMoveTarget.position);
+            bot.MoveToDestination(newMoveTarget.position);
         }
     }
 
-    public static void OnExit(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnExit(Bot bot, CharacterAnimatorBase botAnimator) {
 
-        // TODO: Reset nav mesh agent destination before change to other state
+        bot.StopMovement();
     }
 }

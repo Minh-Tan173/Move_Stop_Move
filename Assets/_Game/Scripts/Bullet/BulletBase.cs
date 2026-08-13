@@ -17,11 +17,7 @@ public class BulletBase : PoolUnit
 
     public void InteractWithCharacter(CharacterBase character) {
 
-        if (character is Bot) {
-
-            CharacterManager.Instance.DespawnBot(character as Bot);
-            return;
-        }
+        CharacterManager.Instance.DeadCharacter(character);
     }
 
     public virtual void OnInit(Transform target, float attackRange) {

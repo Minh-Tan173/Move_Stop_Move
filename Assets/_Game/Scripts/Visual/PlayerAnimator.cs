@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour, ICharacterAnimator
+public class PlayerAnimator : CharacterAnimatorBase
 {
     [Header("Parent")]
     [SerializeField] private Player player;
@@ -14,22 +14,22 @@ public class PlayerAnimator : MonoBehaviour, ICharacterAnimator
         HandleIdleAnim();
     }
 
-    public void ResetAnim() {
+    public override void ResetAnim() {
 
 
     }
 
-    public void HandleIdleAnim() {
+    public override void HandleIdleAnim() {
 
-        animator.SetBool(ICharacterAnimator.IS_MOVING, player.IsMoving());
+        animator.SetBool(CharacterAnimatorBase.IS_MOVING, player.IsMoving());
     }
 
-    public void TriggerAttackAnim() {
-        animator.SetTrigger(ICharacterAnimator.ATTACK_ANIM);
+    public override void TriggerAttackAnim() {
+        animator.SetTrigger(CharacterAnimatorBase.ATTACK_ANIM);
     }
 
-    public void TriggerDeadAnim() {
+    public override void TriggerDeadAnim() {
 
-        animator.SetTrigger(ICharacterAnimator.DEAD_ANIM);
+        animator.SetTrigger(CharacterAnimatorBase.DEAD_ANIM);
     }
 }

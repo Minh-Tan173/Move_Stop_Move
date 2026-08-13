@@ -24,20 +24,27 @@ public class CharacterScan : MonoBehaviour
 
     private void Update() {
 
+        if (!character.CanScanTarget()) return;
+
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime >= duration) {
 
             elapsedTime -= duration;
+
             ScanTargetProgress();
         }
     }
 
     private void ScanTargetProgress() {
 
-        charCollArray = Physics.OverlapSphere(character.UnitTF.position, TrueAttackRange(), charLayer);
+        charCollArray = Physics.OverlapSphere(character.UnitTF.position, character.GetTrueAttackRange(), charLayer);
 
-        GetNearestTarget(charCollArray);
+        CharacterBase target = GetNearestTarget(charCollArray);
+        if (target != null) {
+
+            character.SetAttackTarget(target);
+        }
     }
 
     private CharacterBase GetNearestTarget(Collider[] collArray) {
@@ -61,17 +68,13 @@ public class CharacterScan : MonoBehaviour
         return nearestTarget;
     }
 
-    private float TrueAttackRange(float multiply = 1f) {
-        return character.GetCurrentAttackRange() * multiply; // TODO: multiply is: Udpate booster in future
-    }
-
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
 
         if (character == null) return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(character.UnitTF.position, TrueAttackRange());
+        Gizmos.DrawWireSphere(character.UnitTF.position, character.GetTrueAttackRange());
     }
 #endif
 }
