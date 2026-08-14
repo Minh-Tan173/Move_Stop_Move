@@ -21,15 +21,15 @@ public class PlayerAnimator : CharacterAnimatorBase
 
     public override void HandleIdleAnim() {
 
-        animator.SetBool(CharacterAnimatorBase.IS_MOVING, player.IsMoving());
+        animator.SetBool(CharacterConst.IS_MOVING, player.IsMoving());
     }
 
     public override void TriggerAttackAnim() {
-        animator.SetTrigger(CharacterAnimatorBase.ATTACK_ANIM);
+        animator.SetTrigger(CharacterConst.ATTACK_ANIM);
     }
 
     public override void TriggerDeadAnim() {
 
-        animator.SetTrigger(CharacterAnimatorBase.DEAD_ANIM);
+        animator.SetTrigger(CharacterConst.DEAD_ANIM);
     }
 }

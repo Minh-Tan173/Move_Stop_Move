@@ -33,9 +33,12 @@ public class Bot : CharacterBase
         isGamePlaying = false;
         isDead = false;
 
-        charAnimator.ResetAnim();
-
         ChangeBotStateTo(BotStates.Idle);
+
+        // Visual
+        charAnimator.ResetAnim();
+        charVisual.ChangePants();
+        charVisual.ChangeHats();
     }
 
     public override void OnGamePlaying() {
@@ -49,6 +52,9 @@ public class Bot : CharacterBase
 
         currentState?.OnExit(this, charAnimator);
         currentState = null;
+
+        charAnimator.ResetAnim();
+        charVisual.OnDespawn();
 
         DeactiveNavMesh();
     }

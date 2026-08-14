@@ -1,46 +1,58 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum WeaponType {
 
-    Knife,
-    Hammer,
-    Boomerang
+    Knife = 0,
+    Hammer = 1,
+    Boomerang = 2
 }
 
 [CreateAssetMenu()]
 public class WeaponSO : ScriptableObject
 {
-    private readonly Dictionary<WeaponType, WeaponItemData> weaponDataDict = new Dictionary<WeaponType, WeaponItemData>();
-
     [SerializeField] private List<WeaponItemData> weaponItemDataList;
 
-    public WeaponBase GetWeaponByType(WeaponType weaponType) {
+    public WeaponBase GetWeaponPrefab(WeaponType weaponType) {
 
-        if (!weaponDataDict.ContainsKey(weaponType)) {
+        foreach (WeaponItemData itemData in weaponItemDataList) {
 
-            foreach (WeaponItemData weaponItem in weaponItemDataList) {
+            if (!itemData.IsSameWeaponType(weaponType)) { continue; }
 
-                if (weaponItem.IsSameWeaponType(weaponType)) {
-
-                    weaponDataDict.Add(weaponType, weaponItem);
-
-                    break;
-                }
-            }
+            return itemData.GetPrefab();
         }
 
-        return weaponDataDict[weaponType].GetPrefab();
+        return null;
+    }
+
+    public BulletBase GetBulletPrefab(WeaponType weaponType) {
+
+        foreach (WeaponItemData itemData in weaponItemDataList) {
+
+            if (!itemData.IsSameWeaponType(weaponType)) { continue; }
+
+            return itemData.GetBullet();
+        }
+
+        return null;
     }
 }
 
 [System.Serializable]
 public class WeaponItemData {
 
-    [SerializeField] private string name;
+    [Header("Base Data")]
     [SerializeField] private WeaponType weaponType;
+    [SerializeField] private string name;
+
+    [Header("Prefab")]
     [SerializeField] private WeaponBase prefab;
+    [SerializeField] private BulletBase prefabBullet;
+
+    [Header("Price")]
     [SerializeField] private int goldPrice;
+    [SerializeField] private Sprite sprite;
 
     public bool IsSameWeaponType(WeaponType weaponType) {
         return this.weaponType == weaponType;
@@ -48,5 +60,9 @@ public class WeaponItemData {
 
     public WeaponBase GetPrefab() {
         return this.prefab;
+    }
+
+    public BulletBase GetBullet() {
+        return this.prefabBullet;
     }
 }

@@ -5,13 +5,18 @@ using UnityEngine.TextCore.Text;
 
 public class CharacterBase : PoolUnit
 {
+    [Header("Visual")]
     [SerializeField] protected CharacterAnimatorBase charAnimator;
+    [SerializeField] protected CharacterVisual charVisual;
     [SerializeField] protected float attackRange;
 
     [Header("Attack Behavior")]
+    [SerializeField] protected WeaponSO weaponSO;
     [SerializeField] protected float attackCD;
     [SerializeField] protected Transform shootingPoint;
-    [SerializeField] protected WeaponType weaponType; // TẠM THỜI
+
+    [Header("TEST -- REMOVE AFTER")]
+    [SerializeField] protected WeaponType currentWeaponType; // TẠM THỜI
 
     protected float elapsedAttackCD;
 
@@ -57,7 +62,8 @@ public class CharacterBase : PoolUnit
 
     public void Throw() {
 
-        BulletBase bullet = SimplePool.Spawn<BulletBase>(PoolType.Knife, shootingPoint.position, shootingPoint.rotation);
+        BulletBase bulletPrefab = weaponSO.GetBulletPrefab(currentWeaponType);
+        BulletBase bullet = SimplePool.Spawn<BulletBase>(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
         bullet.ActiveMovement(this);
     }
 

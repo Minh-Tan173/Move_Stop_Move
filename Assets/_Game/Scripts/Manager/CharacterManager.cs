@@ -4,7 +4,11 @@ using System.Collections;
 
 public class CharacterManager : Singleton<CharacterManager>
 {
-    [Header("Spawn bot")]
+    [Header("Character Prefab")]
+    [SerializeField] private CharacterBase playerPrefab;
+    [SerializeField] private CharacterBase botPrefab;
+
+    [Header("Spawn Bot Behavior")]
     [SerializeField] private Transform pooling;
     [SerializeField] private int maxBotCountInLevel = 50;
     [SerializeField] private int maxBotCountRuntime = 10;
@@ -54,7 +58,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private void SpawnPlayer(Vector3 spawnPos) {
 
-        CharacterBase player = SimplePool.Spawn<CharacterBase>(PoolType.Character, spawnPos, Quaternion.identity);
+        CharacterBase player = SimplePool.Spawn<CharacterBase>(playerPrefab, spawnPos, Quaternion.identity);
 
         charDeactiveList.Remove(player);
         charActiveList.Add(player);
@@ -66,7 +70,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
         float randomYRot = Random.Range(0f, 180f);
         Quaternion botRot = Quaternion.Euler(0f, randomYRot, 0f);
-        CharacterBase bot = SimplePool.Spawn<CharacterBase>(PoolType.Character, spawnPos, botRot);
+        CharacterBase bot = SimplePool.Spawn<CharacterBase>(botPrefab, spawnPos, botRot);
 
         bot.OnInit();
 

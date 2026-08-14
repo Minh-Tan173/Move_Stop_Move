@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SimplePool : MonoBehaviour
 {
-    private static Dictionary<PoolType, Pool> poolInstance = new Dictionary<PoolType, Pool>();
+    private static Dictionary<PoolUnit, Pool> poolInstance = new Dictionary<PoolUnit, Pool>();
 
     public static void Preload(PoolUnit prefab, int amount, Transform parent) {
 
@@ -13,33 +13,38 @@ public class SimplePool : MonoBehaviour
             return;
         }
 
-        if (!poolInstance.ContainsKey(prefab.poolType) || poolInstance[prefab.poolType] == null) {
+        if (!poolInstance.ContainsKey(prefab.prefabKey) || poolInstance[prefab.prefabKey] == null) {
 
             Pool p = new Pool();
             p.PreLoad(prefab, amount, parent);
-            poolInstance[prefab.poolType] = p;
+            poolInstance[prefab.prefabKey] = p;
+        }
+        else {
+            poolInstance[prefab].PreLoad(prefab, amount, parent);
         }
 
     }
 
-    public static T Spawn<T>(PoolType poolType, Vector3 spawnPos, Quaternion rot) where T : PoolUnit {
+    public static T Spawn<T>(T prefab, Vector3 spawnPos, Quaternion rot) where T : PoolUnit {
 
-        if (!poolInstance.ContainsKey(poolType)) {
+        if (!poolInstance.ContainsKey(prefab)) {
 
-            Debug.LogError($"{poolType} is not preload!!!");
+            Debug.LogError($"{prefab.name} is not preload!!!");
             return null;
         }
 
-        return poolInstance[poolType].Spawn(spawnPos, rot) as T;
+        return poolInstance[prefab].Spawn(spawnPos, rot) as T;
     }
 
     public static void Despawn(PoolUnit unit) {
 
-        if (!poolInstance.ContainsKey(unit.poolType)) {
-            Debug.LogError($"{unit.poolType} is not preload!!!");
+        PoolUnit prefabKey = unit.prefabKey;
+
+        if (prefabKey == null || !poolInstance.ContainsKey(unit.prefabKey)) {
+            Debug.LogError($"{unit.prefabKey.name} is not preload!!!");
         }
 
-        poolInstance[unit.poolType].Depsawn(unit);
+        poolInstance[prefabKey].Depsawn(unit);
     }
 
 }
@@ -76,6 +81,7 @@ public class Pool {
         if (inactives.Count <= 0) {
 
             unit = GameObject.Instantiate(prefab, parent);
+            unit.prefabKey = prefab;
         }
         else {
 

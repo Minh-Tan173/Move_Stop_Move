@@ -3,7 +3,7 @@ using UnityEngine;
 public class PoolUnit : MonoBehaviour
 {
     [Header("Pooling")]
-    public PoolType poolType;
+    public PoolUnit prefabKey;
     
     private Transform unitTF;
 

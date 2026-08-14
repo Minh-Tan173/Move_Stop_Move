@@ -101,12 +101,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215c6b92ed5606f44b10d7b15bb43f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  poolType: 1
+  prefabKey: {fileID: 9118833147600455854}
   charAnimator: {fileID: 7948811754228205032}
+  charVisual: {fileID: 8641911475448365515}
   attackRange: 4
+  weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
   attackCD: 1
   shootingPoint: {fileID: 5760372036626729513}
-  weaponType: 0
+  currentWeaponType: 0
   moveSpeed: 5
   rotateSpeed: 500
   obstacleCheckPoint: {fileID: 6264515488078779459}
@@ -383,6 +385,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2445193559103534071, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2062984104648900448, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2062984104648900448, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: -2062984104648900448, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_Name
       value: PlayerVisual
@@ -401,6 +419,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7948811754228205032}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8641911475448365515}
   m_SourcePrefab: {fileID: 100100000, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
 --- !u!95 &832792912319880008 stripped
 Animator:
@@ -431,6 +452,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
   player: {fileID: 9118833147600455854}
   animator: {fileID: 832792912319880008}
+--- !u!114 &8641911475448365515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6007791614582866977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab44bfc7a7bd5c42a3bd84a61e504f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterVisual
+  pantSO: {fileID: 0}
+  hatSO: {fileID: 0}
+  pantsRenderer: {fileID: 6402394645552664225}
+  topHeadPlaceholder: {fileID: 0}
+--- !u!137 &6402394645552664225 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -529177695146175607, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 2341339311385287976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7279135846465189426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}

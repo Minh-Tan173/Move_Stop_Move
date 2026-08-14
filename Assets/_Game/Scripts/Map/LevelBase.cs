@@ -70,10 +70,7 @@ public class LevelBase : MonoBehaviour
         float r1 = Mathf.Sqrt(Random.value);
         float r2 = Random.value;
 
-        spawnPos =
-            (1f - r1) * a +
-            r1 * (1f - r2) * b +
-            r1 * r2 * c;
+        spawnPos = (1f - r1) * a + r1 * (1f - r2) * b + r1 * r2 * c;
 
         return true;
     }

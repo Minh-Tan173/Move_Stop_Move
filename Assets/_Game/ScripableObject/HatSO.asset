@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0dd904fa868fe40bfe74fb87d3498b, type: 3}
+  m_Name: HatSO
+  m_EditorClassIdentifier: Assembly-CSharp::HatSO
+  hatItemDataList:
+  - hatID: 0
+    namehat: Crown
+    hatPrefab: {fileID: 4796347082636842697, guid: d7c1c542bd3e0d949a15044dd32da9b4, type: 3}
+  - hatID: 1
+    namehat: Cap
+    hatPrefab: {fileID: 9112482897969890990, guid: ee418cb14b7d33746958326a4d98e2f9, type: 3}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1010873069070809437}
   - component: {fileID: -6259602838788733098}
   m_Layer: 0
-  m_Name: knife
+  m_Name: Knife_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911965421911048115}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.36739, y: -2.90377, z: -5.52109}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 41.690052, y: 41.690052, z: 41.690052}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &729108709848787349
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68,8 +68,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 7d6afe017ec25c240a74eb80b8a5efe4, type: 3}
-  - {fileID: -3846018093981099296, guid: 7d6afe017ec25c240a74eb80b8a5efe4, type: 3}
+  - {fileID: 8486936951020155453, guid: 7d22ba4646139ed499c8d6f6cba73b3e, type: 3}
+  - {fileID: 8852321937590121897, guid: 5040eef3eae504e48a15798fb8241766, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,6 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbaafacbf1d5fa40be57aa9a7b50549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Knife
-  poolType: 2
+  prefabKey: {fileID: -6259602838788733098}
   moveSpeed: 5
   boxCollider: {fileID: 1010873069070809437}

@@ -18,7 +18,7 @@ public class Knife : BulletBase
 
         CharacterManager.Instance.DeadCharacter(character); 
         OnDespawn();
-    }
+    }   
 
     private void Update() {
 

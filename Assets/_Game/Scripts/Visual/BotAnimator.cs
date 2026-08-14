@@ -12,7 +12,7 @@ public class BotAnimator : CharacterAnimatorBase {
 
     public override void HandleIdleAnim() {
 
-        animator.SetBool(IS_MOVING, bot.IsMoving());
+        animator.SetBool(CharacterConst.IS_MOVING, bot.IsMoving());
     }
 
     public override void ResetAnim() {
@@ -22,12 +22,12 @@ public class BotAnimator : CharacterAnimatorBase {
 
     public override void TriggerAttackAnim() {
 
-        animator.SetTrigger(ATTACK_ANIM);
+        animator.SetTrigger(CharacterConst.ATTACK_ANIM);
     
     }
 
     public override void TriggerDeadAnim() {
 
-        animator.SetTrigger(DEAD_ANIM);
+        animator.SetTrigger(CharacterConst.DEAD_ANIM);
     }
 }
