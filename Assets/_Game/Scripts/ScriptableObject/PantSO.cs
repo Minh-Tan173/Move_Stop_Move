@@ -3,20 +3,27 @@ using UnityEngine;
 
 [CreateAssetMenu()]
 public class PantSO : ScriptableObject
-{   
+{
+    private Dictionary<int, PantItemData> pantDict = new Dictionary<int, PantItemData>();
+
     public List<PantItemData> pantItemDataList;
 
     public Texture2D GetPantTexture(int pantID) {
         
-        foreach (PantItemData pantItem in pantItemDataList) {
 
-            if (pantItem.IsSameID(pantID)) {
+        if (!pantDict.ContainsKey(pantID)) {
 
-                return pantItem.GetTexture();
+            foreach (PantItemData pantItem in pantItemDataList) {
+
+                if (pantItem.IsSameID(pantID)) {
+
+                    pantDict.Add(pantID, pantItem);
+                    break;
+                }
             }
         }
 
-        return null;
+        return pantDict[pantID].GetTexture();
     }
 }
 
