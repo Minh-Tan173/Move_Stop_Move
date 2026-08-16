@@ -15,6 +15,7 @@ public static class PatrolState
     private static CharacterBase GetNearestCharacter(Bot bot) {
 
         List<CharacterBase> charList = CharacterManager.Instance.GetActiveCharacterList();
+        if (charList.Count <= 1) { return null; }
 
         CharacterBase nearestCharacter = null;
         float nearestDistance = Mathf.Infinity;
@@ -72,7 +73,7 @@ public static class PatrolState
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
-            bot.ChangeBotStateTo(BotStates.Idle);
+            bot.ChangeBotStateTo(BotStateSet.Idle);
             return;
         }
 
@@ -82,7 +83,7 @@ public static class PatrolState
             if (bot.IsAttackTargetValid() && bot.CanAttackCurrentTarget()) {
                 // 60% attack chance
 
-                bot.ChangeBotStateTo(BotStates.Attack);
+                bot.ChangeBotStateTo(BotStateSet.Attack);
                 return;
             }
 
@@ -96,16 +97,18 @@ public static class PatrolState
                 if (bot.HasAttackTarget()) {
                     // Last check
 
-                    bot.ChangeBotStateTo(BotStates.Attack);
+                    bot.ChangeBotStateTo(BotStateSet.Attack);
                     return;
                 }
                 else {
                     // Still none attack target
 
-                    bot.RollFindType();
+                    bot.ChangeBotStateTo(BotStateSet.Idle);
 
-                    Transform newMoveTarget = GetTargetByType(bot.GetFindType(), bot);
-                    bot.MoveToDestination(newMoveTarget.position);
+                    //bot.RollFindType();
+
+                    //Transform newMoveTarget = GetTargetByType(bot.GetFindType(), bot);
+                    //bot.MoveToDestination(newMoveTarget.position);
                 }
 
             }

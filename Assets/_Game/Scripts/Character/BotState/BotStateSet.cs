@@ -1,6 +1,6 @@
 using System;
 
-public static class BotStates
+public static class BotStateSet
 {
     public static readonly BotState Idle = new BotState(IdleState.OnEnter, IdleState.OnExcute, IdleState.OnExit);
 

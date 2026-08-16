@@ -8,8 +8,15 @@ public class Bot : CharacterBase
     [Header("Movement")]
     [SerializeField] private NavMeshAgent navMeshAgent;
 
+    [Header("Idle Behavior")]
+    [SerializeField] private float idleDuration;
+
     private BotState currentState;
     private bool isGamePlaying;
+
+    #region Idle Behavior
+    private float elapsedIdleDuration;
+    #endregion
 
     #region Patrol Behavior
     private int indexFindType;
@@ -25,6 +32,8 @@ public class Bot : CharacterBase
 
     public override void OnInit() {
 
+        base.OnInit();
+
         ActiveNavMesh();
 
         moveTarget = Vector3.zero;
@@ -33,17 +42,17 @@ public class Bot : CharacterBase
         isGamePlaying = false;
         isDead = false;
 
-        ChangeBotStateTo(BotStates.Idle);
+        ChangeBotStateTo(BotStateSet.Idle);
 
         // Visual
-        charAnimator.ResetAnim();
         charVisual.ChangePants();
         charVisual.ChangeHats();
+        charVisual.ChangeAccessories();
     }
 
     public override void OnGamePlaying() {
 
-        ChangeBotStateTo(BotStates.Patrol);
+        ChangeBotStateTo(BotStateSet.Patrol);
     }
 
     public override void OnDespawn() {
@@ -167,7 +176,7 @@ public class Bot : CharacterBase
     }
 
     public override bool IsMoving() {
-        return currentState == BotStates.Patrol;
+        return currentState == BotStateSet.Patrol;
     }
 
     public override bool CanSelectAttackTarget(CharacterBase target) {
@@ -201,5 +210,17 @@ public class Bot : CharacterBase
 
         ignoredAttackTarget = attackTarget;
         attackTarget = null;
+    }
+
+    public void UpdateElapsedIdleDuration(float time) {
+        elapsedIdleDuration += Time.deltaTime;
+    }
+
+    public void ResetElapsedIdleDuration() {
+        elapsedIdleDuration = 0f;
+    }
+
+    public bool IsOverIdleDuration() {
+        return elapsedIdleDuration >= idleDuration;
     }
 }

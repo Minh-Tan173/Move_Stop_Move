@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1228b564799d53b49b00600b9637fc2f, type: 3}
+  m_Name: AccessorySO
+  m_EditorClassIdentifier: Assembly-CSharp::AccessorySO
+  accessoryItemDataList:
+  - accessoryID: 0
+    accessoryName: Knight Shield
+    accessoryPrefab: {fileID: 3292287827393353624, guid: b75a6b37d7f9f8a4bb3cd329d4d241ec, type: 3}
+  - accessoryID: 1
+    accessoryName: Captain Shield
+    accessoryPrefab: {fileID: -7657332400220799181, guid: 43d32d53022e15549898cc5da5ca90fa, type: 3}

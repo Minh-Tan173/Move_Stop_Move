@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class CharacterVisual : MonoBehaviour
@@ -5,13 +6,16 @@ public class CharacterVisual : MonoBehaviour
     [Header("Skin Data")]
     [SerializeField] private PantSO pantSO;
     [SerializeField] private HatSO hatSO;
+    [SerializeField] private AccessorySO accessorySO;
 
     [Header("Ref")]
     [SerializeField] private SkinnedMeshRenderer pantsRenderer;
     [SerializeField] private Transform topHeadPlaceholder;
+    [SerializeField] private Transform leftHandPlaceholder;
 
     private MaterialPropertyBlock propertyBlock;
     private PoolUnit currentHat;
+    private PoolUnit currentAccessory;
 
     private void Awake() {
         propertyBlock = new MaterialPropertyBlock();
@@ -22,6 +26,11 @@ public class CharacterVisual : MonoBehaviour
         if (currentHat != null) {
             SimplePool.Despawn(currentHat);
             currentHat = null;
+        }
+
+        if (currentAccessory != null) {
+            SimplePool.Despawn(currentAccessory);
+            currentAccessory = null;
         }
 
     }
@@ -51,6 +60,9 @@ public class CharacterVisual : MonoBehaviour
 
     public void ChangeHats(int hatID = -1) {
 
+
+        if (Random.Range(0, 2) == 0) { return; } // 50% chance not spawn
+
         PoolUnit hatPrefab;
 
         // Get Hat Prefab
@@ -66,12 +78,37 @@ public class CharacterVisual : MonoBehaviour
             hatPrefab = hatSO.GetHatPrefab(randomHatID);
         }
 
-        if (Random.Range(0, 2) == 0) { return; } // 50% chance not spawn
-
         // Setup Hat
         Quaternion quaternion = Quaternion.Euler(-90f, 0f, 0f);
         currentHat = SimplePool.Spawn<PoolUnit>(hatPrefab, topHeadPlaceholder.position, quaternion);
         currentHat.UnitTF.SetParent(topHeadPlaceholder);
         currentHat.UnitTF.localPosition = Vector3.zero;
+    }
+
+    public void ChangeAccessories(int acessoryID = -1) {
+
+        //if (Random.value <= 0.3f) { return; }
+
+        PoolUnit accessoryPrefab;
+
+        // Get Accessory Prefab
+        if (acessoryID >= 0) {
+            // If having ID
+
+            accessoryPrefab = accessorySO.GetAccesoryPrefab(acessoryID);
+        }
+        else {
+
+            int totalAccessory = accessorySO.accessoryItemDataList.Count;
+            int randomAccessoryID = Random.Range(0, totalAccessory);
+            accessoryPrefab = accessorySO.GetAccesoryPrefab(randomAccessoryID);
+        }
+
+        // Setup accessory
+        currentAccessory = SimplePool.Spawn<PoolUnit>(accessoryPrefab, leftHandPlaceholder.position, Quaternion.identity);
+        currentAccessory.UnitTF.SetParent(leftHandPlaceholder);
+        currentAccessory.UnitTF.localPosition = Vector3.zero;
+        currentAccessory.UnitTF.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+
     }
 }

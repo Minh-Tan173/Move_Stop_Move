@@ -88,7 +88,9 @@ public class Player : CharacterBase
     }
 
     public override void OnInit() {
-        
+
+        base.OnInit();
+
         // TODO: Load player data from Data Manager
     }
 

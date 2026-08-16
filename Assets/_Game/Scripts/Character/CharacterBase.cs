@@ -8,24 +8,31 @@ public class CharacterBase : PoolUnit
     [Header("Visual")]
     [SerializeField] protected CharacterAnimatorBase charAnimator;
     [SerializeField] protected CharacterVisual charVisual;
-    [SerializeField] protected float attackRange;
 
     [Header("Attack Behavior")]
     [SerializeField] protected WeaponSO weaponSO;
-    [SerializeField] protected float attackCD;
+    [SerializeField] protected float attackDuration;
     [SerializeField] protected Transform shootingPoint;
+
+    [Header("Ref")]
+    [SerializeField] protected CharacterStats characterStats;
 
     [Header("TEST -- REMOVE AFTER")]
     [SerializeField] protected WeaponType currentWeaponType; // TẠM THỜI
 
+    #region Attack Behavior
+    protected float elapsedAttackDuration;
     protected float elapsedAttackCD;
-
+    protected bool isInAttackDuration;
     protected CharacterBase attackTarget;
+    #endregion
 
     protected bool isDead;
 
     public virtual void OnInit() {
-        Debug.LogError("TRIGGER BASE CHARACTER!!");
+
+        characterStats.ResetAttackSize();
+        charAnimator.ResetAnim();
     }
 
     public virtual void OnGamePlaying() {
@@ -44,29 +51,6 @@ public class CharacterBase : PoolUnit
         attackTarget = target;
     }
 
-    #region Skin Method
-    public void ChangeWeapon() {
-
-    }
-
-    public void ChangePants() {
-
-    }
-    #endregion
-
-    public void Attack() {
-
-        charAnimator.TriggerAttackAnim();
-        Throw();
-    }
-
-    public void Throw() {
-
-        BulletBase bulletPrefab = weaponSO.GetBulletPrefab(currentWeaponType);
-        BulletBase bullet = SimplePool.Spawn<BulletBase>(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
-        bullet.ActiveMovement(this);
-    }
-
     public void OnDead() {
 
         charAnimator.TriggerDeadAnim();
@@ -78,8 +62,48 @@ public class CharacterBase : PoolUnit
         return true;
     }
 
-    public void ResetAttackCD() {
-        elapsedAttackCD = 0f;
+    public void Attack() {
+
+        isInAttackDuration = true;
+        ResetAttackTimers();
+
+        charAnimator.TriggerAttackAnim();
+    }
+
+    public void Throw() {
+
+        BulletBase bulletPrefab = weaponSO.GetBulletPrefab(currentWeaponType);
+        BulletBase bullet = SimplePool.Spawn<BulletBase>(bulletPrefab, shootingPoint.position, Quaternion.identity);
+        bullet.ActiveMovement(this);
+    }
+
+    public void UpdateAttackDuration(float time) {
+
+        elapsedAttackDuration += time;
+    }
+
+    public bool IsOverAttackDuration() {
+
+        return elapsedAttackDuration >= attackDuration;
+    }
+
+    public bool IsInAttackDuration() {
+
+        return isInAttackDuration;
+    }
+
+    public void FinishAttack() {
+
+        isInAttackDuration = false;
+        ResetAttackTimers();
+
+        Throw();
+    }
+
+    public void CancelAttack() {
+
+        isInAttackDuration = false;
+        ResetAttackTimers();
     }
 
     public void UpdateAttackCD(float time) {
@@ -87,11 +111,17 @@ public class CharacterBase : PoolUnit
     }
 
     public bool IsOverAttackCD() {
-        return elapsedAttackCD >= attackCD; 
+        return elapsedAttackCD >= characterStats.GetAttackCD(); 
     }
 
-    public float GetTrueAttackRange(float multiply = 1f) {
-        return this.attackRange * multiply;
+    public void ResetAttackTimers() {
+
+        elapsedAttackDuration = 0f;
+        elapsedAttackCD = 0f;
+    }
+
+    public float GetTrueAttackRange() {
+        return this.characterStats.GetAttackRange();
     }
 
     public bool IsAttackTargetValid() {

@@ -8,19 +8,20 @@ public class Knife : BulletBase
     private Vector3 startPosition;
     private Vector3 moveDir;
     private float sqrAttackRange;
+    private CharacterBase bulletOwner;
 
     private void OnTriggerEnter(Collider other) {
 
         CharacterBase character = LevelCache<Collider, CharacterBase>.GetValueWithKey(other);
         if (character == null) { return; }
-
+        if (character == bulletOwner) { return; }
         if (character.IsDead()) { return; }
 
         CharacterManager.Instance.DeadCharacter(character); 
         OnDespawn();
     }   
 
-    private void Update() {
+    private void Update() { 
 
         if (!canMove) return;
 
@@ -34,11 +35,15 @@ public class Knife : BulletBase
 
     public override void OnInit(CharacterBase bulletOwner) {
 
+        this.bulletOwner = bulletOwner;
+
         startPosition = this.UnitTF.position;
 
         moveDir = bulletOwner.UnitTF.forward;
         moveDir.y = 0f;
         moveDir.Normalize();
+
+        UnitTF.rotation = Quaternion.LookRotation(moveDir);
 
         sqrAttackRange = bulletOwner.GetTrueAttackRange() * bulletOwner.GetTrueAttackRange();
 

@@ -9,10 +9,19 @@ public static class IdleState
 
     public static void OnExcute(Bot bot, CharacterAnimatorBase botAnimator) {
 
-        //botAnimator.HandleIdleAnim();
+        if (bot.HasAttackTarget()) {
+            bot.ChangeBotStateTo(BotStateSet.Attack);
+        }
+
+        bot.UpdateElapsedIdleDuration(Time.deltaTime);
+
+        if (bot.IsOverIdleDuration()) {
+            bot.ChangeBotStateTo(BotStateSet.Patrol);
+        }
+        
     }
 
     public static void OnExit(Bot bot, CharacterAnimatorBase botAnimator) {
-
+        bot.ResetElapsedIdleDuration();
     }
 }

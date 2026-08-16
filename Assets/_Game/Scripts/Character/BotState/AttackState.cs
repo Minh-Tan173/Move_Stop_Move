@@ -6,46 +6,63 @@ public static class AttackState
 
     public static void OnEnter(Bot bot, CharacterAnimatorBase botAnimator) {
 
-        bot.ResetAttackCD();
+        //bot.ResetAttackCD();
         bot.RollMaxAttackCount();
         bot.LookAttackTarget();
+
+        bot.Attack();
     }
 
     public static void OnExcute(Bot bot, CharacterAnimatorBase botAnimatort) {
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
-            bot.ChangeBotStateTo(BotStates.Idle);
+            bot.ChangeBotStateTo(BotStateSet.Idle);
             return;
         }
 
-        if (bot.IsAttackTargetValid()) {
+        if (!bot.IsAttackTargetValid()) {
 
-            bot.UpdateAttackCD(Time.deltaTime);
+            bot.ChangeBotStateTo(BotStateSet.Patrol);
+            return;
+        }
 
-            if (bot.IsOverAttackCD()) {
+        if (bot.IsInAttackDuration()) {
+            // In Attack Duration
 
-                bot.ResetAttackCD();
+            bot.UpdateAttackDuration(Time.deltaTime);
 
-                bot.LookAttackTarget();
-                bot.Attack();
+            if (bot.IsOverAttackDuration()) {
 
+                bot.FinishAttack();
                 bot.IncreaseAttackCount();
+
                 if (bot.IsOverMaxAttackCount()) {
 
                     bot.IgnoreCurrentAttackTarget();
-                    bot.ChangeBotStateTo(BotStates.Patrol);
+                    bot.ChangeBotStateTo(BotStateSet.Patrol);
+
+                    return;
                 }
             }
 
+            return;
         }
-        else {
-            bot.SetAttackTarget(null);
-            bot.ChangeBotStateTo(BotStates.Patrol);
+
+
+        // Wait CD between 2 attack behavior
+        bot.UpdateAttackCD(Time.deltaTime);
+
+        if (bot.IsOverAttackCD()) {
+
+            bot.LookAttackTarget();
+            bot.Attack();
         }
     }
 
     public static void OnExit(Bot bot, CharacterAnimatorBase botAnimator) {
 
+        bot.CancelAttack();
+        bot.SetAttackTarget(null);
     }
 }
