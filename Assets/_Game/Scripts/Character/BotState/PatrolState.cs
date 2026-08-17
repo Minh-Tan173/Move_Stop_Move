@@ -63,13 +63,13 @@ public static class PatrolState
         return null;
     }
 
-    public static void OnEnter(Bot bot, CharacterAnimatorBase botAnimator) {
+    public static void OnEnter(Bot bot, ICharacterAnimator botAnimator) {
 
         bot.RollFindType();
 
     }
 
-    public static void OnExcute(Bot bot, CharacterAnimatorBase botAnimator) {
+    public static void OnExcute(Bot bot, ICharacterAnimator botAnimator) {
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
@@ -104,11 +104,7 @@ public static class PatrolState
                     // Still none attack target
 
                     bot.ChangeBotStateTo(BotStateSet.Idle);
-
-                    //bot.RollFindType();
-
-                    //Transform newMoveTarget = GetTargetByType(bot.GetFindType(), bot);
-                    //bot.MoveToDestination(newMoveTarget.position);
+                    return;
                 }
 
             }
@@ -124,7 +120,7 @@ public static class PatrolState
         }
     }
 
-    public static void OnExit(Bot bot, CharacterAnimatorBase botAnimator) {
+    public static void OnExit(Bot bot, ICharacterAnimator botAnimator) {
 
         bot.StopMovement();
     }

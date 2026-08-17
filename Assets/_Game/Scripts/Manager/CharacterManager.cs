@@ -25,6 +25,11 @@ public class CharacterManager : Singleton<CharacterManager>
         //SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
     }
 
+    public void OnGamePlaying() {
+
+
+    }
+
     public void OnDespawn() {
 
         for (int i = charActiveList.Count - 1; i >= 0; i--) {
@@ -91,7 +96,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public void DeadCharacter(CharacterBase character) {
 
-        character.OnDead();
+        character.Dead();
 
         StartCoroutine(IEDespawnCharacter(character));
         //SimplePool.Despawn(character);

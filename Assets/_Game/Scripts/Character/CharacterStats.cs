@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [Header("Attack Range")]
-    [SerializeField] private float attackRange;
-    [SerializeField] protected float arDefaultSize;
+    [SerializeField] protected AttackRangeVisual attackRangeVisual;
 
+    [Header("Attack Range")]
+    [SerializeField] private float arDefaultSize;
     [SerializeField] private float attackCD;
 
-    #region Attack Range
+    private float attackRange;
 
+    #region Attack Range
     public void SetAttackSize(float value) {
+        
         attackRange = value;
+
+        attackRangeVisual.UpdateVisual();
     }
 
     public void AddAttackSize(float value) {

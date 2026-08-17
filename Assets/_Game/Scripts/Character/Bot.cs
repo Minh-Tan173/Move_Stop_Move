@@ -12,7 +12,6 @@ public class Bot : CharacterBase
     [SerializeField] private float idleDuration;
 
     private BotState currentState;
-    private bool isGamePlaying;
 
     #region Idle Behavior
     private float elapsedIdleDuration;
@@ -39,20 +38,18 @@ public class Bot : CharacterBase
         moveTarget = Vector3.zero;
         attackTarget = null;
 
-        isGamePlaying = false;
         isDead = false;
 
+        elapsedIdleDuration = LevelManager.Instance.IsGamePlaying() ? 0f : idleDuration;
         ChangeBotStateTo(BotStateSet.Idle);
 
         // Visual
         charVisual.ChangePants();
-        charVisual.ChangeHats();
+
+        HatItemData hat = charVisual.ChangeHats();
+        if (hat != null) { hat.ApplyBoosterFor(this); }
+
         charVisual.ChangeAccessories();
-    }
-
-    public override void OnGamePlaying() {
-
-        ChangeBotStateTo(BotStateSet.Patrol);
     }
 
     public override void OnDespawn() {
@@ -70,12 +67,8 @@ public class Bot : CharacterBase
 
     private void Update() {
 
-        if (!isGamePlaying && LevelManager.Instance.IsGamePlaying()) {
-            isGamePlaying = true;
+        if (!LevelManager.Instance.IsGamePlaying()) { return; }
 
-            OnGamePlaying();
-        }
-        
         if (currentState != null) {
 
             currentState?.OnExcute(this, charAnimator);
@@ -176,12 +169,17 @@ public class Bot : CharacterBase
     }
 
     public override bool IsMoving() {
-        return currentState == BotStateSet.Patrol;
+
+        if (!navMeshAgent.enabled || !navMeshAgent.isOnNavMesh) {
+            return false;
+        }
+
+        return navMeshAgent.velocity.sqrMagnitude > 0.01f;
     }
 
     public override bool CanSelectAttackTarget(CharacterBase target) {
 
-        return target != this && target != ignoredAttackTarget;
+        return base.CanSelectAttackTarget(target) && target != ignoredAttackTarget;
     }
 
     public override void SetAttackTarget(CharacterBase target) {
@@ -199,7 +197,7 @@ public class Bot : CharacterBase
     }
 
     public void IncreaseAttackCount() {
-        attackCount++;
+        attackCount += 1;
     }
 
     public bool IsOverMaxAttackCount() {

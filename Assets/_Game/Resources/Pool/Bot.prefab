@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 633333778911073449}
   - component: {fileID: 5887153715476655363}
   - component: {fileID: 424574915608694251}
+  - component: {fileID: 4246925344445636655}
   - component: {fileID: 3090917831434315342}
   m_Layer: 7
   m_Name: Bot
@@ -127,12 +128,27 @@ MonoBehaviour:
   charAnimator: {fileID: 2320559466662988195}
   charVisual: {fileID: 2010296201266842551}
   weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
-  attackDuration: 0.4
+  attackDuration: 0.6
   shootingPoint: {fileID: 8077340295940514469}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 4246925344445636655}
   currentWeaponType: 0
   navMeshAgent: {fileID: 5887153715476655363}
   idleDuration: 4
+--- !u!114 &4246925344445636655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3207955696063156489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79ab836484430694784d639a51818f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
+  attackRangeVisual: {fileID: 8304004335470027580}
+  arDefaultSize: 4
+  attackCD: 1
 --- !u!114 &3090917831434315342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3430597399681670580}
   - component: {fileID: 8403206818180354705}
+  - component: {fileID: 8304004335470027580}
   m_Layer: 7
   m_Name: AttackRangeVisual
   m_TagString: Untagged
@@ -366,6 +383,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &8304004335470027580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000938670712593463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767379828a0639147a027a7f0b20610c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackRangeVisual
+  character: {fileID: 424574915608694251}
 --- !u!1001 &710930995547950829
 PrefabInstance:
   m_ObjectHideFlags: 0

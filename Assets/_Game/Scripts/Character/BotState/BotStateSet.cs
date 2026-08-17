@@ -12,11 +12,11 @@ public static class BotStateSet
 
 public class BotState {
 
-    public readonly Action<Bot, CharacterAnimatorBase> OnEnter;
-    public readonly Action<Bot, CharacterAnimatorBase> OnExcute;
-    public readonly Action<Bot, CharacterAnimatorBase> OnExit;
+    public readonly Action<Bot, ICharacterAnimator> OnEnter;
+    public readonly Action<Bot, ICharacterAnimator> OnExcute;
+    public readonly Action<Bot, ICharacterAnimator> OnExit;
 
-    public BotState(Action<Bot, CharacterAnimatorBase> onEnter, Action<Bot, CharacterAnimatorBase> onExecute, Action<Bot, CharacterAnimatorBase> onExit) {
+    public BotState(Action<Bot, ICharacterAnimator> onEnter, Action<Bot, ICharacterAnimator> onExecute, Action<Bot, ICharacterAnimator> onExit) {
 
         OnEnter = onEnter;
         OnExcute = onExecute;

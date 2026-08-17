@@ -1,21 +1,22 @@
 using UnityEngine;
 
-public class BotAnimator : CharacterAnimatorBase {
+public class BotAnimator : ICharacterAnimator {
 
     [SerializeField] private Bot bot;
     [SerializeField] private Animator animator;
 
     private void Update() {
 
-        HandleIdleAnim();   
+        HandleMovementAnim();   
     }
 
-    public override void HandleIdleAnim() {
+    public override void HandleMovementAnim() {
 
         animator.SetBool(CharacterConst.IS_MOVING, bot.IsMoving());
     }
 
     public override void ResetAnim() {
+
         animator.Rebind();
         animator.Update(0f);
     }

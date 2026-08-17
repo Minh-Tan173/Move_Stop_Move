@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 public class CharacterBase : PoolUnit
 {
     [Header("Visual")]
-    [SerializeField] protected CharacterAnimatorBase charAnimator;
+    [SerializeField] protected ICharacterAnimator charAnimator;
     [SerializeField] protected CharacterVisual charVisual;
 
     [Header("Attack Behavior")]
@@ -43,18 +43,14 @@ public class CharacterBase : PoolUnit
         Debug.LogError("TRIGGER BASE CHARACTER!!");
     }
 
-    public virtual bool CanSelectAttackTarget(CharacterBase target) {
-        return target != this;
-    }
-
     public virtual void SetAttackTarget(CharacterBase target) {
         attackTarget = target;
     }
 
-    public void OnDead() {
+    public void Dead() {
 
-        charAnimator.TriggerDeadAnim();
         OnDespawn();
+        charAnimator.TriggerDeadAnim();
     }
 
     public virtual bool IsMoving() {
@@ -124,19 +120,25 @@ public class CharacterBase : PoolUnit
         return this.characterStats.GetAttackRange();
     }
 
+    public bool IsTargetAvailable(CharacterBase target) {
+        // if target is null, dead or hide
+        return target != null && target != this && !target.IsDead() && target.gameObject.activeSelf;
+    }
+
+    public virtual bool CanSelectAttackTarget(CharacterBase target) {
+        return IsTargetAvailable(target);
+    }
+
     public bool IsAttackTargetValid() {
 
-        if (attackTarget == null) { return false; }
-
-        // Is target not still alive
-        if (!attackTarget.gameObject.activeSelf) { return false; }
+        // Is target not still availble
+        if (!IsTargetAvailable(attackTarget)) { return false; }
 
         // Is target not still in attack range
         float sqrDistanceToTarget = (attackTarget.UnitTF.position - this.UnitTF.position).sqrMagnitude;
         float sqrTrueAttackRange = GetTrueAttackRange() * GetTrueAttackRange();
-        if (sqrDistanceToTarget > sqrTrueAttackRange) { return false; }
 
-        return true;
+        return sqrDistanceToTarget <= sqrTrueAttackRange;
     }
 
     public bool CanScanTarget() {
@@ -147,7 +149,7 @@ public class CharacterBase : PoolUnit
         return isDead;
     }
 
-    public Transform GetAttackTarget() {
-        return attackTarget.UnitTF;
+    public CharacterStats GetCharacterStats() {
+        return characterStats;
     }
 }

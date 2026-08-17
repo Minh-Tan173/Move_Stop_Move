@@ -15,7 +15,11 @@ MonoBehaviour:
   hatItemDataList:
   - hatID: 0
     namehat: Crown
-    hatPrefab: {fileID: 4796347082636842697, guid: d7c1c542bd3e0d949a15044dd32da9b4, type: 3}
+    hatPrefab: {fileID: 8055549267166021858, guid: d7c1c542bd3e0d949a15044dd32da9b4, type: 3}
+    boosterDataList:
+    - booster: {fileID: 11400000, guid: 8cc483cffcbf2034baeaafa28d273a13, type: 2}
+      value: 2
   - hatID: 1
     namehat: Cap
-    hatPrefab: {fileID: 9112482897969890990, guid: ee418cb14b7d33746958326a4d98e2f9, type: 3}
+    hatPrefab: {fileID: 1516482078903752188, guid: ee418cb14b7d33746958326a4d98e2f9, type: 3}
+    boosterDataList: []

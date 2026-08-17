@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 public static class AttackState
 {
 
-    public static void OnEnter(Bot bot, CharacterAnimatorBase botAnimator) {
+    public static void OnEnter(Bot bot, ICharacterAnimator botAnimator) {
 
         //bot.ResetAttackCD();
         bot.RollMaxAttackCount();
@@ -13,7 +13,7 @@ public static class AttackState
         bot.Attack();
     }
 
-    public static void OnExcute(Bot bot, CharacterAnimatorBase botAnimatort) {
+    public static void OnExcute(Bot bot, ICharacterAnimator botAnimatort) {
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
@@ -40,8 +40,8 @@ public static class AttackState
                 if (bot.IsOverMaxAttackCount()) {
 
                     bot.IgnoreCurrentAttackTarget();
-                    bot.ChangeBotStateTo(BotStateSet.Patrol);
 
+                    bot.ChangeBotStateTo(BotStateSet.Patrol);
                     return;
                 }
             }
@@ -60,7 +60,7 @@ public static class AttackState
         }
     }
 
-    public static void OnExit(Bot bot, CharacterAnimatorBase botAnimator) {
+    public static void OnExit(Bot bot, ICharacterAnimator botAnimator) {
 
         bot.CancelAttack();
         bot.SetAttackTarget(null);

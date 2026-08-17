@@ -58,31 +58,26 @@ public class CharacterVisual : MonoBehaviour
         pantsRenderer.SetPropertyBlock(propertyBlock);
     }
 
-    public void ChangeHats(int hatID = -1) {
+    public HatItemData ChangeHats(int hatID = -1) {
 
+        if (hatID < 0) {
 
-        if (Random.Range(0, 2) == 0) { return; } // 50% chance not spawn
-
-        PoolUnit hatPrefab;
-
-        // Get Hat Prefab
-        if (hatID >= 0) {
-            // If having hatID
-
-            hatPrefab = hatSO.GetHatPrefab(hatID);
-        }
-        else {
+            if (Random.Range(0, 2) == 0) { return null; }
 
             int totalHat = hatSO.hatItemDataList.Count;
-            int randomHatID = Random.Range(0, totalHat);
-            hatPrefab = hatSO.GetHatPrefab(randomHatID);
+            hatID = Random.Range(0, totalHat);
         }
 
+        PoolUnit hatPrefab = hatSO.GetHatPrefab(hatID);
+
         // Setup Hat
-        Quaternion quaternion = Quaternion.Euler(-90f, 0f, 0f);
-        currentHat = SimplePool.Spawn<PoolUnit>(hatPrefab, topHeadPlaceholder.position, quaternion);
+        currentHat = SimplePool.Spawn<PoolUnit>(hatPrefab, topHeadPlaceholder.position, Quaternion.identity);
+
         currentHat.UnitTF.SetParent(topHeadPlaceholder);
         currentHat.UnitTF.localPosition = Vector3.zero;
+        currentHat.UnitTF.localRotation = Quaternion.identity;
+
+        return hatSO.GetHatData(hatID);
     }
 
     public void ChangeAccessories(int acessoryID = -1) {

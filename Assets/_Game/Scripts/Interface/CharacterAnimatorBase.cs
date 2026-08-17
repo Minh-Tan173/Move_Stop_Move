@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class CharacterAnimatorBase : MonoBehaviour  
+public class ICharacterAnimator : MonoBehaviour  
 {
 
     public virtual void ResetAnim() { }
 
-    public virtual void HandleIdleAnim() { }
+    public virtual void HandleMovementAnim() { }
 
     public virtual void TriggerAttackAnim() { }
 

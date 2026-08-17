@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAnimator : CharacterAnimatorBase
+public class PlayerAnimator : ICharacterAnimator
 {
     [Header("Parent")]
     [SerializeField] private Player player;
@@ -11,7 +11,7 @@ public class PlayerAnimator : CharacterAnimatorBase
 
     private void Update() {
 
-        HandleIdleAnim();
+        HandleMovementAnim();
     }
 
     public override void ResetAnim() {
@@ -19,7 +19,7 @@ public class PlayerAnimator : CharacterAnimatorBase
 
     }
 
-    public override void HandleIdleAnim() {
+    public override void HandleMovementAnim() {
 
         animator.SetBool(CharacterConst.IS_MOVING, player.IsMoving());
     }
