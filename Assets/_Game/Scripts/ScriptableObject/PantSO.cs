@@ -8,8 +8,7 @@ public class PantSO : ScriptableObject
 
     public List<PantItemData> pantItemDataList;
 
-    public Texture2D GetPantTexture(int pantID) {
-        
+    public PantItemData GetPantItemData(int pantID) {
 
         if (!pantDict.ContainsKey(pantID)) {
 
@@ -23,16 +22,25 @@ public class PantSO : ScriptableObject
             }
         }
 
-        return pantDict[pantID].GetTexture();
+        return pantDict[pantID];
+    }
+
+    public Texture2D GetPantTexture(int pantID) {
+     
+        return GetPantItemData(pantID).GetTexture();
     }
 }
 
 [System.Serializable]
 public class PantItemData {
 
+    [Header("Base Data")]
     [SerializeField] private int pantID;
     [SerializeField] private string pantName;
     [SerializeField] private Texture2D pantTexture;
+
+    [Header("Booster")]
+    [SerializeField] private List<BoosterData> boosterDataList;
 
     public bool IsSameID(int pantID) {
         return this.pantID == pantID;
@@ -41,11 +49,11 @@ public class PantItemData {
     public Texture2D GetTexture() {
         return pantTexture;
     }
+
+    public void ApplyBoosterFor(CharacterBase character) {
+
+        foreach (BoosterData booster in boosterDataList) {
+            booster.Apply(character);
+        }
+    }
 }
-
-//[System.Serializable]
-//public class BufferPant {
-
-//    public float attackRange;
-//    public float speed;
-//}

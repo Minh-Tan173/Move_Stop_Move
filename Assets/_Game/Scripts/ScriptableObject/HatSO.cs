@@ -28,20 +28,7 @@ public class HatSO : ScriptableObject
 
     public PoolUnit GetHatPrefab(int hatID) {
 
-        if (!hatDict.ContainsKey(hatID)) {
-
-            foreach (HatItemData hatItem in hatItemDataList) {
-
-                if (hatItem.IsSameID(hatID)) {
-
-                    hatDict.Add(hatID, hatItem);
-
-                    break;
-                }
-            }
-        }
-
-        return hatDict[hatID].GetPrefab();    
+        return GetHatData(hatID).GetPrefab();    
     }
 }
 

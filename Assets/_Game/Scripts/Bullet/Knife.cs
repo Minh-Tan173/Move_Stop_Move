@@ -17,7 +17,11 @@ public class Knife : BulletBase
         if (character == bulletOwner) { return; }
         if (character.IsDead()) { return; }
 
+        int expReward = character.GetCharacterStats().GetExpReward();
+        bulletOwner.GetCharacterStats().AddExp(expReward);
+
         CharacterManager.Instance.DeadCharacter(character); 
+
         OnDespawn();
     }   
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 public class CharacterBase : PoolUnit
 {
@@ -16,6 +17,7 @@ public class CharacterBase : PoolUnit
 
     [Header("Ref")]
     [SerializeField] protected CharacterStats characterStats;
+    [SerializeField] protected CapsuleCollider capsuleCollider;
 
     [Header("TEST -- REMOVE AFTER")]
     [SerializeField] protected WeaponType currentWeaponType; // TẠM THỜI
@@ -29,9 +31,21 @@ public class CharacterBase : PoolUnit
 
     protected bool isDead;
 
+    private float defaultColliderHeight;
+    private float defaultColliderRadius;
+    private Vector3 defaultColliderCenter;
+
+    private void Awake() {
+
+        defaultColliderHeight = capsuleCollider.height;
+        defaultColliderRadius = capsuleCollider.radius;
+        defaultColliderCenter = capsuleCollider.center;
+    }
+
     public virtual void OnInit() {
 
-        characterStats.ResetAttackSize();
+
+        characterStats.OnInit();
         charAnimator.ResetAnim();
     }
 
@@ -151,5 +165,14 @@ public class CharacterBase : PoolUnit
 
     public CharacterStats GetCharacterStats() {
         return characterStats;
+    }
+
+    public void UpdateBodySize(float newSize) {
+
+        charVisual.UpdateSize(newSize);
+
+        capsuleCollider.height = defaultColliderHeight * newSize;
+        capsuleCollider.radius = defaultColliderRadius * newSize;
+        capsuleCollider.center = defaultColliderCenter * newSize;
     }
 }

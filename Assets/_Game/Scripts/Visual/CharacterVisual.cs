@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterVisual : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class CharacterVisual : MonoBehaviour
     [SerializeField] private AccessorySO accessorySO;
 
     [Header("Ref")]
+    [SerializeField] private Transform visualTransform;
     [SerializeField] private SkinnedMeshRenderer pantsRenderer;
     [SerializeField] private Transform topHeadPlaceholder;
     [SerializeField] private Transform leftHandPlaceholder;
@@ -35,27 +36,29 @@ public class CharacterVisual : MonoBehaviour
 
     }
 
-    public void ChangePants(int pantID = -1) {
+    public void UpdateSize(float newSize) {
+        visualTransform.localScale = Vector3.one * newSize;
+    }
+
+    public PantItemData ChangePants(int pantID = -1) {
 
         Texture2D pantsTexture;
 
         // Get Pant Texture
-        if (pantID >= 0) {
-            // If having pantID
+        if (pantID < 0) {
 
-            pantsTexture = pantSO.GetPantTexture(pantID);
-        }
-        else {
             int totalPant = pantSO.pantItemDataList.Count;
-            int randomPantID = Random.Range(0, totalPant);
-
-            pantsTexture = pantSO.GetPantTexture(randomPantID);
+            pantID = Random.Range(0, totalPant);
         }
+
+        pantsTexture = pantSO.GetPantTexture(pantID);
 
         // Setup Pant Visual
         pantsRenderer.GetPropertyBlock(propertyBlock);
         propertyBlock.SetTexture(CharacterConst.BASE_MAP, pantsTexture);
         pantsRenderer.SetPropertyBlock(propertyBlock);
+
+        return pantSO.GetPantItemData(pantID);
     }
 
     public HatItemData ChangeHats(int hatID = -1) {
@@ -74,8 +77,10 @@ public class CharacterVisual : MonoBehaviour
         currentHat = SimplePool.Spawn<PoolUnit>(hatPrefab, topHeadPlaceholder.position, Quaternion.identity);
 
         currentHat.UnitTF.SetParent(topHeadPlaceholder);
+
         currentHat.UnitTF.localPosition = Vector3.zero;
         currentHat.UnitTF.localRotation = Quaternion.identity;
+        currentHat.UnitTF.localScale = Vector3.one;
 
         return hatSO.GetHatData(hatID);
     }

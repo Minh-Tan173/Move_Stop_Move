@@ -44,7 +44,8 @@ public class Bot : CharacterBase
         ChangeBotStateTo(BotStateSet.Idle);
 
         // Visual
-        charVisual.ChangePants();
+        PantItemData pant = charVisual.ChangePants();
+        if (pant != null) { pant.ApplyBoosterFor(this); }
 
         HatItemData hat = charVisual.ChangeHats();
         if (hat != null) { hat.ApplyBoosterFor(this); }
@@ -74,6 +75,12 @@ public class Bot : CharacterBase
             currentState?.OnExcute(this, charAnimator);
         }
     }
+
+    public void UpdateNavMeshSpeed() {
+
+        navMeshAgent.speed = GetCharacterStats().GetMoveSpeed();
+    }
+    
 
     private void DeactiveNavMesh() {
 
@@ -188,7 +195,7 @@ public class Bot : CharacterBase
 
         if (target != null) {
 
-            canAttackCurrentTarget = UnityEngine.Random.value < 0.6f;
+            canAttackCurrentTarget = UnityEngine.Random.value < 0.7f;
 
             if (target != ignoredAttackTarget) {
                 ignoredAttackTarget = null;

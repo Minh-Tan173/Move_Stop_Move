@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df12f465e24ade4c8d8e1550d0c0e1f, type: 3}
+  m_Name: CharacterStatsSO
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterStatsSO
+  moveSpeed: 4
+  arDefaultSize: 3
+  attackCD: 1
+  charLevelDataList:
+  - level: 1
+    bodyScaleSize: 0
+    expRequired: 2
+    expReward: 1
+  - level: 2
+    bodyScaleSize: 0.5
+    expRequired: 8
+    expReward: 2
+  - level: 3
+    bodyScaleSize: 1
+    expRequired: 14
+    expReward: 3
+  - level: 4
+    bodyScaleSize: 1.5
+    expRequired: 17
+    expReward: 4
