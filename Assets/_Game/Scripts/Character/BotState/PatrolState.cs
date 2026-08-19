@@ -67,6 +67,10 @@ public static class PatrolState
 
         bot.RollFindType();
 
+        bot.Run();
+
+        bot.ChangeBotSMTo(BotSM.patrol);
+        
     }
 
     public static void OnExcute(Bot bot, ICharacterAnimator botAnimator) {

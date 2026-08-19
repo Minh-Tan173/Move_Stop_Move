@@ -78,6 +78,16 @@ public class CharacterBase : PoolUnit
         return IsTargetAvailable(target);
     }
 
+    public void Idle() {
+
+        charAnimator.TriggerIdleAnim();
+    }
+
+    public void Run() {
+
+        charAnimator.TriggerRunAnim();
+    }
+
     public void Dead() {
 
         OnDespawn();

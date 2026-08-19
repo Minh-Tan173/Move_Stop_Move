@@ -2,6 +2,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+
+// TEST
+public enum BotSM {
+    idle,
+    patrol,
+    attack
+}
 public class Bot : CharacterBase
 {
 
@@ -32,6 +39,9 @@ public class Bot : CharacterBase
     private int maxAttackCount;
     private CharacterBase ignoredAttackTarget;
     #endregion
+
+    // TEST
+    private BotSM currentSM;
 
     public override void OnInit() {
 
@@ -125,6 +135,8 @@ public class Bot : CharacterBase
 
     public void ChangeBotStateTo(BotState newState) {
 
+        if (this.IsDead()) { return; }
+
         currentState?.OnExit(this, charAnimator);
 
         currentState = newState;
@@ -160,7 +172,7 @@ public class Bot : CharacterBase
 
         this.moveTarget = moveTarget;
 
-        navMeshAgent.stoppingDistance = GetTrueAttackRange() * 0.8f;
+        navMeshAgent.stoppingDistance = 0f;
 
         navMeshAgent.SetDestination(moveTarget);
     }
@@ -246,5 +258,11 @@ public class Bot : CharacterBase
 
     public bool IsOverIdleDuration() {
         return elapsedIdleDuration >= idleDuration;
+    }
+
+    // TEST ONLY
+    public void ChangeBotSMTo(BotSM botSM) {
+
+        currentSM = botSM;
     }
 }

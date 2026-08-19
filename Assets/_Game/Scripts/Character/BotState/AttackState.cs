@@ -11,6 +11,8 @@ public static class AttackState
         bot.LookAttackTarget();
 
         bot.Attack();
+
+        bot.ChangeBotSMTo(BotSM.attack);
     }
 
     public static void OnExcute(Bot bot, ICharacterAnimator botAnimatort) {

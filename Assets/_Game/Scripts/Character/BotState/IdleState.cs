@@ -5,6 +5,10 @@ public static class IdleState
     public static void OnEnter(Bot bot, ICharacterAnimator botAnimator) {
 
         bot.StopMovement();
+
+        bot.Idle();
+
+        bot.ChangeBotSMTo(BotSM.idle);
     }
 
     public static void OnExcute(Bot bot, ICharacterAnimator botAnimator) {

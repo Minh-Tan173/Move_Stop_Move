@@ -7,6 +7,10 @@ public class ICharacterAnimator : MonoBehaviour
 
     public virtual void HandleMovementAnim() { }
 
+    public virtual void TriggerIdleAnim() { }
+
+    public virtual void TriggerRunAnim() { }
+
     public virtual void TriggerAttackAnim() { }
 
     public virtual void TriggerDeadAnim() { }
