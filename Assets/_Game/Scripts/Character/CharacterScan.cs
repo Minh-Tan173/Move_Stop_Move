@@ -56,7 +56,7 @@ public class CharacterScan : MonoBehaviour
 
             CharacterBase target = LevelCache<Collider, CharacterBase>.GetValueWithKey(coll);
 
-            if (!character.CanSelectAttackTarget(target)) continue;
+            if (!character.CanSelectTarget(target)) continue;
 
             float sqrDistance = (target.UnitTF.position - character.UnitTF.position).sqrMagnitude;
 

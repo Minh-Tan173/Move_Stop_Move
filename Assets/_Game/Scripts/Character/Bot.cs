@@ -13,6 +13,11 @@ public class Bot : CharacterBase
 
     private BotState currentState;
 
+    #region Navmesh Setup
+    private float defaultAgentRadius;
+    private bool cachedAgentSize;
+    #endregion
+
     #region Idle Behavior
     private float elapsedIdleDuration;
     #endregion
@@ -26,7 +31,6 @@ public class Bot : CharacterBase
     private int attackCount;
     private int maxAttackCount;
     private CharacterBase ignoredAttackTarget;
-    private bool canAttackCurrentTarget;
     #endregion
 
     public override void OnInit() {
@@ -74,6 +78,24 @@ public class Bot : CharacterBase
 
             currentState?.OnExcute(this, charAnimator);
         }
+    }
+
+
+    private void CacheAgentSize() {
+
+        if (cachedAgentSize) return;
+
+        defaultAgentRadius = navMeshAgent.radius;
+        cachedAgentSize = true;
+    }
+
+    public override void UpdateBodySize(float newSize) {
+
+        base.UpdateBodySize(newSize);
+
+        CacheAgentSize();
+
+        navMeshAgent.radius = defaultAgentRadius * newSize;
     }
 
     public void UpdateNavMeshSpeed() {
@@ -137,6 +159,9 @@ public class Bot : CharacterBase
     public void MoveToDestination(Vector3 moveTarget) {
 
         this.moveTarget = moveTarget;
+
+        navMeshAgent.stoppingDistance = GetTrueAttackRange() * 0.8f;
+
         navMeshAgent.SetDestination(moveTarget);
     }
 
@@ -157,10 +182,6 @@ public class Bot : CharacterBase
 
     public Vector3 GetMoveTarget() {
         return this.moveTarget;
-    }
-
-    public bool CanAttackCurrentTarget() {
-        return canAttackCurrentTarget;
     }
 
     public void LookAttackTarget() {
@@ -184,9 +205,9 @@ public class Bot : CharacterBase
         return navMeshAgent.velocity.sqrMagnitude > 0.01f;
     }
 
-    public override bool CanSelectAttackTarget(CharacterBase target) {
+    public override bool CanSelectTarget(CharacterBase target) {
 
-        return base.CanSelectAttackTarget(target) && target != ignoredAttackTarget;
+        return base.CanSelectTarget(target) && target != ignoredAttackTarget;
     }
 
     public override void SetAttackTarget(CharacterBase target) {
@@ -194,8 +215,6 @@ public class Bot : CharacterBase
         attackTarget = target;
 
         if (target != null) {
-
-            canAttackCurrentTarget = UnityEngine.Random.value < 0.7f;
 
             if (target != ignoredAttackTarget) {
                 ignoredAttackTarget = null;

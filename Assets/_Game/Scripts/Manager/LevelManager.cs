@@ -40,6 +40,8 @@ public class LevelManager : Singleton<LevelManager>
 
         LoadLevel();
 
+        UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
+
         CharacterManager.Instance.OnInit();
 
         ChangeLevelState(LevelState.Start);
@@ -50,6 +52,8 @@ public class LevelManager : Singleton<LevelManager>
     }
     
     public void OnPlay() {
+
+        UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
 
         ChangeLevelState(LevelState.Playing);
     }

@@ -22,7 +22,7 @@ public static class PatrolState
 
         foreach (CharacterBase character in charList) {
 
-            if (character == bot) continue;
+            if (!bot.CanSelectTarget(character)) { continue; }
 
             float sqrDistance = (character.UnitTF.position - bot.UnitTF.position).sqrMagnitude;
 
@@ -80,8 +80,8 @@ public static class PatrolState
         if (bot.HasMoveTarget()) {
             // On moving to moveTarget
           
-            if (bot.IsAttackTargetValid() && bot.CanAttackCurrentTarget()) {
-                // 60% attack chance
+            if (bot.IsAttackTargetValid()) {
+                // Is target is valid
 
                 bot.ChangeBotStateTo(BotStateSet.Attack);
                 return;

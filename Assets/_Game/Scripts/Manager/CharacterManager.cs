@@ -18,9 +18,14 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private LevelBase currentLevel;
 
+    private int totalBotSpawned;
+        
+
     public void OnInit() {
 
         currentLevel = LevelManager.Instance.GetCurrentLeveL();
+
+        ResetTotalBotSpawned();
 
         //SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
     }
@@ -43,14 +48,11 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private void Update() {
 
-        int botActiveTotal = charActiveList.Count;
-        int botDeactiveTotal = charDeactiveList.Count;
-        int botTotal = botActiveTotal + botDeactiveTotal;
 
-        if (botTotal <= maxBotCountInLevel) {
+        if (totalBotSpawned < maxBotCountInLevel) {
             // Total character can't over 50 (includes player)
 
-            if (botActiveTotal < maxBotCountRuntime) {
+            if (charActiveList.Count < maxBotCountRuntime) {
                 // If not enough character on field
 
                if (currentLevel.TryGetRandomSpawnPoint(out Vector3 spawnPos)) {
@@ -59,6 +61,15 @@ public class CharacterManager : Singleton<CharacterManager>
                 }
             }
         }
+    }
+
+    private void IncreaseTotalBotSpawned() {
+
+        totalBotSpawned += 1;
+    }
+
+    private void ResetTotalBotSpawned() {
+        totalBotSpawned = 0;
     }
 
     private void SpawnPlayer(Vector3 spawnPos) {
@@ -77,7 +88,11 @@ public class CharacterManager : Singleton<CharacterManager>
         Quaternion botRot = Quaternion.Euler(0f, randomYRot, 0f);
         CharacterBase bot = SimplePool.Spawn<CharacterBase>(botPrefab, spawnPos, botRot);
 
+        IncreaseTotalBotSpawned();
+
         bot.OnInit();
+        bot.GetCanvasCharacter().SetIndex(totalBotSpawned);
+        UIManager.Instance.GetUI<CanvasOffScreenIndicator>().Register(bot.GetCanvasCharacter());
 
         charDeactiveList.Remove(bot);
         charActiveList.Add(bot);
@@ -95,6 +110,8 @@ public class CharacterManager : Singleton<CharacterManager>
     }
 
     public void DeadCharacter(CharacterBase character) {
+
+        UIManager.Instance.GetUI<CanvasOffScreenIndicator>().UnRegister(character.GetCanvasCharacter());
 
         character.Dead();
 

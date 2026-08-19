@@ -266,6 +266,7 @@ MonoBehaviour:
   prefabKey: {fileID: 424574915608694251}
   charAnimator: {fileID: 2320559466662988195}
   charVisual: {fileID: 2010296201266842551}
+  canvasCharacter: {fileID: 3814595757246511326}
   weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
   attackDuration: 0.6
   shootingPoint: {fileID: 8077340295940514469}
@@ -328,7 +329,6 @@ GameObject:
   - component: {fileID: 8701019799701580067}
   - component: {fileID: 6182479856645319210}
   - component: {fileID: 2249626021820147527}
-  - component: {fileID: 4307662811737704145}
   m_Layer: 7
   m_Name: Text_NumberChar
   m_TagString: Untagged
@@ -455,19 +455,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &4307662811737704145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3472736348730581294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c45bdbe9be46648aeb615e118d5de0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LookAtCamera
-  mode: 3
 --- !u!1 &4008306100664169872
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +696,6 @@ GameObject:
   - component: {fileID: 4112222394522714917}
   - component: {fileID: 892786214162056809}
   - component: {fileID: 6249294379833287225}
-  - component: {fileID: 7816168878055095341}
   m_Layer: 7
   m_Name: Image_NumberChar
   m_TagString: Untagged
@@ -775,19 +761,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7816168878055095341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5811132629799163332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c45bdbe9be46648aeb615e118d5de0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LookAtCamera
-  mode: 3
 --- !u!1 &8425817153662654254
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,8 +770,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2814119047986500479}
+  - component: {fileID: 4589627703938913657}
   m_Layer: 7
-  m_Name: Panel
+  m_Name: NameTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,6 +799,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 3.14}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4589627703938913657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425817153662654254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c45bdbe9be46648aeb615e118d5de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LookAtCamera
+  mode: 2
 --- !u!1 &9070269103707113931
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +929,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasCharacter
   character: {fileID: 0}
-  nameChar: {fileID: 0}
+  nameTag: {fileID: 2814119047986500479}
+  nameCharText: {fileID: 1885335788894663074}
+  indexCharImage: {fileID: 6249294379833287225}
+  indexCharText: {fileID: 2249626021820147527}
 --- !u!1001 &710930995547950829
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,6 +22,13 @@ public class CharacterVisual : MonoBehaviour
         propertyBlock = new MaterialPropertyBlock();
     }
 
+    private void ResetItem(PoolUnit item) {
+
+        item.UnitTF.localPosition = Vector3.zero;
+        item.UnitTF.localRotation = Quaternion.identity;
+        item.UnitTF.localScale = Vector3.one;
+    }
+
     public void OnDespawn() {
 
         if (currentHat != null) {
@@ -77,10 +84,8 @@ public class CharacterVisual : MonoBehaviour
         currentHat = SimplePool.Spawn<PoolUnit>(hatPrefab, topHeadPlaceholder.position, Quaternion.identity);
 
         currentHat.UnitTF.SetParent(topHeadPlaceholder);
-
-        currentHat.UnitTF.localPosition = Vector3.zero;
-        currentHat.UnitTF.localRotation = Quaternion.identity;
-        currentHat.UnitTF.localScale = Vector3.one;
+        ResetItem(currentHat);
+        
 
         return hatSO.GetHatData(hatID);
     }
@@ -107,8 +112,7 @@ public class CharacterVisual : MonoBehaviour
         // Setup accessory
         currentAccessory = SimplePool.Spawn<PoolUnit>(accessoryPrefab, leftHandPlaceholder.position, Quaternion.identity);
         currentAccessory.UnitTF.SetParent(leftHandPlaceholder);
-        currentAccessory.UnitTF.localPosition = Vector3.zero;
-        currentAccessory.UnitTF.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+        ResetItem(currentAccessory);
 
     }
 }

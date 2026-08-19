@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class CharacterBase : PoolUnit
 {
     [Header("Visual")]
     [SerializeField] protected ICharacterAnimator charAnimator;
     [SerializeField] protected CharacterVisual charVisual;
+    [SerializeField] private CanvasCharacter canvasCharacter;
 
     [Header("Attack Behavior")]
     [SerializeField] protected WeaponSO weaponSO;
@@ -22,6 +19,8 @@ public class CharacterBase : PoolUnit
     [Header("TEST -- REMOVE AFTER")]
     [SerializeField] protected WeaponType currentWeaponType; // TẠM THỜI
 
+    protected bool isDead;
+
     #region Attack Behavior
     protected float elapsedAttackDuration;
     protected float elapsedAttackCD;
@@ -29,11 +28,11 @@ public class CharacterBase : PoolUnit
     protected CharacterBase attackTarget;
     #endregion
 
-    protected bool isDead;
-
+    #region Navmesh Setup
     private float defaultColliderHeight;
     private float defaultColliderRadius;
     private Vector3 defaultColliderCenter;
+    #endregion
 
     private void Awake() {
 
@@ -61,15 +60,28 @@ public class CharacterBase : PoolUnit
         attackTarget = target;
     }
 
+    public virtual bool IsMoving() {
+        Debug.LogError("TRIGGER BASE CHARACTER!!");
+        return true;
+    }
+
+    public virtual void UpdateBodySize(float newSize) {
+
+        charVisual.UpdateSize(newSize);
+
+        capsuleCollider.height = defaultColliderHeight * newSize;
+        capsuleCollider.radius = defaultColliderRadius * newSize;
+        capsuleCollider.center = defaultColliderCenter * newSize;
+    }
+
+    public virtual bool CanSelectTarget(CharacterBase target) {
+        return IsTargetAvailable(target);
+    }
+
     public void Dead() {
 
         OnDespawn();
         charAnimator.TriggerDeadAnim();
-    }
-
-    public virtual bool IsMoving() {
-        Debug.LogError("TRIGGER BASE CHARACTER!!");
-        return true;
     }
 
     public void Attack() {
@@ -139,10 +151,6 @@ public class CharacterBase : PoolUnit
         return target != null && target != this && !target.IsDead() && target.gameObject.activeSelf;
     }
 
-    public virtual bool CanSelectAttackTarget(CharacterBase target) {
-        return IsTargetAvailable(target);
-    }
-
     public bool IsAttackTargetValid() {
 
         // Is target not still availble
@@ -167,12 +175,7 @@ public class CharacterBase : PoolUnit
         return characterStats;
     }
 
-    public void UpdateBodySize(float newSize) {
-
-        charVisual.UpdateSize(newSize);
-
-        capsuleCollider.height = defaultColliderHeight * newSize;
-        capsuleCollider.radius = defaultColliderRadius * newSize;
-        capsuleCollider.center = defaultColliderCenter * newSize;
+    public CanvasCharacter GetCanvasCharacter() {
+        return this.canvasCharacter;
     }
 }
