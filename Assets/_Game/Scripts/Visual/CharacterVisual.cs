@@ -4,17 +4,20 @@ using UnityEngine.UI;
 public class CharacterVisual : MonoBehaviour
 {
     [Header("Skin Data")]
+    [SerializeField] private WeaponSO weaponSO;
     [SerializeField] private PantSO pantSO;
     [SerializeField] private HatSO hatSO;
     [SerializeField] private AccessorySO accessorySO;
 
     [Header("Ref")]
     [SerializeField] private Transform visualTransform;
+    [SerializeField] private Transform rightHandPlacedHolder;
     [SerializeField] private SkinnedMeshRenderer pantsRenderer;
     [SerializeField] private Transform topHeadPlaceholder;
     [SerializeField] private Transform leftHandPlaceholder;
 
     private MaterialPropertyBlock propertyBlock;
+    private PoolUnit currentWeapon;
     private PoolUnit currentHat;
     private PoolUnit currentAccessory;
 
@@ -30,7 +33,12 @@ public class CharacterVisual : MonoBehaviour
     }
 
     public void OnDespawn() {
-
+        
+        if (currentWeapon != null) {
+            SimplePool.Despawn(currentWeapon);
+            currentWeapon = null;
+        }
+        
         if (currentHat != null) {
             SimplePool.Despawn(currentHat);
             currentHat = null;
@@ -45,6 +53,14 @@ public class CharacterVisual : MonoBehaviour
 
     public void UpdateSize(float newSize) {
         visualTransform.localScale = Vector3.one * newSize;
+    }
+
+    public void ChangeWeapon(WeaponType weaponType) {
+
+        PoolUnit weaponPrefab = weaponSO.GetWeaponPrefab(weaponType);
+        
+        currentWeapon = SimplePool.Spawn<PoolUnit>(weaponPrefab, rightHandPlacedHolder.position, Quaternion.identity);
+        ResetItem(currentWeapon);
     }
 
     public PantItemData ChangePants(int pantID = -1) {

@@ -15,28 +15,32 @@ public class WeaponSO : ScriptableObject
 {
     [SerializeField] private List<WeaponItemData> weaponItemDataList;
 
-    public WeaponBase GetWeaponPrefab(WeaponType weaponType) {
+    private Dictionary<WeaponType, WeaponItemData> weaponItemDict = new Dictionary<WeaponType, WeaponItemData>();
 
-        foreach (WeaponItemData itemData in weaponItemDataList) {
+    public WeaponItemData GetWeaponItemData(WeaponType weaponType) {
+        
+        if (!weaponItemDict.ContainsKey(weaponType)) {
 
-            if (!itemData.IsSameWeaponType(weaponType)) { continue; }
+            foreach (WeaponItemData itemData in weaponItemDataList) {
 
-            return itemData.GetPrefab();
+                if (itemData.IsSameWeaponType(weaponType)) {
+
+                    weaponItemDict.Add(weaponType, itemData);
+                }            
+            }
         }
 
-        return null;
+        return weaponItemDict[weaponType];
+    }
+
+    public PoolUnit GetWeaponPrefab(WeaponType weaponType) {
+
+        return GetWeaponItemData(weaponType).GetPrefab();
     }
 
     public BulletBase GetBulletPrefab(WeaponType weaponType) {
 
-        foreach (WeaponItemData itemData in weaponItemDataList) {
-
-            if (!itemData.IsSameWeaponType(weaponType)) { continue; }
-
-            return itemData.GetBullet();
-        }
-
-        return null;
+        return GetWeaponItemData(weaponType).GetBulletPrefab();
     }
 }
 
@@ -48,7 +52,7 @@ public class WeaponItemData {
     [SerializeField] private string name;
 
     [Header("Prefab")]
-    [SerializeField] private WeaponBase prefab;
+    [SerializeField] private PoolUnit prefab;
     [SerializeField] private BulletBase prefabBullet;
 
     [Header("Price")]
@@ -59,11 +63,11 @@ public class WeaponItemData {
         return this.weaponType == weaponType;
     }
 
-    public WeaponBase GetPrefab() {
+    public PoolUnit GetPrefab() {
         return this.prefab;
     }
 
-    public BulletBase GetBullet() {
+    public BulletBase GetBulletPrefab() {
         return this.prefabBullet;
     }
 }
