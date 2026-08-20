@@ -14,6 +14,7 @@ public class CharacterStatsSO : ScriptableObject
 
     [Header("Level")]
     [SerializeField] private List<CharLevelData> charLevelDataList;
+    [SerializeField] private float immortalDuration;
 
     private Dictionary<int, CharLevelData> charLevelDict = new Dictionary<int, CharLevelData>();
 
@@ -54,6 +55,10 @@ public class CharacterStatsSO : ScriptableObject
         int validLevel = Mathf.Min(level, charLevelDataList.Count);
 
         return GetCharLevelData(validLevel);
+    }
+
+    public float GetImmortalDuration() {
+        return immortalDuration;
     }
 }
 

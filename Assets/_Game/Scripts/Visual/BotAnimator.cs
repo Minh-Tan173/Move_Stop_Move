@@ -5,16 +5,6 @@ public class BotAnimator : ICharacterAnimator {
     [SerializeField] private Bot bot;
     [SerializeField] private Animator animator;
 
-    private void Update() {
-
-        HandleMovementAnim();   
-    }
-
-    public override void HandleMovementAnim() {
-
-        animator.SetBool(CharacterConst.IS_MOVING, bot.IsMoving());
-    }
-
     private void ResetAllTriggers() {
         animator.ResetTrigger(CharacterConst.IDLE_ANIM);
         animator.ResetTrigger(CharacterConst.RUN_ANIM);

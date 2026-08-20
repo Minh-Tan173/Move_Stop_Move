@@ -5,8 +5,6 @@ public class ICharacterAnimator : MonoBehaviour
 
     public virtual void ResetAnim() { }
 
-    public virtual void HandleMovementAnim() { }
-
     public virtual void TriggerIdleAnim() { }
 
     public virtual void TriggerRunAnim() { }

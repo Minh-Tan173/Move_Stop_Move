@@ -116,7 +116,6 @@ public class CharacterManager : Singleton<CharacterManager>
         character.Dead();
 
         StartCoroutine(IEDespawnCharacter(character));
-        //SimplePool.Despawn(character);
 
         charActiveList.Remove(character);
         charDeactiveList.Add(character);

@@ -135,7 +135,7 @@ public class Bot : CharacterBase
 
     public void ChangeBotStateTo(BotState newState) {
 
-        if (this.IsDead()) { return; }
+        if (this.IsDead()) { return;}
 
         currentState?.OnExit(this, charAnimator);
 

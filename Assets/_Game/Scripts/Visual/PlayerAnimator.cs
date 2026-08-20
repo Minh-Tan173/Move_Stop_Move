@@ -8,20 +8,9 @@ public class PlayerAnimator : ICharacterAnimator
     [Header("Ref component")]
     [SerializeField] private Animator animator;
 
-
-    private void Update() {
-
-        HandleMovementAnim();
-    }
-
     public override void ResetAnim() {
 
 
-    }
-
-    public override void HandleMovementAnim() {
-
-        animator.SetBool(CharacterConst.IS_MOVING, player.IsMoving());
     }
 
     public override void TriggerAttackAnim() {

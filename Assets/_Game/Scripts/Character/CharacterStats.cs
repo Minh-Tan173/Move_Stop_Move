@@ -4,6 +4,9 @@ public class CharacterStats : MonoBehaviour
 {
     [SerializeField] protected AttackRangeVisual attackRangeVisual;
 
+    [Header("Ref")]
+    [SerializeField] private UpgradeVFX upgradeVFX;
+
     [Header("Data")]
     [SerializeField] private CharacterStatsSO characterStatsSO;
 
@@ -115,14 +118,21 @@ public class CharacterStats : MonoBehaviour
 
     public void LevelUp() {
 
+        if (character.IsDead()) { return; }
+
         currentLevel += 1;
-        
+
         if (!characterStatsSO.IsOverLevelList(currentLevel)) {
             // If current level having data for setup
 
             UpdateBodySize();
             UpAttackSize();
         }
+
+        float immortalDuration = characterStatsSO.GetImmortalDuration();
+
+        Character.TriggerImmortal(immortalDuration);
+        upgradeVFX.PlayVFX(immortalDuration, bodySizeScale);
     }
 
     public void AddExp(int expGet) {

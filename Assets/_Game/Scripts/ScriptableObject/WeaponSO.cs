@@ -6,7 +6,8 @@ public enum WeaponType {
 
     Knife = 0,
     Hammer = 1,
-    Boomerang = 2
+    Axe = 2,
+    Boomerang = 3
 }
 
 [CreateAssetMenu()]

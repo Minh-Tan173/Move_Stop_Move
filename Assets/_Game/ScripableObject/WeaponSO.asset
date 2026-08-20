@@ -19,3 +19,15 @@ MonoBehaviour:
     prefabBullet: {fileID: -6259602838788733098, guid: 743d6ecfe49de5e4db8b70ce753c637a, type: 3}
     goldPrice: 5
     sprite: {fileID: 0}
+  - weaponType: 1
+    name: Knife
+    prefab: {fileID: 0}
+    prefabBullet: {fileID: -6259602838788733098, guid: 743d6ecfe49de5e4db8b70ce753c637a, type: 3}
+    goldPrice: 5
+    sprite: {fileID: 0}
+  - weaponType: 2
+    name: Axe
+    prefab: {fileID: 0}
+    prefabBullet: {fileID: 7648629883111501040, guid: ebe5ea87309ae6f4ebf8b1b873068488, type: 3}
+    goldPrice: 5
+    sprite: {fileID: 0}

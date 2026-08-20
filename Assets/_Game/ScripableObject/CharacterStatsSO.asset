@@ -32,3 +32,4 @@ MonoBehaviour:
     bodyScaleSize: 1.5
     expRequired: 17
     expReward: 4
+  immortalDuration: 2.5

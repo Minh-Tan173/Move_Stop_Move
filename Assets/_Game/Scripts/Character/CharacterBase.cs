@@ -19,6 +19,7 @@ public class CharacterBase : PoolUnit
     [Header("TEST -- REMOVE AFTER")]
     [SerializeField] protected WeaponType currentWeaponType; // TẠM THỜI
 
+    private float immortalEndTime;
     protected bool isDead;
 
     #region Attack Behavior
@@ -43,6 +44,7 @@ public class CharacterBase : PoolUnit
 
     public virtual void OnInit() {
 
+        immortalEndTime = 0f;
 
         characterStats.OnInit();
         charAnimator.ResetAnim();
@@ -88,12 +90,27 @@ public class CharacterBase : PoolUnit
         charAnimator.TriggerRunAnim();
     }
 
+    #region Life Control
+
+    public void TriggerImmortal(float duration) {   
+
+        immortalEndTime = Time.time + duration;
+    }
+
+    public bool IsImmortal() {
+
+        return Time.time < immortalEndTime;
+    }
+
     public void Dead() {
 
         OnDespawn();
         charAnimator.TriggerDeadAnim();
     }
 
+    #endregion
+
+    #region Combat
     public void Attack() {
 
         isInAttackDuration = true;
@@ -106,7 +123,7 @@ public class CharacterBase : PoolUnit
 
         BulletBase bulletPrefab = weaponSO.GetBulletPrefab(currentWeaponType);
         BulletBase bullet = SimplePool.Spawn<BulletBase>(bulletPrefab, shootingPoint.position, Quaternion.identity);
-        bullet.ActiveMovement(this);
+        bullet.ActiveThrow(this);
     }
 
     public void UpdateAttackDuration(float time) {
@@ -155,6 +172,7 @@ public class CharacterBase : PoolUnit
     public float GetTrueAttackRange() {
         return this.characterStats.GetAttackRange();
     }
+    #endregion
 
     public bool IsTargetAvailable(CharacterBase target) {
         // if target is null, dead or hide
