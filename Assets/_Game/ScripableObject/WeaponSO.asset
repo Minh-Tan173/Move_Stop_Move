@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponItemDataList:
   - weaponType: 0
     name: Knife
-    prefab: {fileID: 0}
+    prefab: {fileID: 2076741837943682087, guid: f7894f168aca4e647ad57f8df39c09e0, type: 3}
     prefabBullet: {fileID: -6259602838788733098, guid: 743d6ecfe49de5e4db8b70ce753c637a, type: 3}
     goldPrice: 5
     sprite: {fileID: 0}
@@ -27,7 +27,7 @@ MonoBehaviour:
     sprite: {fileID: 0}
   - weaponType: 2
     name: Axe
-    prefab: {fileID: 0}
+    prefab: {fileID: 8857496150109122371, guid: d080acf12f3e85e4291864bc85b1abe8, type: 3}
     prefabBullet: {fileID: 7648629883111501040, guid: ebe5ea87309ae6f4ebf8b1b873068488, type: 3}
     goldPrice: 5
     sprite: {fileID: 0}

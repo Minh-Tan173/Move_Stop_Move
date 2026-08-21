@@ -57,6 +57,9 @@ public class Bot : CharacterBase
         elapsedIdleDuration = LevelManager.Instance.IsGamePlaying() ? 0f : idleDuration;
         ChangeBotStateTo(BotStateSet.Idle);
 
+        // Weapon Prepared
+        charVisual.ChangeWeapon(currentWeaponType);
+
         // Visual
         PantItemData pant = charVisual.ChangePants();
         if (pant != null) { pant.ApplyBoosterFor(this); }
