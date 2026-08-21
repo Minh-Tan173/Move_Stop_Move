@@ -41,10 +41,8 @@ public class CharacterScan : MonoBehaviour
         charCollArray = Physics.OverlapSphere(character.UnitTF.position, character.GetTrueAttackRange(), charLayer);
 
         CharacterBase target = GetNearestTarget(charCollArray);
-        if (target != null) {
 
-            character.SetAttackTarget(target);
-        }
+        character.SetAttackTarget(target);
     }
 
     private CharacterBase GetNearestTarget(Collider[] collArray) {

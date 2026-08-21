@@ -3,7 +3,6 @@ using UnityEngine;
 public class Player : CharacterBase
 {
     [Header("Player's Info")]
-    [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
 
     [Header("Check Obstacle Behavior")]
@@ -13,12 +12,26 @@ public class Player : CharacterBase
 
     private bool isMoving;
     private Vector3 moveDir;
+    private bool lastMovingState;
+
+    #region Test
+    private int hatID = 0;
+    private int pantID = 0;
+    private int accessoryID = 0;
+    #endregion
+
+    private CharacterBase lastAttackTarget;
 
     private void Update() {
 
         HandleMovement();
 
-        HandleAttackBehavior();
+        CheckMovementState();
+
+        if (!IsMoving()) {
+
+            UpdateAttack();
+        }
     }
 
     private void HandleMovement() {
@@ -28,6 +41,15 @@ public class Player : CharacterBase
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         isMoving = moveDir != Vector3.zero;
+        
+        if (isMoving) {
+            // Cancel attack when moving
+
+            CancelAttack();
+            SetAttackTarget(null);
+
+            lastAttackTarget = null;
+        }
 
         bool canMove = !IsBlockedByObstacle(moveDir);
 
@@ -54,7 +76,7 @@ public class Player : CharacterBase
             }
         }
 
-        UnitTF.position += moveDir * moveSpeed * Time.deltaTime;
+        UnitTF.position += moveDir * GetCharacterStats().GetMoveSpeed() * Time.deltaTime;
 
         // Rotate
         if (IsMoving()) {
@@ -63,13 +85,52 @@ public class Player : CharacterBase
         }
     }
 
-    private void HandleAttackBehavior() {
+    private void UpdateAttack() {
 
-        if (!IsMoving()) {
-            // When player is not moving
+        if (!IsAttackTargetValid()) {
 
-            ScanTarget();
+            SetAttackTarget(null);
+            CancelAttack();
+
+            return;
         }
+
+        // New target -> attack immediately
+        if (attackTarget != lastAttackTarget) {
+
+            lastAttackTarget = attackTarget;
+
+            StartAttack();
+
+            return;
+        }
+
+
+        if (IsInAttackDuration()) {
+
+            UpdateAttackDuration(Time.deltaTime);
+
+            if (IsOverAttackDuration()) {
+
+                FinishAttack();
+            }
+
+            return;
+        }
+
+
+        UpdateAttackCD(Time.deltaTime);
+
+        if (IsOverAttackCD()) {
+
+            StartAttack();
+        }
+    }
+
+    private void StartAttack() {
+        LookAttackTarget();
+
+        Attack();
     }
 
     private bool IsBlockedByObstacle(Vector3 checkDir) {
@@ -83,15 +144,29 @@ public class Player : CharacterBase
         return true;
     }
 
-    private void ScanTarget() {
+    private void CheckMovementState() {
 
+        if (lastMovingState && !isMoving) {
+
+            ResetAttackTimers();
+        }
+
+        lastMovingState = isMoving;
     }
+
+
 
     public override void OnInit() {
 
         base.OnInit();
 
-        // TODO: Load player data from Data Manager
+        HatItemData hat = charVisual.ChangeHats(hatID);
+        if (hat != null) { hat.ApplyBoosterFor(this); }
+
+        PantItemData pant = charVisual.ChangePants(pantID);
+        if (pant != null) { pant.ApplyBoosterFor(this); }
+
+        charVisual.ChangeAccessories(accessoryID);
     }
 
     public override void OnDespawn() {

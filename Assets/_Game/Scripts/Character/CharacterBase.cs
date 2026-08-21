@@ -8,6 +8,7 @@ public class CharacterBase : PoolUnit
     [SerializeField] private CanvasCharacter canvasCharacter;
 
     [Header("Attack Behavior")]
+    [SerializeField] protected bool canScanWhileMoving;
     [SerializeField] protected WeaponSO weaponSO;
     [SerializeField] protected float attackDuration;
     [SerializeField] protected Transform shootingPoint;
@@ -172,6 +173,18 @@ public class CharacterBase : PoolUnit
     public float GetTrueAttackRange() {
         return this.characterStats.GetAttackRange();
     }
+
+    public void LookAttackTarget() {
+
+        if (attackTarget == null) { return; }
+
+        Vector3 direction = attackTarget.UnitTF.position - UnitTF.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude <= 0.2f * 0.2f) { return; }
+
+        UnitTF.rotation = Quaternion.LookRotation(direction);
+    }
     #endregion
 
     public bool IsTargetAvailable(CharacterBase target) {
@@ -192,7 +205,14 @@ public class CharacterBase : PoolUnit
     }
 
     public bool CanScanTarget() {
-        return IsMoving() && !IsAttackTargetValid();
+
+        if (canScanWhileMoving) {
+
+            return IsMoving() && !IsAttackTargetValid();
+        }
+
+
+        return !IsMoving() && !IsAttackTargetValid();
     }
 
     public bool IsDead() {

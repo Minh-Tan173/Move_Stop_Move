@@ -44,6 +44,8 @@ public class LevelManager : Singleton<LevelManager>
 
         CharacterManager.Instance.OnInit();
 
+        CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);
+
         ChangeLevelState(LevelState.Start);
     }
 

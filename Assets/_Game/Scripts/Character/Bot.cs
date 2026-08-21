@@ -199,18 +199,6 @@ public class Bot : CharacterBase
         return this.moveTarget;
     }
 
-    public void LookAttackTarget() {
-
-        if (attackTarget == null) { return;}
-
-        Vector3 direction = attackTarget.UnitTF.position - UnitTF.position;
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude <= 0.2f * 0.2f) { return; }
-
-        UnitTF.rotation = Quaternion.LookRotation(direction);
-    }
-
     public override bool IsMoving() {
 
         if (!navMeshAgent.enabled || !navMeshAgent.isOnNavMesh) {

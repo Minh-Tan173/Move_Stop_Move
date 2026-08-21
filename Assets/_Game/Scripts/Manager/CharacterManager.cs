@@ -18,6 +18,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private LevelBase currentLevel;
 
+    private Player player;
     private int totalBotSpawned;
         
 
@@ -27,7 +28,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
         ResetTotalBotSpawned();
 
-        //SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
+        player = SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
     }
 
     public void OnGamePlaying() {
@@ -72,7 +73,7 @@ public class CharacterManager : Singleton<CharacterManager>
         totalBotSpawned = 0;
     }
 
-    private void SpawnPlayer(Vector3 spawnPos) {
+    private Player SpawnPlayer(Vector3 spawnPos) {
 
         CharacterBase player = SimplePool.Spawn<CharacterBase>(playerPrefab, spawnPos, Quaternion.identity);
 
@@ -80,6 +81,8 @@ public class CharacterManager : Singleton<CharacterManager>
         charActiveList.Add(player);
 
         player.OnInit();
+
+        return player as Player;
     }
 
     private void SpawnBot(Vector3 spawnPos) {
@@ -123,5 +126,9 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public List<CharacterBase> GetActiveCharacterList() {
         return charActiveList;
+    }
+
+    public Player GetPlayer() {
+        return player;
     }
 }
