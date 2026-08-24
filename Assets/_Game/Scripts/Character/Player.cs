@@ -146,6 +146,17 @@ public class Player : CharacterBase
 
     private void CheckMovementState() {
 
+        if (lastMovingState != isMoving) {
+
+            if (isMoving) {
+
+                Run();
+            }
+            else {
+                Idle();
+            }
+        }
+
         if (lastMovingState && !isMoving) {
 
             ResetAttackTimers();

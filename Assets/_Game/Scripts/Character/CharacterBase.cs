@@ -3,7 +3,7 @@
 public class CharacterBase : PoolUnit
 {
     [Header("Visual")]
-    [SerializeField] protected ICharacterAnimator charAnimator;
+    [SerializeField] protected CharacterAnimator charAnimator;
     [SerializeField] protected CharacterVisual charVisual;
     [SerializeField] private CanvasCharacter canvasCharacter;
 

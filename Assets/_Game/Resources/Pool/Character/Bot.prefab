@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bot
   prefabKey: {fileID: 424574915608694251}
-  charAnimator: {fileID: 2320559466662988195}
+  charAnimator: {fileID: 3426064377689005957}
   charVisual: {fileID: 2010296201266842551}
   canvasCharacter: {fileID: 3814595757246511326}
   canScanWhileMoving: 1
@@ -1682,10 +1682,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2320559466662988195}
+      addedObject: {fileID: 2010296201266842551}
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2010296201266842551}
+      addedObject: {fileID: 3426064377689005957}
   m_SourcePrefab: {fileID: 100100000, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
 --- !u!95 &285778712545900851 stripped
 Animator:
@@ -1712,20 +1712,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 2884552497847320403}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2320559466662988195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6567954839750895194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4533105e45729a641b00b10a08390517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BotAnimator
-  bot: {fileID: 424574915608694251}
-  animator: {fileID: 285778712545900851}
 --- !u!114 &2010296201266842551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,6 +1733,19 @@ MonoBehaviour:
   pantsRenderer: {fileID: 5809650692371459290}
   topHeadPlaceholder: {fileID: 5429427818562306035}
   leftHandPlaceholder: {fileID: 2076087393725841649}
+--- !u!114 &3426064377689005957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6567954839750895194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c2cbfe997fb2143bcd269dc28c2d89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
+  animator: {fileID: 285778712545900851}
 --- !u!4 &7889543452726006857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}

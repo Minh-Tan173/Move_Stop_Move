@@ -3,12 +3,16 @@ using UnityEngine;
 public class CameraManager : Singleton<CameraManager>
 {
 
-    [SerializeField] private Vector3 offset;
-    [SerializeField] private float baseSize = 0.15f;
+    [SerializeField] private Vector3 baseOffset;
 
+    private Vector3 offset;
 
     private Transform target;
-    private Vector3 velocity;
+
+    private void Awake() {
+
+        offset = baseOffset;
+    }
 
 
     private void LateUpdate() {
@@ -19,6 +23,11 @@ public class CameraManager : Singleton<CameraManager>
 
         transform.position = target.position + offset;
 
+    }
+    public void UpdateZoom(float currentValue, float defaultValue) {
+
+        float newScale = currentValue / defaultValue;
+        offset = baseOffset * newScale;
     }
 
     public void SetTracking(Transform targetTracking) {

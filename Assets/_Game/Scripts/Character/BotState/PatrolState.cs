@@ -63,7 +63,7 @@ public static class PatrolState
         return null;
     }
 
-    public static void OnEnter(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnEnter(Bot bot, CharacterAnimator botAnimator) {
 
         bot.RollFindType();
 
@@ -73,7 +73,7 @@ public static class PatrolState
         
     }
 
-    public static void OnExcute(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnExcute(Bot bot, CharacterAnimator botAnimator) {
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
@@ -124,7 +124,7 @@ public static class PatrolState
         }
     }
 
-    public static void OnExit(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnExit(Bot bot, CharacterAnimator botAnimator) {
 
         bot.StopMovement();
     }

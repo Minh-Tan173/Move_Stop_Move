@@ -242,16 +242,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   prefabKey: {fileID: 6066061722146784550}
-  charAnimator: {fileID: 2320559466662988195}
+  charAnimator: {fileID: 1644595293577107298}
   charVisual: {fileID: 2010296201266842551}
   canvasCharacter: {fileID: 3814595757246511326}
+  canScanWhileMoving: 0
   weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
   attackDuration: 0.6
   shootingPoint: {fileID: 8077340295940514469}
   characterStats: {fileID: 4246925344445636655}
   capsuleCollider: {fileID: 7983582227235976245}
   currentWeaponType: 0
-  moveSpeed: 5
   rotateSpeed: 400
   obstacleCheckPoint: {fileID: 8077340295940514469}
   obstacleLayer:
@@ -1663,10 +1663,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2320559466662988195}
+      addedObject: {fileID: 2010296201266842551}
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2010296201266842551}
+      addedObject: {fileID: 1644595293577107298}
   m_SourcePrefab: {fileID: 100100000, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
 --- !u!95 &285778712545900851 stripped
 Animator:
@@ -1693,20 +1693,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 2884552497847320403}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2320559466662988195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6567954839750895194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4533105e45729a641b00b10a08390517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BotAnimator
-  bot: {fileID: 0}
-  animator: {fileID: 285778712545900851}
 --- !u!114 &2010296201266842551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1728,6 +1714,19 @@ MonoBehaviour:
   pantsRenderer: {fileID: 5809650692371459290}
   topHeadPlaceholder: {fileID: 5429427818562306035}
   leftHandPlaceholder: {fileID: 2076087393725841649}
+--- !u!114 &1644595293577107298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6567954839750895194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c2cbfe997fb2143bcd269dc28c2d89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimator
+  animator: {fileID: 285778712545900851}
 --- !u!4 &7889543452726006857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}

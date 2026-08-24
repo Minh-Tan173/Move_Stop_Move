@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class IdleState
 {
-    public static void OnEnter(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnEnter(Bot bot, CharacterAnimator botAnimator) {
 
         bot.StopMovement();
 
@@ -11,7 +11,7 @@ public static class IdleState
         bot.ChangeBotSMTo(BotSM.idle);
     }
 
-    public static void OnExcute(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnExcute(Bot bot, CharacterAnimator botAnimator) {
 
         if (bot.HasAttackTarget()) {
 
@@ -29,7 +29,7 @@ public static class IdleState
         
     }
 
-    public static void OnExit(Bot bot, ICharacterAnimator botAnimator) {
+    public static void OnExit(Bot bot, CharacterAnimator botAnimator) {
         bot.ResetElapsedIdleDuration();
     }
 }

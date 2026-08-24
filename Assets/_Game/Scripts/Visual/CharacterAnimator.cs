@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class BotAnimator : ICharacterAnimator {
+public class CharacterAnimator : MonoBehaviour {
 
-    [SerializeField] private Bot bot;
     [SerializeField] private Animator animator;
 
     private void ResetAllTriggers() {
@@ -12,32 +11,32 @@ public class BotAnimator : ICharacterAnimator {
         animator.ResetTrigger(CharacterConst.DEAD_ANIM);
     }
 
-    public override void ResetAnim() {
+    public void ResetAnim() {
 
         animator.Rebind();
         animator.Update(0f);
     }
 
-    public override void TriggerIdleAnim() {
+    public void TriggerIdleAnim() {
 
         ResetAllTriggers();
         animator.SetTrigger(CharacterConst.IDLE_ANIM);
     }
 
-    public override void TriggerRunAnim() {
+    public void TriggerRunAnim() {
 
         ResetAllTriggers();
         animator.SetTrigger(CharacterConst.RUN_ANIM);
     }
 
-    public override void TriggerAttackAnim() {
+    public void TriggerAttackAnim() {
 
         ResetAllTriggers();
         animator.SetTrigger(CharacterConst.ATTACK_ANIM);
-    
+
     }
 
-    public override void TriggerDeadAnim() {
+    public void TriggerDeadAnim() {
 
         ResetAllTriggers();
         animator.SetTrigger(CharacterConst.DEAD_ANIM);
