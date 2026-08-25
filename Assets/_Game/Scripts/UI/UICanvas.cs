@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class UICanvas : MonoBehaviour
 {
+    [Header("")]
+    [SerializeField] private UIElementAnim[] uiElementAnims;
+
     [SerializeField] private bool isdestroyOnClose = false;
     [SerializeField] protected RectTransform canvasRect;
 

@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Player
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43db62a1c1902d149bf3736adf87dbae, type: 2}
-  m_sharedMaterial: {fileID: -2783534957842615075, guid: 43db62a1c1902d149bf3736adf87dbae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f11abf11a85f5554a97a960cb79774d7, type: 2}
+  m_sharedMaterial: {fileID: 6232575676222371010, guid: f11abf11a85f5554a97a960cb79774d7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 16
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

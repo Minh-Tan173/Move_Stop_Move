@@ -24,11 +24,13 @@ public class Player : CharacterBase
 
     private void Update() {
 
+        if (IsDead() || !LevelManager.Instance.IsGamePlaying()) { return; }
+
         HandleMovement();
 
         CheckMovementState();
 
-        if (!IsMoving()) {
+        if (!IsMoving()) {  
 
             UpdateAttack();
         }

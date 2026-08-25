@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum LevelState { Start, Playing, Finish, Complete }
+public enum LevelState { Start, Playing, Finish, Complete, Pause }
 
 public class LevelManager : Singleton<LevelManager>
 {
@@ -58,6 +58,11 @@ public class LevelManager : Singleton<LevelManager>
         UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
 
         ChangeLevelState(LevelState.Playing);
+    }
+
+    public void OnPauseGame() {
+
+        ChangeLevelState(LevelState.Pause);
     }
 
     public void OnFinish() {

@@ -40,11 +40,13 @@ public class CharacterManager : Singleton<CharacterManager>
 
         for (int i = charActiveList.Count - 1; i >= 0; i--) {
 
-            DeadCharacter(charActiveList[i]);
+            DeadCharacter(charActiveList[i], updateUI: false);
         }
 
         charActiveList.Clear();
         charDeactiveList.Clear();
+
+        UpdateAliveUI();
     }
 
     private void Update() {
@@ -62,6 +64,11 @@ public class CharacterManager : Singleton<CharacterManager>
                 }
             }
         }
+    }
+
+    private void UpdateAliveUI() {
+
+        UIManager.Instance.GetUI<CanvasHUD>().UpdateAliveLeftText(charActiveList.Count);
     }
 
     private void IncreaseTotalBotSpawned() {
@@ -82,6 +89,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
         player.OnInit();
 
+        UpdateAliveUI();
+
         return player as Player;
     }
 
@@ -99,6 +108,9 @@ public class CharacterManager : Singleton<CharacterManager>
 
         charDeactiveList.Remove(bot);
         charActiveList.Add(bot);
+
+
+        UpdateAliveUI();
     }
 
     private void DespawnCharacter(CharacterBase character) {
@@ -112,7 +124,7 @@ public class CharacterManager : Singleton<CharacterManager>
         SimplePool.Despawn(character);
     }
 
-    public void DeadCharacter(CharacterBase character) {
+    public void DeadCharacter(CharacterBase character, bool updateUI = true) {
 
         UIManager.Instance.GetUI<CanvasOffScreenIndicator>().UnRegister(character.GetCanvasCharacter());
 
@@ -122,6 +134,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
         charActiveList.Remove(character);
         charDeactiveList.Add(character);
+
+        if (updateUI) { UpdateAliveUI(); }
     }
 
     public List<CharacterBase> GetActiveCharacterList() {
