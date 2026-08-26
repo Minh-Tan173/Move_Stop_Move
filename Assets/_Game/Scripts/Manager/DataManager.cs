@@ -1,6 +1,214 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public static class DataManager
 {
+    private const string GAME_DATA_KEY = "GameData";
 
+    private static GameData gameData;
+    
+    private static void SaveDataToPrefs() {
+
+        string jsonText = JsonUtility.ToJson(gameData);
+        PlayerPrefs.SetString(GAME_DATA_KEY, jsonText);
+        PlayerPrefs.Save();
+    }
+
+    public static void OnInit() {
+
+
+        gameData = GetGameData();
+    }
+
+    public static GameData GetGameData() {
+
+        if (gameData == null) {
+            //  Get Default Data First
+
+            gameData = new GameData();
+
+            if (PlayerPrefs.HasKey(GAME_DATA_KEY)) {
+                // Having saved data before
+
+                string saveDataText = PlayerPrefs.GetString(GAME_DATA_KEY);
+
+                if (!string.IsNullOrEmpty(saveDataText)) {
+
+                    JsonUtility.FromJsonOverwrite(saveDataText, gameData);
+                }
+            }
+            else {
+                // First time playing
+
+                SaveDataToPrefs();
+            }
+        }
+
+
+        return gameData;
+    }
+
+    public static void UpdateSavedLevel(int newLevelIndex) {
+
+        gameData.GetPlayerData().SetCurrentLevel(newLevelIndex);
+
+        SaveDataToPrefs();
+    }
+
+    public static void UpdateGold(int value, bool isIncrease = true) {
+
+        int newGold = isIncrease ? gameData.GetPlayerData().CurrentGold + value : gameData.GetPlayerData().CurrentGold - value;
+        newGold = Mathf.Max(0, newGold); // ensure new gold not lower than 0
+
+
+        gameData.GetPlayerData().SetCurrentGold(newGold);
+
+        SaveDataToPrefs();
+    }
+
+    #region Hat Item Saved
+    public static void UnlockHat(int hatID) {
+        
+        gameData.GetPlayerData().UnlockNewHatID(hatID);
+
+        SaveDataToPrefs();
+    }
+
+    public static void ChangeEquippedHatTo(int hatID) {
+
+
+        gameData.GetPlayerData().SetEquippedHatID(hatID);
+
+        SaveDataToPrefs();
+    }
+    #endregion
+
+    #region Pant Item Saved
+    public static void UnlockPant(int pantID) {
+
+        gameData.GetPlayerData().UnlockNewPantID(pantID);
+
+        SaveDataToPrefs();
+    }
+
+    public static void ChangeEquippedPantTo(int pantID) {
+
+        gameData.GetPlayerData().SetEquippedPantID(pantID);
+
+        SaveDataToPrefs();
+    }
+    #endregion
+
+    #region Accessory Item Saved
+    public static void UnlockAccess(int accessoryID) {
+
+        gameData.GetPlayerData().UnlockNewAccessoryID(accessoryID);
+
+        SaveDataToPrefs();
+    }
+
+    public static void ChangeEquippedAccessoryTo(int accessoryID) {
+
+        gameData.GetPlayerData().SetEquippedAccessoryID(accessoryID);
+
+        SaveDataToPrefs();
+    }
+    #endregion
+}
+
+[System.Serializable]
+public class PlayerData {
+
+    public const int NONE_ITEM_ID = -1;
+
+    #region Field
+    [SerializeField] private int currentLevelIndex;
+    [SerializeField] private int currentGold;
+
+    // Current Equipped Item   
+    [SerializeField] private int equippedHatID;
+    [SerializeField] private int equippedPantID;
+    [SerializeField] private int equippedAccessoryID;
+
+    // Owned Item
+    [SerializeField] private List<int> ownedHatIDList = new List<int>();
+    [SerializeField] private List<int> ownedPantIDList = new List<int>();
+    [SerializeField] private List<int> ownedAccessoryIDList = new List<int>();
+    #endregion
+
+    public PlayerData() {
+
+        currentLevelIndex = 0;
+        currentGold = 0;
+
+        equippedHatID = NONE_ITEM_ID;
+        equippedPantID = NONE_ITEM_ID;
+        equippedAccessoryID = NONE_ITEM_ID;
+
+    }
+
+    #region Getter
+    public int CurrentLevelIndex => currentLevelIndex;
+    public int CurrentGold => currentGold;
+
+    public int EquippedHatID => equippedHatID;
+    public int EquippedPantID => equippedPantID;
+    public int EquippedAccessoryID => equippedAccessoryID;
+
+    public List<int> OwnedHatIDList => ownedHatIDList;
+    public List<int> OwnedPantIDList => ownedPantIDList;
+    public List<int> OwnedAccessoryIDList => ownedAccessoryIDList;
+    #endregion
+
+    #region Setter
+    public void SetCurrentLevel(int value) { currentLevelIndex = value; }
+    public void SetCurrentGold(int value) { currentGold = value; }
+
+    public void SetEquippedHatID(int hatID) { equippedHatID = hatID; }
+    public void SetEquippedPantID(int pantID) { equippedPantID = pantID; }
+    public void SetEquippedAccessoryID(int accessoryID) { equippedAccessoryID = accessoryID; }
+    #endregion
+
+    public void UnlockNewHatID(int hatID) {
+        ownedHatIDList.Add(hatID);
+    }
+
+    public void UnlockNewPantID(int pantID) {
+        ownedPantIDList.Add(pantID);
+    }
+
+    public void UnlockNewAccessoryID(int accessoryID) {
+        ownedAccessoryIDList.Add(accessoryID);
+    }
+
+    public bool IsPlayerOwnedHat(int hatID) {
+        return ownedHatIDList.Contains(hatID);
+    }
+
+    public bool IsPlayerOwnedPant(int pantID) {
+        return ownedPantIDList.Contains(pantID);
+    }
+
+    public bool IsPlayerOwnedAccessory(int accessoryID) {
+        return ownedAccessoryIDList.Contains(accessoryID);
+    }
+}
+
+[System.Serializable]
+public class GameData {
+
+    [SerializeField] private bool isMutedMusic;
+    [SerializeField] private bool isMutedSFX;
+    [SerializeField] private PlayerData playerData;
+
+    public GameData() {
+
+        this.isMutedMusic = false;
+        this.isMutedSFX = false;
+        this.playerData = new PlayerData();
+    } 
+    
+    public PlayerData GetPlayerData() {
+        return playerData;
+    }
 }

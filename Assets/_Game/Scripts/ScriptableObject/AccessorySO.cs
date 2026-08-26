@@ -27,11 +27,56 @@ public class AccessorySO : ScriptableObject
 }
 
 [System.Serializable]
-public class AccessoryItemData {
-
+public class AccessoryItemData : IItemData
+{
+    [Header("Base Data")]
     [SerializeField] private int accessoryID;
     [SerializeField] private string accessoryName;
     [SerializeField] private PoolUnit accessoryPrefab;
+    [SerializeField] private Sprite accessorySprite;
+
+    [Header("Price")]
+    [SerializeField] private int price;
+
+    [Header("Booster")]
+    [SerializeField] private List<BoosterData> boosterDataList;
+
+    public int GetItemID() {
+        return accessoryID;
+    }
+
+    public Sprite GetItemSprite() {
+        return accessorySprite;
+    }
+
+    public string GetItemName() {
+        return accessoryName;
+    }
+
+
+    public int GetItemPrice() {
+        return price;
+    }
+
+    public bool IsOwned() {
+
+        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedAccessory(accessoryID);
+    }
+
+    public bool IsEquipped() {
+
+        return DataManager.GetGameData().GetPlayerData().EquippedAccessoryID == accessoryID;
+    }
+
+    public void Unlock() {
+
+        DataManager.UnlockAccess(accessoryID);
+    }
+
+    public void Equip() {
+
+        DataManager.ChangeEquippedAccessoryTo(accessoryID);
+    }
 
     public bool IsSameID(int accessoryID) {
         return this.accessoryID == accessoryID;

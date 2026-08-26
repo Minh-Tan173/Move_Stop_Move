@@ -3,22 +3,28 @@ using UnityEngine;
 
 public class ShopItemGrids : MonoBehaviour
 {
+    [Header("Parent")]
+    [SerializeField] private CanvasSkinShop canvasSkinShop;
+
+    [Header("Child")]
     [SerializeField] private ShopItemSlot itemSlotPrefab;
 
     private List<ShopItemSlot> shopItemSlotList = new List<ShopItemSlot>();
 
     private Transform shopTransform;
-    private Transform ShopTransform => shopTransform == null ? shopTransform = this.transform : shopTransform; 
+    private Transform ShopTransform => shopTransform == null ? shopTransform = this.transform : shopTransform;
+
+    private ShopItemSlot currentSelectedSlot;
 
     public void SpawnItemSlots(List<ShopItemViewData> itemlist ) {
 
         shopItemSlotList.Clear();
 
-        foreach (ShopItemViewData item in itemlist) {
+        foreach (ShopItemViewData itemViewData in itemlist) {
 
             ShopItemSlot itemSlot = Instantiate(itemSlotPrefab, ShopTransform);
-
-            // TODO: Add data for item slot
+            itemSlot.OnInit(this, itemViewData);
+            
 
             shopItemSlotList.Add(itemSlot);
         }
@@ -33,5 +39,29 @@ public class ShopItemGrids : MonoBehaviour
         }
 
         shopItemSlotList.Clear();
+
+        currentSelectedSlot = null;
+    }
+
+    public void SelectSlot(ShopItemSlot itemSlot, ShopItemViewData itemData) {
+
+        if (currentSelectedSlot != null) {
+            // Off highlight old slot
+            currentSelectedSlot.SetHighlight(false);
+        }
+
+        currentSelectedSlot = itemSlot;
+
+        currentSelectedSlot.SetHighlight(true);
+
+        canvasSkinShop.SelectItem(itemData);
+    }
+
+    public void UnlockCurrentSelectedSlot() {
+
+        if (currentSelectedSlot != null) {
+
+            currentSelectedSlot.UnlockItem();
+        }
     }
 }

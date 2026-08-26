@@ -5,46 +5,70 @@ public class ShopItemSlot : MonoBehaviour
 {
 
     [Header("Image")]
+    [SerializeField] private Image itemSpriteImage;
     [SerializeField] private Image highlightImage;
-    [SerializeField] private Image lockImage;
+    [SerializeField] private Image lockedIconImage;
 
-    private bool isSelected;
-    private bool isLocked;
+    private ShopItemGrids owner;
+    private ShopItemViewData currentData;
 
-    public void OnInit() {
+    private bool isUnlocked;
 
-        isSelected = false;
-        lockImage.gameObject.SetActive(isSelected);
+    private void SetLock(bool isLock) {
+
+        isUnlocked = !isLock;
+
+        lockedIconImage.gameObject.SetActive(isLock);
     }
 
-    public void OnDespawn() {
+    public void OnInit(ShopItemGrids owner , ShopItemViewData itemViewData) {
+
+        SetHighlight(false);
+
+        currentData = itemViewData;
+        this.owner = owner;
+
+        itemSpriteImage.sprite = itemViewData.GetIcon();
+        SetLock(!itemViewData.IsUnlocked());
 
     }
-    
-    public void OnClickSlot() {
 
-        isSelected = !isSelected;
-        lockImage.gameObject.SetActive(isSelected);
+    public void SetHighlight(bool isShow) {
 
+        highlightImage.gameObject.SetActive(isShow);
+    }
+
+    public void UnlockItem() {
+
+        SetLock(false);
+    }
+
+    public void OnClickSlot() { 
+
+        owner.SelectSlot(this, currentData);
     }
 }
 
 [System.Serializable]
 public class ShopItemViewData {
 
-    private int idItem;
+    private int itemID;
     private Sprite icon;
     private string itemName;
+    private IItemData sourceItemData;
+    private bool isUnlocked;
 
-    public ShopItemViewData(int idItem, Sprite icon, string itemName) {
-        
-        this.idItem = idItem;
-        this.icon = icon;
-        this.itemName = itemName;
+    public ShopItemViewData(IItemData itemData) {
+
+        sourceItemData = itemData;
+        itemID = itemData.GetItemID();
+        icon = itemData.GetItemSprite();
+        itemName = itemData.GetItemName();
+        isUnlocked = itemData.IsOwned();
     }
 
-    public int GetIDItem() {
-        return this.idItem;
+    public int GetItemID() {
+        return this.itemID;
     }
 
     public Sprite GetIcon() {
@@ -53,5 +77,29 @@ public class ShopItemViewData {
 
     public string GetItemName() {
         return this.itemName;
+    }
+
+    public int GetPrice() {
+        return sourceItemData.GetItemPrice();
+    }
+
+    public bool IsUnlocked() {
+        return isUnlocked;
+    }
+
+    public bool IsEquipped() {
+        return sourceItemData.IsEquipped();
+    }
+
+    public void Unlock() {
+
+        sourceItemData.Unlock();
+
+        isUnlocked = true;
+    }
+
+    public void Equip() {
+
+        sourceItemData.Equip();
     }
 }

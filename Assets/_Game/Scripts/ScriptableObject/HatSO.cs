@@ -33,15 +33,56 @@ public class HatSO : ScriptableObject
 }
 
 [System.Serializable]
-public class HatItemData 
+public class HatItemData : IItemData
 {
     [Header("Base Data")]
     [SerializeField] private int hatID;
-    [SerializeField] private string namehat;
+    [SerializeField] private string hatName;
     [SerializeField] private PoolUnit hatPrefab;
+    [SerializeField] private Sprite hatSprite;
+
+    [Header("Price")]
+    [SerializeField] private int price;
 
     [Header("Booster")]
     [SerializeField] private List<BoosterData> boosterDataList;
+
+
+    public int GetItemID() {
+        return hatID;
+    }
+
+    public Sprite GetItemSprite() {
+        return hatSprite;
+    }
+
+    public string GetItemName() {
+        return hatName;
+    }
+
+    public int GetItemPrice() {
+        return price;
+    }
+
+    public bool IsOwned() {
+
+        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedHat(hatID);
+    }
+
+    public bool IsEquipped() {
+
+        return DataManager.GetGameData().GetPlayerData().EquippedHatID == hatID;
+    }
+
+    public void Unlock() {
+
+        DataManager.UnlockHat(hatID);
+    }
+
+    public void Equip() {
+
+        DataManager.ChangeEquippedHatTo(hatID);
+    }
 
     public bool IsSameID(int hatID) {
         return this.hatID == hatID;

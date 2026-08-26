@@ -32,15 +32,55 @@ public class PantSO : ScriptableObject
 }
 
 [System.Serializable]
-public class PantItemData {
+public class PantItemData : IItemData{
 
     [Header("Base Data")]
     [SerializeField] private int pantID;
     [SerializeField] private string pantName;
     [SerializeField] private Texture2D pantTexture;
+    [SerializeField] private Sprite pantSprite;
+
+    [Header("Price")]
+    [SerializeField] private int price;
 
     [Header("Booster")]
     [SerializeField] private List<BoosterData> boosterDataList;
+
+    public int GetItemID() {
+        return pantID;
+    }
+
+    public Sprite GetItemSprite() {
+        return pantSprite;
+    }
+
+    public string GetItemName() {
+        return pantName;
+    }
+
+    public int GetItemPrice() {
+        return price;
+    }
+
+    public bool IsOwned() {
+
+        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedPant(pantID);
+    }
+
+    public bool IsEquipped() {
+
+        return DataManager.GetGameData().GetPlayerData().EquippedPantID == pantID;
+    }
+
+    public void Unlock() {
+
+        DataManager.UnlockPant(pantID);
+    }
+
+    public void Equip() {
+
+        DataManager.ChangeEquippedPantTo(pantID);
+    }
 
     public bool IsSameID(int pantID) {
         return this.pantID == pantID;
