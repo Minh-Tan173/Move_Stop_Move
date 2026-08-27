@@ -178,6 +178,7 @@ public class UIElementAnim : MonoBehaviour
 
 
     public void HideElement() {
+
         isShow = false;
 
         ActiveAnimation(animationType);

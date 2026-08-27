@@ -9,6 +9,28 @@ public class InputManager : Singleton<InputManager>
 
         inputAction = new PlayerInputActions();
         inputAction.Player.Enable();
+
+
+#if UNITY_EDITOR
+
+        inputAction.Cheat.Enable();
+        inputAction.Cheat.ResetGameData.performed += ResetGameData_performed;
+        inputAction.Cheat.CheatGold.performed += CheatGold_performed;
+#endif
+
+    }
+
+    private void OnDestroy() {
+        inputAction.Cheat.ResetGameData.performed -= ResetGameData_performed;
+    }
+
+    private void ResetGameData_performed(InputAction.CallbackContext obj) {
+
+        DataManager.ForceResetGame();
+    }
+
+    private void CheatGold_performed(InputAction.CallbackContext obj) {
+        DataManager.UpdateGold(100000);
     }
 
     public Vector2 GetInputVectorNormalized() {

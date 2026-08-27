@@ -9,6 +9,7 @@ public enum BotSM {
     patrol,
     attack
 }
+
 public class Bot : CharacterBase
 {
 
@@ -61,13 +62,13 @@ public class Bot : CharacterBase
         charVisual.ChangeWeapon(currentWeaponType);
 
         // Visual
-        PantItemData pant = charVisual.ChangePants();
+        PantItemData pant = charVisual.ChangePants(this);
         if (pant != null) { pant.ApplyBoosterFor(this); }
 
-        HatItemData hat = charVisual.ChangeHats();
+        HatItemData hat = charVisual.ChangeHats(this);
         if (hat != null) { hat.ApplyBoosterFor(this); }
 
-        charVisual.ChangeAccessories();
+        charVisual.ChangeAccessories(this);
     }
 
     public override void OnDespawn() {
@@ -148,7 +149,6 @@ public class Bot : CharacterBase
     }
 
     public void RollFindType() {
-
 
         if (CharacterManager.Instance.GetActiveCharacterList().Count <= 3) {
             // On field has too few characters --> Default moveTarget is nearest, not other type

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4130419059165011946}
   - component: {fileID: 686837397485982344}
   - component: {fileID: 9219970189223513554}
+  - component: {fileID: 7010997946184884896}
   m_Layer: 5
   m_Name: Image_AliveLeft
   m_TagString: Untagged
@@ -76,6 +77,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7010997946184884896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472919375419579452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69636ad2708ff6e4fb95e55aa4e95257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIElementAnim
+  animationType: 0
+  canvasGroup: {fileID: 0}
+  rect: {fileID: 4130419059165011946}
+  appearDuration: 0.35
+  hideDuration: 0.25
+  axis: 0
+  startPos: -200
+  endPos: 30
 --- !u!1 &2345985105492702606
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,9 +214,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da1de8730054b443b4078b3d4b635d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasHUD
+  uiElementAnims:
+  - {fileID: 7010997946184884896}
+  - {fileID: 1341060088594002370}
   isdestroyOnClose: 0
   canvasRect: {fileID: 8231791670899958025}
   aliveLeftText: {fileID: 7287466612051402389}
+  setting: {fileID: 9183875002346358496}
 --- !u!1 &3152134318823775983
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_LocalRotation.x
@@ -395,7 +420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_LocalRotation.z
@@ -403,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -68.3
+      value: -68
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -415,7 +440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -428,10 +453,49 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5642719991573352683, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1341060088594002370}
   m_SourcePrefab: {fileID: 100100000, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
 --- !u!224 &3245356127373247798 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 119938179052351105, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
   m_PrefabInstance: {fileID: 3216635661252848567}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7128423024103914332 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5642719991573352683, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
+  m_PrefabInstance: {fileID: 3216635661252848567}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1341060088594002370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128423024103914332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69636ad2708ff6e4fb95e55aa4e95257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIElementAnim
+  animationType: 0
+  canvasGroup: {fileID: 0}
+  rect: {fileID: 3245356127373247798}
+  appearDuration: 0.35
+  hideDuration: 0.25
+  axis: 0
+  startPos: 68
+  endPos: -68
+--- !u!114 &9183875002346358496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6039437873426836823, guid: 6a9d2b01e5faeef4c8672be2128e89ea, type: 3}
+  m_PrefabInstance: {fileID: 3216635661252848567}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128423024103914332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea46a9f2fcc18f4095550a2b8e91cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Setting

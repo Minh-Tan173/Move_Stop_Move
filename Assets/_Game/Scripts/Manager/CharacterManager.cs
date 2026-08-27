@@ -68,6 +68,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private void UpdateAliveUI() {
 
+        if (!UIManager.Instance.IsUIOpened<CanvasHUD>()) return;
+
         UIManager.Instance.GetUI<CanvasHUD>().UpdateAliveLeftText(charActiveList.Count);
     }
 

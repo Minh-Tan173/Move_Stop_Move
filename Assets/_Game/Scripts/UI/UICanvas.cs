@@ -27,22 +27,23 @@ public class UICanvas : MonoBehaviour
 
     public void ShowUIElements() {
 
-        //foreach (UIElementAnimation elementUI in elementUIAnimationArray) {
 
-        //    elementUI.ShowElement();
-        //}
+        foreach (UIElementAnim uiElement in uiElementAnims) {
+
+            uiElement.ShowElement();
+        }
     }
 
     public void HideUIElements() {
 
-        //foreach (UIElementAnimation elementUI in elementUIAnimationArray) {
+        foreach (UIElementAnim uiElement in uiElementAnims) {
 
-        //    elementUI.HideElement();
-        //}
+            uiElement.HideElement();
+        }
     }
 
     public virtual void SetUp() {
-
+                
     }
 
     public virtual void Open() {

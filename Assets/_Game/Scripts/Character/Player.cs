@@ -14,11 +14,9 @@ public class Player : CharacterBase
     private Vector3 moveDir;
     private bool lastMovingState;
 
-    #region Test
-    private int hatID = 0;
-    private int pantID = 0;
-    private int accessoryID = 0;
-    #endregion
+    private int hatID;
+    private int pantID;
+    private int accessoryID;
 
     private CharacterBase lastAttackTarget;
 
@@ -173,13 +171,19 @@ public class Player : CharacterBase
 
         base.OnInit();
 
-        HatItemData hat = charVisual.ChangeHats(hatID);
+        hatID = DataManager.GetGameData().GetPlayerData().EquippedHatID;
+        pantID = DataManager.GetGameData().GetPlayerData().EquippedPantID;
+        accessoryID = DataManager.GetGameData().GetPlayerData().EquippedAccessoryID;
+
+
+
+        HatItemData hat = charVisual.ChangeHats(this, hatID);
         if (hat != null) { hat.ApplyBoosterFor(this); }
 
-        PantItemData pant = charVisual.ChangePants(pantID);
+        PantItemData pant = charVisual.ChangePants(this, pantID);
         if (pant != null) { pant.ApplyBoosterFor(this); }
 
-        charVisual.ChangeAccessories(accessoryID);
+        charVisual.ChangeAccessories(this, accessoryID);
     }
 
     public override void OnDespawn() {

@@ -36,8 +36,8 @@ public class UIManager : Singleton<UIManager>
             canvas.gameObject.SetActive(true);
         }
 
-        canvas.Open();
         canvas.SetUp();
+        canvas.Open();
 
         return canvas as T;
     }

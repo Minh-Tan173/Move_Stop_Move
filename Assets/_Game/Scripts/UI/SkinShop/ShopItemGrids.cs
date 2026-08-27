@@ -8,6 +8,7 @@ public class ShopItemGrids : MonoBehaviour
 
     [Header("Child")]
     [SerializeField] private ShopItemSlot itemSlotPrefab;
+    [SerializeField] private Transform content;
 
     private List<ShopItemSlot> shopItemSlotList = new List<ShopItemSlot>();
 
@@ -22,11 +23,15 @@ public class ShopItemGrids : MonoBehaviour
 
         foreach (ShopItemViewData itemViewData in itemlist) {
 
-            ShopItemSlot itemSlot = Instantiate(itemSlotPrefab, ShopTransform);
+            ShopItemSlot itemSlot = Instantiate(itemSlotPrefab, content);
             itemSlot.OnInit(this, itemViewData);
             
-
             shopItemSlotList.Add(itemSlot);
+
+            if (itemViewData.IsEquipped()) {
+
+                SelectSlot(itemSlot, itemViewData);
+            }
         }
 
     }
@@ -59,9 +64,6 @@ public class ShopItemGrids : MonoBehaviour
 
     public void UnlockCurrentSelectedSlot() {
 
-        if (currentSelectedSlot != null) {
-
-            currentSelectedSlot.UnlockItem();
-        }
+        currentSelectedSlot.UnlockItem();
     }
 }

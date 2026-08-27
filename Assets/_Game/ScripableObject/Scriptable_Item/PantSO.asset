@@ -16,28 +16,38 @@ MonoBehaviour:
   - pantID: 0
     pantName: BatMan
     pantTexture: {fileID: 2800000, guid: 47c8d5358d60d474388d6a7e89a221aa, type: 3}
+    pantSprite: {fileID: 21300000, guid: ac43040d37e7e714ba4ff54fd70786c6, type: 3}
+    price: 500
     boosterDataList:
     - booster: {fileID: 11400000, guid: 830b84688d3074c40980ecd84c4e6ddc, type: 2}
       value: 3
   - pantID: 1
     pantName: Cham Bi
     pantTexture: {fileID: 2800000, guid: 60bbae7447731bc4f8f7921a7b846832, type: 3}
+    pantSprite: {fileID: 21300000, guid: 215eb993ab28eea4e88e0d07550de47b, type: 3}
+    price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 830b84688d3074c40980ecd84c4e6ddc, type: 2}
       value: 2
   - pantID: 2
     pantName: Da Bao
     pantTexture: {fileID: 2800000, guid: e6cdcdd7f2a0d8b4fb11ca94d0d7d775, type: 3}
+    pantSprite: {fileID: 21300000, guid: 1134effe8b2b3a9439955440c1c4c187, type: 3}
+    price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 830b84688d3074c40980ecd84c4e6ddc, type: 2}
       value: 1
   - pantID: 3
     pantName: Pokemon
     pantTexture: {fileID: 2800000, guid: f5d61e52e0c02c7499cc3e23eb8c7f3f, type: 3}
+    pantSprite: {fileID: 21300000, guid: 86c8058ff7617b449b156810b6757546, type: 3}
+    price: 0
     boosterDataList: []
   - pantID: 4
     pantName: Onion
     pantTexture: {fileID: 2800000, guid: e119361a0d7fd344eb37842037719c31, type: 3}
+    pantSprite: {fileID: 21300000, guid: 61f79d521c34baf4d92f9c50cac70b56, type: 3}
+    price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 830b84688d3074c40980ecd84c4e6ddc, type: 2}
       value: -2

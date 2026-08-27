@@ -84,6 +84,54 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Cheat",
+            "id": "4c04ca5d-88be-4b3b-96eb-a7f7e2769b64",
+            "actions": [
+                {
+                    "name": "ResetGameData",
+                    "type": "Button",
+                    "id": "056fb5c6-b650-4a94-ad0c-c084987e0cd4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CheatGold",
+                    "type": "Button",
+                    "id": "b932b998-e8fa-427d-8e74-e745e267f44f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1671eefe-4630-472a-b4b8-ae103b8e3b22",
+                    "path": "<Keyboard>/0",
+                    "interactions": "MultiTap(tapCount=3)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetGameData",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5ee20fe-38f0-4c61-829f-49dbe84435e7",
+                    "path": "<Keyboard>/9",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CheatGold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

@@ -170,6 +170,54 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Cheat"",
+            ""id"": ""4c04ca5d-88be-4b3b-96eb-a7f7e2769b64"",
+            ""actions"": [
+                {
+                    ""name"": ""ResetGameData"",
+                    ""type"": ""Button"",
+                    ""id"": ""056fb5c6-b650-4a94-ad0c-c084987e0cd4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CheatGold"",
+                    ""type"": ""Button"",
+                    ""id"": ""b932b998-e8fa-427d-8e74-e745e267f44f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1671eefe-4630-472a-b4b8-ae103b8e3b22"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": ""MultiTap(tapCount=3)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetGameData"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5ee20fe-38f0-4c61-829f-49dbe84435e7"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CheatGold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -177,11 +225,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        // Cheat
+        m_Cheat = asset.FindActionMap("Cheat", throwIfNotFound: true);
+        m_Cheat_ResetGameData = m_Cheat.FindAction("ResetGameData", throwIfNotFound: true);
+        m_Cheat_CheatGold = m_Cheat.FindAction("CheatGold", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Cheat.enabled, "This will cause a leak and performance issues, PlayerInputActions.Cheat.Disable() has not been called.");
     }
 
     /// <summary>
@@ -349,6 +402,113 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Cheat
+    private readonly InputActionMap m_Cheat;
+    private List<ICheatActions> m_CheatActionsCallbackInterfaces = new List<ICheatActions>();
+    private readonly InputAction m_Cheat_ResetGameData;
+    private readonly InputAction m_Cheat_CheatGold;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Cheat".
+    /// </summary>
+    public struct CheatActions
+    {
+        private @PlayerInputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public CheatActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Cheat/ResetGameData".
+        /// </summary>
+        public InputAction @ResetGameData => m_Wrapper.m_Cheat_ResetGameData;
+        /// <summary>
+        /// Provides access to the underlying input action "Cheat/CheatGold".
+        /// </summary>
+        public InputAction @CheatGold => m_Wrapper.m_Cheat_CheatGold;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Cheat; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="CheatActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(CheatActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="CheatActions" />
+        public void AddCallbacks(ICheatActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CheatActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CheatActionsCallbackInterfaces.Add(instance);
+            @ResetGameData.started += instance.OnResetGameData;
+            @ResetGameData.performed += instance.OnResetGameData;
+            @ResetGameData.canceled += instance.OnResetGameData;
+            @CheatGold.started += instance.OnCheatGold;
+            @CheatGold.performed += instance.OnCheatGold;
+            @CheatGold.canceled += instance.OnCheatGold;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="CheatActions" />
+        private void UnregisterCallbacks(ICheatActions instance)
+        {
+            @ResetGameData.started -= instance.OnResetGameData;
+            @ResetGameData.performed -= instance.OnResetGameData;
+            @ResetGameData.canceled -= instance.OnResetGameData;
+            @CheatGold.started -= instance.OnCheatGold;
+            @CheatGold.performed -= instance.OnCheatGold;
+            @CheatGold.canceled -= instance.OnCheatGold;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CheatActions.UnregisterCallbacks(ICheatActions)" />.
+        /// </summary>
+        /// <seealso cref="CheatActions.UnregisterCallbacks(ICheatActions)" />
+        public void RemoveCallbacks(ICheatActions instance)
+        {
+            if (m_Wrapper.m_CheatActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="CheatActions.AddCallbacks(ICheatActions)" />
+        /// <seealso cref="CheatActions.RemoveCallbacks(ICheatActions)" />
+        /// <seealso cref="CheatActions.UnregisterCallbacks(ICheatActions)" />
+        public void SetCallbacks(ICheatActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CheatActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CheatActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="CheatActions" /> instance referencing this action map.
+    /// </summary>
+    public CheatActions @Cheat => new CheatActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -363,5 +523,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Cheat" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="CheatActions.AddCallbacks(ICheatActions)" />
+    /// <seealso cref="CheatActions.RemoveCallbacks(ICheatActions)" />
+    public interface ICheatActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ResetGameData" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnResetGameData(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CheatGold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCheatGold(InputAction.CallbackContext context);
     }
 }

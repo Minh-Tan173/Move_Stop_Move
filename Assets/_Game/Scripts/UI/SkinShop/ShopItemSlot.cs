@@ -12,11 +12,7 @@ public class ShopItemSlot : MonoBehaviour
     private ShopItemGrids owner;
     private ShopItemViewData currentData;
 
-    private bool isUnlocked;
-
     private void SetLock(bool isLock) {
-
-        isUnlocked = !isLock;
 
         lockedIconImage.gameObject.SetActive(isLock);
     }

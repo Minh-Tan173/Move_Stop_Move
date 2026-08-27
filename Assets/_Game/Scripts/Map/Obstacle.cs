@@ -35,7 +35,6 @@ public class Obstacle : MonoBehaviour
 
     public void OnBaseMAT() {
 
-        Debug.Log("Turn on base mat");
 
         meshRenderer.material = baseMAT;
     }

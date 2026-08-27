@@ -3,13 +3,14 @@ using UnityEngine.UI;
 
 public class CharacterVisual : MonoBehaviour
 {
+
     [Header("Skin Data")]
     [SerializeField] private WeaponSO weaponSO;
     [SerializeField] private PantSO pantSO;
     [SerializeField] private HatSO hatSO;
     [SerializeField] private AccessorySO accessorySO;
 
-    [Header("Ref")]
+    [Header("Child Ref")]
     [SerializeField] private Transform visualTransform;
     [SerializeField] private Transform rightHandPlacedHolder;
     [SerializeField] private SkinnedMeshRenderer pantsRenderer;
@@ -55,6 +56,11 @@ public class CharacterVisual : MonoBehaviour
         visualTransform.localScale = Vector3.one * newSize;
     }
 
+    public void UpdateVisual() {
+
+        
+    }
+
     public void ChangeWeapon(WeaponType weaponType) {
 
         PoolUnit weaponPrefab = weaponSO.GetWeaponPrefab(weaponType);
@@ -63,15 +69,24 @@ public class CharacterVisual : MonoBehaviour
         ResetItem(currentWeapon);
     }
 
-    public PantItemData ChangePants(int pantID = -1) {
+    public PantItemData ChangePants(CharacterBase parentChar ,int pantID = -1) {
 
         Texture2D pantsTexture;
 
         // Get Pant Texture
         if (pantID < 0) {
 
-            int totalPant = pantSO.pantItemDataList.Count;
-            pantID = Random.Range(0, totalPant);
+            if (parentChar is Player) {
+
+                pantsRenderer.SetPropertyBlock(null);
+                return null;
+
+            }
+            else {
+                // If is Bot
+                int totalPant = pantSO.pantItemDataList.Count;
+                pantID = Random.Range(0, totalPant);
+            }
         }
 
         pantsTexture = pantSO.GetPantTexture(pantID);
@@ -84,14 +99,27 @@ public class CharacterVisual : MonoBehaviour
         return pantSO.GetPantItemData(pantID);
     }
 
-    public HatItemData ChangeHats(int hatID = -1) {
+    public HatItemData ChangeHats(CharacterBase parentChar, int hatID = -1) {
 
         if (hatID < 0) {
+            
+            if (parentChar is Player) {
 
-            if (Random.Range(0, 2) == 0) { return null; }
+                if (currentHat != null) {
 
-            int totalHat = hatSO.hatItemDataList.Count;
-            hatID = Random.Range(0, totalHat);
+                    SimplePool.Despawn(currentHat);
+                    currentHat = null;
+                }
+
+                return null;
+            }
+            else {
+
+                if (Random.Range(0, 2) == 0) { return null; }
+
+                int totalHat = hatSO.hatItemDataList.Count;
+                hatID = Random.Range(0, totalHat);
+            }
         }
 
         PoolUnit hatPrefab = hatSO.GetHatPrefab(hatID);
@@ -106,27 +134,32 @@ public class CharacterVisual : MonoBehaviour
         return hatSO.GetHatData(hatID);
     }
 
-    public void ChangeAccessories(int acessoryID = -1) {
+    public void ChangeAccessories(CharacterBase parentChar, int accessoryID = -1) {
 
-        //if (Random.value <= 0.3f) { return; }
+        if (accessoryID < 0) {
 
-        PoolUnit accessoryPrefab;
+            if (parentChar is Player) {
 
-        // Get Accessory Prefab
-        if (acessoryID >= 0) {
-            // If having ID
+                if (currentAccessory != null) {
 
-            accessoryPrefab = accessorySO.GetAccesoryPrefab(acessoryID);
+                    SimplePool.Despawn(currentAccessory);
+                    currentAccessory = null;
+                }
+
+                return;
+            }
+            else {
+
+                int totalAccessory = accessorySO.accessoryItemDataList.Count;
+                accessoryID = Random.Range(0, totalAccessory);
+            }
         }
-        else {
 
-            int totalAccessory = accessorySO.accessoryItemDataList.Count;
-            int randomAccessoryID = Random.Range(0, totalAccessory);
-            accessoryPrefab = accessorySO.GetAccesoryPrefab(randomAccessoryID);
-        }
+        PoolUnit accessoryPrefab = accessorySO.GetAccesoryPrefab(accessoryID);
 
-        // Setup accessory
+        // Setup Accessory
         currentAccessory = SimplePool.Spawn<PoolUnit>(accessoryPrefab, leftHandPlaceholder.position, Quaternion.identity);
+
         currentAccessory.UnitTF.SetParent(leftHandPlaceholder);
         ResetItem(currentAccessory);
 

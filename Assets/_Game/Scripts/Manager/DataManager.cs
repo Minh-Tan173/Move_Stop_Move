@@ -20,6 +20,14 @@ public static class DataManager
         gameData = GetGameData();
     }
 
+#if UNITY_EDITOR
+
+    public static void ForceResetGame() {
+        gameData = new GameData();
+        SaveDataToPrefs();
+    }
+#endif
+
     public static GameData GetGameData() {
 
         if (gameData == null) {

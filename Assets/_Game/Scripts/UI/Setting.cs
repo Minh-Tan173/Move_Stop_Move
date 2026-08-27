@@ -32,38 +32,44 @@ public class Setting : MonoBehaviour
 
         float elapsed = 0f;
 
+        List<RectTransform> activeElementList = new List<RectTransform>();
+
         List<Vector2> startPosList = new List<Vector2>();
-        List<Vector2> targetPosList = new List<Vector2>();
 
-        for (int i = 0; i < elementRectList.Count; i++) {
 
-            RectTransform rect = elementRectList[i];
+        foreach (RectTransform element in elementRectList) {
 
-            startPosList.Add(rect.anchoredPosition);
+            if (!element.gameObject.activeSelf) { continue; }
 
-            Vector2 target = isOpenSetting ? rect.anchoredPosition + Vector2.down * lineSpacing * i : rect.anchoredPosition - Vector2.down * lineSpacing * i;
+            if (isOpenSetting) {
 
-            targetPosList.Add(target);
+                element.anchoredPosition = Vector2.zero;
+            }
+
+            activeElementList.Add(element);
+            startPosList.Add(element.anchoredPosition);
         }
 
 
-        float totalDuration = animDuration + animDelay * (elementRectList.Count - 1);
+        float totalDuration = animDuration + animDelay * (activeElementList.Count - 1);
 
         while (elapsed < totalDuration) {
 
             elapsed += Time.deltaTime;
 
-            for (int i = 0; i < elementRectList.Count; i++) {
+            for (int i = 0; i < activeElementList.Count; i++) {
+
                 float elementTime = elapsed - animDelay * i;
 
-                if (elementTime <= 0f)
-                    continue;
+                if (elementTime <= 0f) continue;
 
                 float t = Mathf.Clamp01(elementTime / animDuration);
 
                 float easeT = isOpenSetting ? AnimationEase.EaseOutBack(t) : AnimationEase.EaseInBack(t);
 
-                elementRectList[i].anchoredPosition = Vector2.LerpUnclamped(startPosList[i], targetPosList[i], easeT);
+                Vector2 targetPos = isOpenSetting ? Vector2.down * lineSpacing * (i + 1) : Vector2.zero;
+
+                activeElementList[i].anchoredPosition = Vector2.LerpUnclamped(startPosList[i], targetPos, easeT);
             }
 
             yield return null;
@@ -72,9 +78,9 @@ public class Setting : MonoBehaviour
         currentCoroutine = null;
     }
 
-    public void OnInit() {
+    public void OnInit(UICanvas parentCanvas) {
 
-        if (UIManager.Instance.GetUI<CanvasMainMenu>().gameObject.activeSelf) {
+        if (parentCanvas is CanvasMainMenu) {
             // If is in main menu
 
             HideButton();
@@ -95,14 +101,15 @@ public class Setting : MonoBehaviour
 
     public void TriggerSetting() {
 
-        LevelManager.Instance.OnPauseGame();
+
+        isOpenSetting = !isOpenSetting;
 
         if (currentCoroutine != null) {
             StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
         }
 
-        isOpenSetting = !isOpenSetting;
-        StartCoroutine(ElementsAnim());
+        currentCoroutine = StartCoroutine(ElementsAnim());
     }
 
     public void MutedMusic(bool isMutedMusic) {
