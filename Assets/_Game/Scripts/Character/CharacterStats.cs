@@ -31,25 +31,25 @@ public class CharacterStats : MonoBehaviour
     #region Attack Range
     public void SetAttackSize(float value) {
 
-        attackRange = value;
+        float oldTrueRange = Character.GetTrueAttackRange();
 
+        attackRange = value;
         attackRangeVisual.UpdateVisual();
+
+        float newTrueRange = Character.GetTrueAttackRange();
+
+        if (Character is Player) {
+
+            CameraManager.Instance.UpdateZoom(newTrueRange, oldTrueRange);
+        }
     }
 
     public void AddAttackSize(float value) {
-        SetAttackSize(attackRange += value);
+        SetAttackSize(attackRange + value);
     }
 
     public void UpAttackSize() {
-
-        float oldRange = attackRange;
-
-        SetAttackSize(attackRange += 1);
-
-        if (character is Player) {
-
-            CameraManager.Instance.UpdateZoom(attackRange, oldRange);
-        }
+        SetAttackSize(attackRange + 1);
     }
 
     public void ResetAttackSize() {
