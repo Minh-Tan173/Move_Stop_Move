@@ -98,4 +98,9 @@ public class ShopItemViewData {
 
         sourceItemData.Equip();
     }
+
+    public void Preview(CharacterBase character) {
+
+        sourceItemData.Preview(character);
+    }
 }

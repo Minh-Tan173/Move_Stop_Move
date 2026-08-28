@@ -155,6 +155,8 @@ public class CanvasSkinShop : UICanvas
 
         currentSelectedItem = itemData;
 
+        currentSelectedItem.Preview(CharacterManager.Instance.GetPlayer());
+
         UpdateActionButton();
     }
 
@@ -188,4 +190,5 @@ public class CanvasSkinShop : UICanvas
 
         currentSelectedItem.Equip();
     }
+
 }

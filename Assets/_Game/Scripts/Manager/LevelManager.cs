@@ -6,8 +6,6 @@ public enum LevelState { Start, Playing, Finish, Complete }
 public class LevelManager : Singleton<LevelManager>
 {
 
-    public event EventHandler OnBoosterAppear;
-
     [Header("List of Level")]
     [SerializeField] private LevelSO levelSO;
 
@@ -50,6 +48,8 @@ public class LevelManager : Singleton<LevelManager>
         LoadLevel();
 
         CharacterManager.Instance.OnInit();
+
+        EventManager.Instance.OnInit();
 
         CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);
 

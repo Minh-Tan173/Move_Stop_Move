@@ -71,8 +71,6 @@ public class CharacterVisual : MonoBehaviour
 
     public PantItemData ChangePants(CharacterBase parentChar ,int pantID = -1) {
 
-        Texture2D pantsTexture;
-
         // Get Pant Texture
         if (pantID < 0) {
 
@@ -89,11 +87,13 @@ public class CharacterVisual : MonoBehaviour
             }
         }
 
-        pantsTexture = pantSO.GetPantTexture(pantID);
+        Texture2D pantsTexture = pantSO.GetPantTexture(pantID);
 
         // Setup Pant Visual
         pantsRenderer.GetPropertyBlock(propertyBlock);
+
         propertyBlock.SetTexture(CharacterConst.BASE_MAP, pantsTexture);
+        propertyBlock.SetColor("_BaseColor", Color.white);
         pantsRenderer.SetPropertyBlock(propertyBlock);
 
         return pantSO.GetPantItemData(pantID);
@@ -101,19 +101,20 @@ public class CharacterVisual : MonoBehaviour
 
     public HatItemData ChangeHats(CharacterBase parentChar, int hatID = -1) {
 
+        if (currentHat != null) {
+
+            SimplePool.Despawn(currentHat);
+            currentHat = null;
+        }
+
         if (hatID < 0) {
             
             if (parentChar is Player) {
 
-                if (currentHat != null) {
-
-                    SimplePool.Despawn(currentHat);
-                    currentHat = null;
-                }
-
                 return null;
             }
             else {
+                // If character is Bot
 
                 if (Random.Range(0, 2) == 0) { return null; }
 
@@ -136,19 +137,20 @@ public class CharacterVisual : MonoBehaviour
 
     public void ChangeAccessories(CharacterBase parentChar, int accessoryID = -1) {
 
+        if (currentAccessory != null) {
+
+            SimplePool.Despawn(currentAccessory);
+            currentAccessory = null;
+        }
+
         if (accessoryID < 0) {
 
             if (parentChar is Player) {
 
-                if (currentAccessory != null) {
-
-                    SimplePool.Despawn(currentAccessory);
-                    currentAccessory = null;
-                }
-
                 return;
             }
             else {
+                // If character is Bot
 
                 int totalAccessory = accessorySO.accessoryItemDataList.Count;
                 accessoryID = Random.Range(0, totalAccessory);

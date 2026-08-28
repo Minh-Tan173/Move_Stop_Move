@@ -84,6 +84,12 @@ public class HatItemData : IItemData
         DataManager.ChangeEquippedHatTo(hatID);
     }
 
+    public void Preview(CharacterBase character) {
+
+        character.GetCharacterVisual().ChangeHats(character, hatID);
+    }
+
+
     public bool IsSameID(int hatID) {
         return this.hatID == hatID;
     }

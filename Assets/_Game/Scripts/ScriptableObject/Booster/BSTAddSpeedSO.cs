@@ -7,4 +7,9 @@ public class BSTAddSpeedSO : BoosterSO {
 
         character.GetCharacterStats().AddMoveSpeed(value);
     }
+
+    public override void Remove(CharacterBase character, float value) {
+
+        character.GetCharacterStats().AddMoveSpeed(-value);
+    }
 }

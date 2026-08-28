@@ -931,7 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae381aa10d99c942b4d156a3bb9fe7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasCharacter
-  character: {fileID: 0}
+  character: {fileID: 424574915608694251}
   nameTag: {fileID: 2814119047986500479}
   nameCharText: {fileID: 1885335788894663074}
   indexCharImage: {fileID: 6249294379833287225}

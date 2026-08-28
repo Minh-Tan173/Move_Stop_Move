@@ -10,11 +10,13 @@ public interface IItemData
 
     public int GetItemPrice();
 
-    bool IsOwned();
+    public bool IsOwned();
     
-    bool IsEquipped();
+    public bool IsEquipped();
 
-    void Unlock();
+    public void Unlock();
     
-    void Equip();
+    public void Equip();
+
+    public void Preview(CharacterBase character);
 }

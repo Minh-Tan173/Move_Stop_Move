@@ -82,6 +82,11 @@ public class PantItemData : IItemData{
         DataManager.ChangeEquippedPantTo(pantID);
     }
 
+    public void Preview(CharacterBase character) {
+
+        character.GetCharacterVisual().ChangePants(character, pantID);
+    }
+
     public bool IsSameID(int pantID) {
         return this.pantID == pantID;
     }

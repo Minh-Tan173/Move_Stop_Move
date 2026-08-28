@@ -9,8 +9,6 @@ public class CanvasMainMenu : UICanvas
     [SerializeField] private TextMeshProUGUI warningText;
     [SerializeField] private TextMeshProUGUI cointText;
     [SerializeField] private Setting setting;
-    
-
 
     #region Warning Text
     private const string INVALID_NAME = "Name is Invalid";
@@ -81,6 +79,12 @@ public class CanvasMainMenu : UICanvas
         HideWarningText();
 
         setting.OnInit(this);
+
+        Player player = CharacterManager.Instance.GetPlayer();
+        if (player != null) {
+
+            player.OnInit();
+        }
     }
 
     public void PlayGame() {

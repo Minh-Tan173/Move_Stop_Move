@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f0a664e4e1e3e34b970ef2d1f7eb05d, type: 3}
-  m_Name: BST_AddAttackSize_SO
+  m_Name: BST_Add_AttackSize_SO
   m_EditorClassIdentifier: Assembly-CSharp::BSTAddAttackSizeSO

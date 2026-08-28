@@ -226,4 +226,8 @@ public class CharacterBase : PoolUnit
     public CanvasCharacter GetCanvasCharacter() {
         return this.canvasCharacter;
     }
+
+    public CharacterVisual GetCharacterVisual() {
+        return this.charVisual;
+    }
 }

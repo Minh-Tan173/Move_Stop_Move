@@ -68,6 +68,10 @@ public class AccessoryItemData : IItemData
         return DataManager.GetGameData().GetPlayerData().EquippedAccessoryID == accessoryID;
     }
 
+    public void Preview(CharacterBase character) {
+        character.GetCharacterVisual().ChangeAccessories(character, accessoryID);
+    }
+
     public void Unlock() {
 
         DataManager.UnlockAccess(accessoryID);
