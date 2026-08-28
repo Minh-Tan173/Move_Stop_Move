@@ -75,6 +75,8 @@ public class CanvasMainMenu : UICanvas
 
     public override void SetUp() {
 
+        CameraManager.Instance.SwitchCam(CameraType.MainMenuCamera);
+
         UpdateCointText();
         HideWarningText();
 

@@ -35,6 +35,8 @@ public class CanvasSkinShop : UICanvas
 
     public override void SetUp() {
 
+        CameraManager.Instance.SwitchCam(CameraType.ShopCamera);
+
         currentSelectedItem = null;
 
         HideWarningNoti();

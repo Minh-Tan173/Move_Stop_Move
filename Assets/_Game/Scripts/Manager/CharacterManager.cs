@@ -88,7 +88,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
         charDeactiveList.Remove(player);
         charActiveList.Add(player);
-
+        
         player.OnInit();
 
         UpdateAliveUI();

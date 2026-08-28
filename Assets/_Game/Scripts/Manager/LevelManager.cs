@@ -38,10 +38,6 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnStart() {
 
-        UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
-        UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
-        UIManager.Instance.OpenUI<CanvasMainMenu>();
-
         DataManager.OnInit();
         currentLevelIndex = DataManager.GetGameData().GetPlayerData().CurrentLevelIndex;
 
@@ -50,6 +46,10 @@ public class LevelManager : Singleton<LevelManager>
         CharacterManager.Instance.OnInit();
 
         EventManager.Instance.OnInit();
+
+        UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
+        UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
+        UIManager.Instance.OpenUI<CanvasMainMenu>();
 
         CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);
 
@@ -64,6 +64,8 @@ public class LevelManager : Singleton<LevelManager>
 
         UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
         UIManager.Instance.OpenUI<CanvasHUD>();
+
+        CameraManager.Instance.SwitchCam(CameraType.GamePlayCamera);
 
         ChangeLevelState(LevelState.Playing);
     }

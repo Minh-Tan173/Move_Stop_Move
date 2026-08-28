@@ -175,8 +175,6 @@ public class Player : CharacterBase
         pantID = DataManager.GetGameData().GetPlayerData().EquippedPantID;
         accessoryID = DataManager.GetGameData().GetPlayerData().EquippedAccessoryID;
 
-
-
         HatItemData hat = charVisual.ChangeHats(this, hatID);
         if (hat != null) { hat.ApplyBoosterFor(this); }
 
