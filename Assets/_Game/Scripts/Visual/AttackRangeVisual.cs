@@ -8,6 +8,13 @@ public class AttackRangeVisual : MonoBehaviour
 
     public Transform AttackRangeTF => attackRangeTF != null ? attackRangeTF : (attackRangeTF = transform);
 
+    public void Show() {
+        this.gameObject.SetActive(true);
+    }
+
+    public void Hide() {
+        this.gameObject.SetActive(false);
+    }
 
     public void UpdateVisual() {
 

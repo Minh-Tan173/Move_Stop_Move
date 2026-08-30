@@ -6,6 +6,7 @@ public class CharacterBase : PoolUnit
     [Header("Visual")]
     [SerializeField] protected CharacterAnimator charAnimator;
     [SerializeField] protected CharacterVisual charVisual;
+    [SerializeField] protected AttackRangeVisual attackRangeVisual;
     [SerializeField] private CanvasCharacter canvasCharacter;
 
     [Header("Ref")]
@@ -34,6 +35,15 @@ public class CharacterBase : PoolUnit
         characterCombat.OnInit(this, charAnimator);
         characterStats.OnInit(this);
         charAnimator.ResetAnim();
+
+
+        // Show/Hide Attack Range base on Type
+        if (this is Player) {
+            attackRangeVisual.Show();
+        }
+        else {
+            attackRangeVisual.Hide();
+        }
     }
 
     public virtual void OnGamePlaying() {

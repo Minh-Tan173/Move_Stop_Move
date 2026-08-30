@@ -112,6 +112,9 @@ public class Setting : MonoBehaviour
         currentCoroutine = StartCoroutine(ElementsAnim());
     }
 
+    public void RestartGame() {
+    }
+
     public void MutedMusic(bool isMutedMusic) {
 
     }

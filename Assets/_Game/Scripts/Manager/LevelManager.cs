@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public enum LevelState { Start, Playing, Finish, Complete }
@@ -63,11 +64,15 @@ public class LevelManager : Singleton<LevelManager>
     public void OnPlay() {
 
         UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
-        UIManager.Instance.OpenUI<CanvasHUD>();
+        CanvasHUD canvasHUD = UIManager.Instance.OpenUI<CanvasHUD>();
+        canvasHUD.Invoke(nameof(canvasHUD.ActiveCountdown), 0.5f);
 
         CameraManager.Instance.SwitchCam(CameraType.GamePlayCamera);
+    }
 
-        ChangeLevelState(LevelState.Playing);
+    public void OnRestart() {
+
+        
     }
 
     public void OnFinish() {
@@ -83,7 +88,7 @@ public class LevelManager : Singleton<LevelManager>
         ChangeLevelState(LevelState.Complete);
     }
 
-    private void ChangeLevelState(LevelState levelState) {
+    public void ChangeLevelState(LevelState levelState) {
 
         this.currentState = levelState;
     }
