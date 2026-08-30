@@ -84,7 +84,7 @@ public static class PatrolState
         if (bot.HasMoveTarget()) {
             // On moving to moveTarget
           
-            if (bot.IsAttackTargetValid()) {
+            if (bot.GetCharacterCombat().IsAttackTargetValid()) {
                 // Is target is valid
 
                 bot.ChangeBotStateTo(BotStateSet.Attack);
@@ -98,7 +98,7 @@ public static class PatrolState
             if (sqrDistanceToMoveTarget <= 0.2f * 0.2f) {
                 // Reached move target
 
-                if (bot.HasAttackTarget()) {
+                if (bot.GetCharacterCombat().HasAttackTarget()) {
                     // Last check
 
                     bot.ChangeBotStateTo(BotStateSet.Attack);

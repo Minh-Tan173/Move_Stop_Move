@@ -19,9 +19,10 @@ public class CharacterStats : MonoBehaviour
     private float bodySizeScale;
 
     private CharacterBase character;
-    private CharacterBase Character => character == null ? character = GetComponent<CharacterBase>() : character;
 
-    public void OnInit() {
+    public void OnInit(CharacterBase character) {
+
+        this.character = character;
 
         ResetMoveSpeed();
         ResetAttackSize();
@@ -31,14 +32,14 @@ public class CharacterStats : MonoBehaviour
     #region Attack Range
     public void SetAttackSize(float value) {
 
-        float oldTrueRange = Character.GetTrueAttackRange();
+        float oldTrueRange = character.GetCharacterCombat().GetTrueAttackRange();
 
         attackRange = value;
         attackRangeVisual.UpdateVisual();
 
-        float newTrueRange = Character.GetTrueAttackRange();
+        float newTrueRange = character.GetCharacterCombat().GetTrueAttackRange();
 
-        if (Character is Player) {
+        if (character is Player) {
 
             CameraManager.Instance.UpdateZoom(newTrueRange, oldTrueRange);
         }
@@ -105,7 +106,7 @@ public class CharacterStats : MonoBehaviour
         float newScale = characterStatsSO.GetCharLevelData(currentLevel).GetBodyScale();
         bodySizeScale = 1f + newScale;
 
-        Character.UpdateBodySize(bodySizeScale);
+        character.UpdateBodySize(bodySizeScale);
     }
 
     private bool CanLevelUp() {
@@ -139,7 +140,7 @@ public class CharacterStats : MonoBehaviour
 
         float immortalDuration = characterStatsSO.GetImmortalDuration();
 
-        Character.TriggerImmortal(immortalDuration);
+        character.TriggerImmortal(immortalDuration);
         upgradeVFX.PlayVFX(immortalDuration, bodySizeScale);
     }
 

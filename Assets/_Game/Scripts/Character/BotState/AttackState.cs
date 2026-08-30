@@ -6,16 +6,16 @@ public static class AttackState
 
     public static void OnEnter(Bot bot, CharacterAnimator botAnimator) {
 
-        //bot.ResetAttackCD();
         bot.RollMaxAttackCount();
-        bot.LookAttackTarget();
 
-        bot.Attack();
+        bot.GetCharacterCombat().StartAttack();
 
         bot.ChangeBotSMTo(BotSM.attack);
     }
 
     public static void OnExcute(Bot bot, CharacterAnimator botAnimatort) {
+
+        CharacterCombat botCombat = bot.GetCharacterCombat();
 
         if (!LevelManager.Instance.IsGamePlaying()) {
 
@@ -23,48 +23,34 @@ public static class AttackState
             return;
         }
 
-        if (!bot.IsAttackTargetValid()) {
+        if (!botCombat.IsAttackTargetValid()) {
+            // If attack target not valid anymore
 
             bot.ChangeBotStateTo(BotStateSet.Patrol);
-            return;
+
         }
+        else {
+            // If attack target valid
 
-        if (bot.IsInAttackDuration()) {
-            // In Attack Duration
+            if (botCombat.IsAttacking()) {
+                // Wait until attack animation completed
 
-            bot.UpdateAttackDuration(Time.deltaTime);
+            }
+            else {
 
-            if (bot.IsOverAttackDuration()) {
+                botCombat.UpdateAttackCD(Time.deltaTime);
 
-                bot.FinishAttack();
-                bot.IncreaseAttackCount();
+                if (botCombat.IsOverAttackCD()) {
 
-                if (bot.IsOverMaxAttackCount()) {
-
-                    bot.IgnoreCurrentAttackTarget();
-
-                    bot.ChangeBotStateTo(BotStateSet.Patrol);
-                    return;
+                    botCombat.StartAttack();
                 }
             }
-
-            return;
-        }
-
-
-        // Wait CD between 2 attack behavior
-        bot.UpdateAttackCD(Time.deltaTime);
-
-        if (bot.IsOverAttackCD()) {
-
-            bot.LookAttackTarget();
-            bot.Attack();
         }
     }
 
     public static void OnExit(Bot bot, CharacterAnimator botAnimator) {
 
-        bot.CancelAttack();
+        bot.GetCharacterCombat().InterruptAttack();
         bot.SetAttackTarget(null);
     }
 }

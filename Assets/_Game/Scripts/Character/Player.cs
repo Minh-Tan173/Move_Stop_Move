@@ -45,7 +45,7 @@ public class Player : CharacterBase
         if (isMoving) {
             // Cancel attack when moving
 
-            CancelAttack();
+            characterCombat.InterruptAttack();
             SetAttackTarget(null);
 
             lastAttackTarget = null;
@@ -87,50 +87,40 @@ public class Player : CharacterBase
 
     private void UpdateAttack() {
 
-        if (!IsAttackTargetValid()) {
+        if (!characterCombat.IsAttackTargetValid()) {
 
             SetAttackTarget(null);
-            CancelAttack();
+            characterCombat.InterruptAttack();
 
             return;
         }
 
-        // New target -> attack immediately
-        if (attackTarget != lastAttackTarget) {
+        if (characterCombat.GetAttackTarget() != lastAttackTarget) {
+            // If having New target -> attack immediately
 
-            lastAttackTarget = attackTarget;
+            lastAttackTarget = characterCombat.GetAttackTarget();
 
-            StartAttack();
+            characterCombat.StartAttack();
 
             return;
         }
+        else {
+            // If current target not changed
 
-
-        if (IsInAttackDuration()) {
-
-            UpdateAttackDuration(Time.deltaTime);
-
-            if (IsOverAttackDuration()) {
-
-                FinishAttack();
+            if (characterCombat.IsAttacking()) {
+                // If attack behavior is happening
             }
+            else {
+                // After attack behavior done --> Wait CD
 
-            return;
+                characterCombat.UpdateAttackCD(Time.deltaTime);
+
+                if (characterCombat.IsOverAttackCD()) {
+
+                    characterCombat.StartAttack();
+                }
+            }
         }
-
-
-        UpdateAttackCD(Time.deltaTime);
-
-        if (IsOverAttackCD()) {
-
-            StartAttack();
-        }
-    }
-
-    private void StartAttack() {
-        LookAttackTarget();
-
-        Attack();
     }
 
     private bool IsBlockedByObstacle(Vector3 checkDir) {
@@ -159,7 +149,7 @@ public class Player : CharacterBase
 
         if (lastMovingState && !isMoving) {
 
-            ResetAttackTimers();
+            characterCombat.ResetAttackCD();
         }
 
         lastMovingState = isMoving;
@@ -186,6 +176,7 @@ public class Player : CharacterBase
 
     public override void OnDespawn() {
 
+        isDead = true;
     }
 
     public override bool IsMoving() {

@@ -39,7 +39,7 @@ public class BulletBase : PoolUnit
         Vector3 forward = bulletOwner.UnitTF.forward;
         moveDir = new Vector3(forward.x, 0f, forward.z).normalized;
 
-        sqrAttackRange = bulletOwner.GetTrueAttackRange() * bulletOwner.GetTrueAttackRange();
+        sqrAttackRange = bulletOwner.GetCharacterCombat().GetTrueAttackRange() * bulletOwner.GetCharacterCombat().GetTrueAttackRange();
     }
 
     public virtual void OnDespawn() {

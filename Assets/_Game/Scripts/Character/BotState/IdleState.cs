@@ -13,7 +13,7 @@ public static class IdleState
 
     public static void OnExcute(Bot bot, CharacterAnimator botAnimator) {
 
-        if (bot.HasAttackTarget()) {
+        if (bot.GetCharacterCombat().HasAttackTarget()) {
 
             bot.ChangeBotStateTo(BotStateSet.Attack);
             return;

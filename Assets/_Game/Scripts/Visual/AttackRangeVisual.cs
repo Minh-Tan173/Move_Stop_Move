@@ -11,7 +11,7 @@ public class AttackRangeVisual : MonoBehaviour
 
     public void UpdateVisual() {
 
-        float size = character.GetTrueAttackRange();
+        float size = character.GetCharacterCombat().GetTrueAttackRange();
         AttackRangeTF.localScale = Vector3.one * size;
     }
 }

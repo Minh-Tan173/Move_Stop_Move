@@ -112,8 +112,6 @@ public class CameraManager : Singleton<CameraManager>
 
         if (target == null || oldValue <= 0f) { return; }
 
-        Debug.Log("Update Zoom");
-
         targetOffset *= currentValue / oldValue;
     }
 

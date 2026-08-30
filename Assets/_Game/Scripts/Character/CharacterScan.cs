@@ -24,7 +24,7 @@ public class CharacterScan : MonoBehaviour
 
     private void Update() {
 
-        if (!character.CanScanTarget()) return;
+        if (!character.GetCharacterCombat().CanScanTarget()) { return; }
 
         elapsedTime += Time.deltaTime;
 
@@ -38,7 +38,7 @@ public class CharacterScan : MonoBehaviour
 
     private void ScanTargetProgress() {
 
-        charCollArray = Physics.OverlapSphere(character.UnitTF.position, character.GetTrueAttackRange(), charLayer);
+        charCollArray = Physics.OverlapSphere(character.UnitTF.position, character.GetCharacterCombat().GetTrueAttackRange(), charLayer);
 
         CharacterBase target = GetNearestTarget(charCollArray);
 
@@ -72,10 +72,10 @@ public class CharacterScan : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
 
-        if (character == null) return;
+        if (character == null || character.GetCharacterStats() == null) return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(character.UnitTF.position, character.GetTrueAttackRange());
+        Gizmos.DrawWireSphere(character.UnitTF.position, character.GetCharacterStats().GetAttackRange());
     }
 #endif
 }

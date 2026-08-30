@@ -48,18 +48,16 @@ public class Bot : CharacterBase
 
         base.OnInit();
 
+        characterCombat.OnAttackCompleted += Bot_OnAttackCompleted;
+
         ActiveNavMesh();
 
         moveTarget = Vector3.zero;
-        attackTarget = null;
 
         isDead = false;
 
         elapsedIdleDuration = LevelManager.Instance.IsGamePlaying() ? 0f : idleDuration;
         ChangeBotStateTo(BotStateSet.Idle);
-
-        // Weapon Prepared
-        charVisual.ChangeWeapon(currentWeaponType);
 
         // Visual
         PantItemData pant = charVisual.ChangePants(this);
@@ -73,6 +71,8 @@ public class Bot : CharacterBase
 
     public override void OnDespawn() {
 
+        characterCombat.OnAttackCompleted -= Bot_OnAttackCompleted;
+
         isDead = true;
 
         currentState?.OnExit(this, charAnimator);
@@ -83,6 +83,18 @@ public class Bot : CharacterBase
 
         DeactiveNavMesh();
     }
+
+    private void Bot_OnAttackCompleted(object sender, EventArgs e) {
+
+        IncreaseAttackCount();
+
+        if (IsOverMaxAttackCount()) {
+
+            IgnoreCurrentAttackTarget();
+            ChangeBotStateTo(BotStateSet.Patrol);
+        }
+    }
+
 
     private void Update() {
 
@@ -191,10 +203,6 @@ public class Bot : CharacterBase
         return moveTarget != Vector3.zero;
     }
 
-    public bool HasAttackTarget() {
-        return attackTarget != null;
-    }
-
     public Vector3 GetMoveTarget() {
         return this.moveTarget;
     }
@@ -215,7 +223,7 @@ public class Bot : CharacterBase
 
     public override void SetAttackTarget(CharacterBase target) {
 
-        attackTarget = target;
+        base.SetAttackTarget(target);
 
         if (target != null) {
 
@@ -235,8 +243,8 @@ public class Bot : CharacterBase
 
     public void IgnoreCurrentAttackTarget() {
 
-        ignoredAttackTarget = attackTarget;
-        attackTarget = null;
+        ignoredAttackTarget = characterCombat.GetAttackTarget();
+        SetAttackTarget(null);
     }
 
     public void UpdateElapsedIdleDuration(float time) {

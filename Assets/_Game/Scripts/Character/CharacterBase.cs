@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CharacterBase : PoolUnit
 {
@@ -7,34 +8,17 @@ public class CharacterBase : PoolUnit
     [SerializeField] protected CharacterVisual charVisual;
     [SerializeField] private CanvasCharacter canvasCharacter;
 
-    [Header("Attack Behavior")]
-    [SerializeField] protected bool canScanWhileMoving;
-    [SerializeField] protected WeaponSO weaponSO;
-    [SerializeField] protected float attackDuration;
-    [SerializeField] protected Transform shootingPoint;
-
     [Header("Ref")]
     [SerializeField] protected CharacterStats characterStats;
+    [SerializeField] protected CharacterCombat characterCombat;
     [SerializeField] protected CapsuleCollider capsuleCollider;
-
-    [Header("TEST -- REMOVE AFTER")]
-    [SerializeField] protected WeaponType currentWeaponType; // TẠM THỜI
 
     private float immortalEndTime;
     protected bool isDead;
 
-    #region Attack Behavior
-    protected float elapsedAttackDuration;
-    protected float elapsedAttackCD;
-    protected bool isInAttackDuration;
-    protected CharacterBase attackTarget;
-    #endregion
-
-    #region Navmesh Setup
     private float defaultColliderHeight;
     private float defaultColliderRadius;
     private Vector3 defaultColliderCenter;
-    #endregion
 
     private void Awake() {
 
@@ -47,7 +31,8 @@ public class CharacterBase : PoolUnit
 
         immortalEndTime = 0f;
 
-        characterStats.OnInit();
+        characterCombat.OnInit(this, charAnimator);
+        characterStats.OnInit(this);
         charAnimator.ResetAnim();
     }
 
@@ -57,10 +42,6 @@ public class CharacterBase : PoolUnit
 
     public virtual void OnDespawn() {
         Debug.LogError("TRIGGER BASE CHARACTER!!");
-    }
-
-    public virtual void SetAttackTarget(CharacterBase target) {
-        attackTarget = target;
     }
 
     public virtual bool IsMoving() {
@@ -77,8 +58,12 @@ public class CharacterBase : PoolUnit
         capsuleCollider.center = defaultColliderCenter * newSize;
     }
 
+    public virtual void SetAttackTarget(CharacterBase target) {
+
+        characterCombat.SetAttackTarget(target);
+    }
     public virtual bool CanSelectTarget(CharacterBase target) {
-        return IsTargetAvailable(target);
+        return characterCombat.IsTargetAvailable(target);
     }
 
     public void Idle() {
@@ -111,110 +96,6 @@ public class CharacterBase : PoolUnit
 
     #endregion
 
-    #region Combat
-    public void Attack() {
-
-        isInAttackDuration = true;
-        ResetAttackTimers();
-
-        charAnimator.TriggerAttackAnim();
-    }
-
-    public void Throw() {
-
-        BulletBase bulletPrefab = weaponSO.GetBulletPrefab(currentWeaponType);
-        BulletBase bullet = SimplePool.Spawn<BulletBase>(bulletPrefab, shootingPoint.position, Quaternion.identity);
-        bullet.ActiveThrow(this);
-    }
-
-    public void UpdateAttackDuration(float time) {
-
-        elapsedAttackDuration += time;
-    }
-
-    public bool IsOverAttackDuration() {
-
-        return elapsedAttackDuration >= attackDuration;
-    }
-
-    public bool IsInAttackDuration() {
-
-        return isInAttackDuration;
-    }
-
-    public void FinishAttack() {
-
-        isInAttackDuration = false;
-        ResetAttackTimers();
-
-        Throw();
-    }
-
-    public void CancelAttack() {
-
-        isInAttackDuration = false;
-        ResetAttackTimers();
-    }
-
-    public void UpdateAttackCD(float time) {
-        elapsedAttackCD += time;
-    }
-
-    public bool IsOverAttackCD() {
-        return elapsedAttackCD >= characterStats.GetAttackCD(); 
-    }
-
-    public void ResetAttackTimers() {
-
-        elapsedAttackDuration = 0f;
-        elapsedAttackCD = 0f;
-    }
-
-    public float GetTrueAttackRange() {
-        return this.characterStats.GetAttackRange();
-    }
-
-    public void LookAttackTarget() {
-
-        if (attackTarget == null) { return; }
-
-        Vector3 direction = attackTarget.UnitTF.position - UnitTF.position;
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude <= 0.2f * 0.2f) { return; }
-
-        UnitTF.rotation = Quaternion.LookRotation(direction);
-    }
-    #endregion
-
-    public bool IsTargetAvailable(CharacterBase target) {
-        // if target is null, dead or hide
-        return target != null && target != this && !target.IsDead() && target.gameObject.activeSelf;
-    }
-
-    public bool IsAttackTargetValid() {
-
-        // Is target not still availble
-        if (!IsTargetAvailable(attackTarget)) { return false; }
-
-        // Is target not still in attack range
-        float sqrDistanceToTarget = (attackTarget.UnitTF.position - this.UnitTF.position).sqrMagnitude;
-        float sqrTrueAttackRange = GetTrueAttackRange() * GetTrueAttackRange();
-
-        return sqrDistanceToTarget <= sqrTrueAttackRange;
-    }
-
-    public bool CanScanTarget() {
-
-        if (canScanWhileMoving) {
-
-            return IsMoving() && !IsAttackTargetValid();
-        }
-
-
-        return !IsMoving() && !IsAttackTargetValid();
-    }
-
     public bool IsDead() {
         return isDead;
     }
@@ -223,11 +104,15 @@ public class CharacterBase : PoolUnit
         return characterStats;
     }
 
-    public CanvasCharacter GetCanvasCharacter() {
-        return this.canvasCharacter;
+    public CharacterCombat GetCharacterCombat() {
+        return characterCombat;
     }
 
     public CharacterVisual GetCharacterVisual() {
         return this.charVisual;
+    }
+
+    public CanvasCharacter GetCanvasCharacter() {
+        return this.canvasCharacter;
     }
 }

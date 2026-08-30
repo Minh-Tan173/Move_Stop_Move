@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour {
 
+    [SerializeField] private CharacterCombat characterCombat;
     [SerializeField] private Animator animator;
 
     private void ResetAllTriggers() {
@@ -10,6 +11,16 @@ public class CharacterAnimator : MonoBehaviour {
         animator.ResetTrigger(CharacterConst.ATTACK_ANIM);
         animator.ResetTrigger(CharacterConst.DEAD_ANIM);
     }
+
+    #region Animation Event
+    public void AnimEventThrow() {
+        characterCombat.Throw();
+    }
+
+    public void AnimEventCompleteAttack() {
+        characterCombat.CompleteAttack();
+    }
+    #endregion
 
     public void ResetAnim() {
 
