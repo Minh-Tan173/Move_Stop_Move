@@ -2,8 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PowerUpType {
+
+    AddSpeed,
+    AddAttackRange,
+    SecretAbility
+}
+
 public class PowerUpBase : PoolUnit
 {
+    [Header("Power Up Type")]
+    [SerializeField] private PowerUpType powerUpType;
+
     [Header("Ref")]
     [SerializeField] private Transform powerUpVisual;
     [SerializeField] private TrailRenderer trailVFX;
@@ -30,6 +40,12 @@ public class PowerUpBase : PoolUnit
 
         if (currentCharInteract == null) {
             // If can interact with character
+
+            if (character.IsHavingThisPowerUp(powerUpType)) {
+
+                PowerUpBase oldPowerUp = character.GetPowerUp(powerUpType);
+                oldPowerUp.ReleaseBooster();
+            }
 
             canInteract = false;
 
@@ -109,9 +125,10 @@ public class PowerUpBase : PoolUnit
         }
     }
 
-    protected void ReleaseBooster() {
+    public void ReleaseBooster() {
 
         RemoveBoosterFor(currentCharInteract);
+        currentCharInteract.UnregisterPowerUp(powerUpType);
 
         currentCharInteract = null;
 

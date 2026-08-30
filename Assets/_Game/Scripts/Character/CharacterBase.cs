@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterBase : PoolUnit
@@ -21,6 +22,8 @@ public class CharacterBase : PoolUnit
     private float defaultColliderRadius;
     private Vector3 defaultColliderCenter;
 
+    private Dictionary<PowerUpType, PowerUpBase> appliedPowerupDict = new Dictionary<PowerUpType, PowerUpBase>();
+
     private void Awake() {
 
         defaultColliderHeight = capsuleCollider.height;
@@ -30,20 +33,15 @@ public class CharacterBase : PoolUnit
 
     public virtual void OnInit() {
 
+        appliedPowerupDict.Clear();
+
         immortalEndTime = 0f;
 
         characterCombat.OnInit(this, charAnimator);
         characterStats.OnInit(this);
         charAnimator.ResetAnim();
 
-
-        // Show/Hide Attack Range base on Type
-        if (this is Player) {
-            attackRangeVisual.Show();
-        }
-        else {
-            attackRangeVisual.Hide();
-        }
+        attackRangeVisual.OnInit();
     }
 
     public virtual void OnGamePlaying() {
@@ -104,10 +102,34 @@ public class CharacterBase : PoolUnit
         charAnimator.TriggerDeadAnim();
     }
 
-    #endregion
-
     public bool IsDead() {
         return isDead;
+    }
+
+    #endregion
+
+    public void RegisterPowerUp(PowerUpType powerUpType, PowerUpBase powerUp) {
+
+        appliedPowerupDict[powerUpType] = powerUp;
+    }
+
+    public void UnregisterPowerUp(PowerUpType powerUpType) {
+
+        appliedPowerupDict.Remove(powerUpType);
+    }
+
+    public bool IsHavingThisPowerUp(PowerUpType powerUpType) {
+
+        return appliedPowerupDict.ContainsKey(powerUpType);
+    }
+
+    public PowerUpBase GetPowerUp(PowerUpType powerUpType) {
+
+        if (!appliedPowerupDict.ContainsKey(powerUpType)) {
+            return null;
+        }
+
+        return appliedPowerupDict[powerUpType];
     }
 
     public CharacterStats GetCharacterStats() {
@@ -120,6 +142,10 @@ public class CharacterBase : PoolUnit
 
     public CharacterVisual GetCharacterVisual() {
         return this.charVisual;
+    }
+
+    public AttackRangeVisual GetAttackRangeVisual() {
+        return this.attackRangeVisual;
     }
 
     public CanvasCharacter GetCanvasCharacter() {

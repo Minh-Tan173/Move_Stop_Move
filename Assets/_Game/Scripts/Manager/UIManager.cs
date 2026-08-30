@@ -90,7 +90,6 @@ public class UIManager : Singleton<UIManager>
             T prefab = GetUIPrefab<T>();
             T canvas = Instantiate(prefab, parent);
             canvasActiveDict[typeof(T)] = canvas;
-
         }
 
         return canvasActiveDict[typeof(T)] as T;

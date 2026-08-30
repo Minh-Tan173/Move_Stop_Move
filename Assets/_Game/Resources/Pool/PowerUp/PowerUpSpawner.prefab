@@ -4891,6 +4891,7 @@ MonoBehaviour:
   timedPowerUpPrefabList:
   - {fileID: 7077274137425538541, guid: 7d4119b35611adf48ac4f143296fe3c2, type: 3}
   - {fileID: 7077274137425538541, guid: 062640659d22be24aaee177942398437, type: 3}
+  - {fileID: 7077274137425538541, guid: 986bae140fa79f9478e4c9c5b73e115e, type: 3}
   chargePowerUpPrefabList: []
 --- !u!1 &7449758159061652399
 GameObject:

@@ -52,11 +52,7 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Armature|all' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:LeftHandThumb1' has translation
-      animation that will be discarded.\n\t'mixamorig:RightHandThumb1' has translation
-      animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -72,7 +68,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Armature|all
-      internalID: 0
+      internalID: -2250548791150738156
       firstFrame: 129
       lastFrame: 263
       wrapMode: 0
@@ -101,7 +97,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Run
       takeName: Armature|all
-      internalID: 0
+      internalID: 9095686598229849690
       firstFrame: 1
       lastFrame: 20
       wrapMode: 0
@@ -130,7 +126,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack
       takeName: Armature|all
-      internalID: 0
+      internalID: 6720303635017113406
       firstFrame: 24
       lastFrame: 57
       wrapMode: 0
@@ -151,7 +147,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.33333334
+        functionName: AnimEventThrow
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.969697
+        functionName: AnimEventCompleteAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -159,7 +169,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Dead
       takeName: Armature|all
-      internalID: 0
+      internalID: 8273325049105940540
       firstFrame: 60
       lastFrame: 126
       wrapMode: 0
@@ -188,7 +198,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Dance
       takeName: Armature|Dance
-      internalID: 0
+      internalID: 5567560465902106206
       firstFrame: 0
       lastFrame: 470
       wrapMode: 0
@@ -217,7 +227,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Win
       takeName: Armature|Win
-      internalID: 0
+      internalID: 4821609917503249430
       firstFrame: 0
       lastFrame: 466
       wrapMode: 0
@@ -246,7 +256,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Ulti
       takeName: Armature|Attack3
-      internalID: 0
+      internalID: 1679763308670167783
       firstFrame: 0
       lastFrame: 47
       wrapMode: 0

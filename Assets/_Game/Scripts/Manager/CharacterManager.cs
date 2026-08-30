@@ -20,7 +20,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private Player player;
     private int totalBotSpawned;
-        
+
+    private int currentCharacterOnField;
 
     public void OnInit() {
 
@@ -29,6 +30,9 @@ public class CharacterManager : Singleton<CharacterManager>
         ResetTotalBotSpawned();
 
         player = SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
+
+        UpdateAliveUI(maxBotCountInLevel + 1); // Include Player
+        UIManager.Instance.CloseUI<CanvasHUD>(0f);
     }
 
     public void OnGamePlaying() {
@@ -40,13 +44,11 @@ public class CharacterManager : Singleton<CharacterManager>
 
         for (int i = charActiveList.Count - 1; i >= 0; i--) {
 
-            DeadCharacter(charActiveList[i], updateUI: false);
+            DeadCharacter(charActiveList[i]);
         }
 
         charActiveList.Clear();
         charDeactiveList.Clear();
-
-        UpdateAliveUI();
     }
 
     private void Update() {
@@ -66,11 +68,10 @@ public class CharacterManager : Singleton<CharacterManager>
         }
     }
 
-    private void UpdateAliveUI() {
+    private void UpdateAliveUI(int aliveValue) {
 
-        if (!UIManager.Instance.IsUIOpened<CanvasHUD>()) return;
-
-        UIManager.Instance.GetUI<CanvasHUD>().UpdateAliveLeftText(charActiveList.Count);
+        currentCharacterOnField = aliveValue;
+        UIManager.Instance.GetUI<CanvasHUD>().UpdateAliveLeftText(currentCharacterOnField);
     }
 
     private void IncreaseTotalBotSpawned() {
@@ -91,8 +92,6 @@ public class CharacterManager : Singleton<CharacterManager>
         
         player.OnInit();
 
-        UpdateAliveUI();
-
         return player as Player;
     }
 
@@ -110,9 +109,6 @@ public class CharacterManager : Singleton<CharacterManager>
 
         charDeactiveList.Remove(bot);
         charActiveList.Add(bot);
-
-
-        UpdateAliveUI();
     }
 
     private void DespawnCharacter(CharacterBase character) {
@@ -126,7 +122,7 @@ public class CharacterManager : Singleton<CharacterManager>
         SimplePool.Despawn(character);
     }
 
-    public void DeadCharacter(CharacterBase character, bool updateUI = true) {
+    public void DeadCharacter(CharacterBase character) {
 
         UIManager.Instance.GetUI<CanvasOffScreenIndicator>().UnRegister(character.GetCanvasCharacter());
 
@@ -137,7 +133,7 @@ public class CharacterManager : Singleton<CharacterManager>
         charActiveList.Remove(character);
         charDeactiveList.Add(character);
 
-        if (updateUI) { UpdateAliveUI(); }
+        UpdateAliveUI(currentCharacterOnField - 1);
     }
 
     public List<CharacterBase> GetActiveCharacterList() {
