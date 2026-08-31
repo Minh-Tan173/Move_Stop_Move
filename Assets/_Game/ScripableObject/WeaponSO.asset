@@ -31,3 +31,9 @@ MonoBehaviour:
     prefabBullet: {fileID: 7648629883111501040, guid: ebe5ea87309ae6f4ebf8b1b873068488, type: 3}
     goldPrice: 5
     sprite: {fileID: 0}
+  - weaponType: 3
+    name: Boomerang
+    prefab: {fileID: 8793005263759760769, guid: 5c347a8393453514c843d08c8b416fd3, type: 3}
+    prefabBullet: {fileID: 2676541372853128188, guid: 975e6ebd41e3f164e8e9efa5b1225370, type: 3}
+    goldPrice: 5
+    sprite: {fileID: 0}

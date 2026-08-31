@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CharacterVisual : MonoBehaviour
 {
@@ -64,9 +65,13 @@ public class CharacterVisual : MonoBehaviour
     public void ChangeWeapon(WeaponType weaponType) {
 
         PoolUnit weaponPrefab = weaponSO.GetWeaponPrefab(weaponType);
-        
+
+        Debug.Log($"spawn {weaponPrefab.gameObject.name}");
+
         currentWeapon = SimplePool.Spawn<PoolUnit>(weaponPrefab, rightHandPlacedHolder.position, Quaternion.identity);
-        ResetItem(currentWeapon);
+        currentWeapon.UnitTF.SetParent(rightHandPlacedHolder);
+        currentWeapon.UnitTF.localPosition = Vector3.zero;
+        currentWeapon.UnitTF.localRotation = Quaternion.identity;
     }
 
     public PantItemData ChangePants(CharacterBase parentChar ,int pantID = -1) {

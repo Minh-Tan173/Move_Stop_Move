@@ -21,6 +21,8 @@ public class ObstacleFade : MonoBehaviour
     }
 
     private void Update() {
+
+        if (!LevelManager.Instance.IsGamePlaying()) { return; }
         if (obstacleDict.Count == 0) return;
 
         CheckObstacle();

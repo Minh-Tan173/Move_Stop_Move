@@ -112,6 +112,7 @@ public class CanvasHUD : UICanvas
 
     public void ShowEventNoti() {
 
+        eventNoti.gameObject.SetActive(true);
         eventNoti.ShowElement();
         eventNoti.Invoke(nameof(eventNoti.HideElement), 2f);
     }

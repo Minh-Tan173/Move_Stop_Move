@@ -113,6 +113,8 @@ public class Setting : MonoBehaviour
     }
 
     public void RestartGame() {
+
+        LevelManager.Instance.OnRestart();
     }
 
     public void MutedMusic(bool isMutedMusic) {

@@ -59,6 +59,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnDespawn() {
 
+        CharacterManager.Instance.OnDespawn();
     }
     
     public void OnPlay() {
@@ -72,7 +73,16 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnRestart() {
 
+        OnDespawn();
+
+        OnStart();
+        UIManager.Instance.CloseUI<CanvasMainMenu>(0f);
         
+        CanvasLoading canvasLoading = UIManager.Instance.OpenUI<CanvasLoading>();
+        canvasLoading.ActiveLoading(() => {
+
+            OnPlay();
+        });
     }
 
     public void OnFinish() {
