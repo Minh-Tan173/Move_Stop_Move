@@ -45,6 +45,9 @@ public class EventManager : Singleton<EventManager> {
 
             hasSpawnedTimedPowerUp = !hasSpawnedTimedPowerUp;
             elapsedPowerUpEvent -= powerUpSpawnEventDuration;
+
+            // UI Visualize
+            UIManager.Instance.GetUI<CanvasHUD>().ShowEventNoti();
         }
     }
 }

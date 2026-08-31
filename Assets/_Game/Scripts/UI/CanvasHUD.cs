@@ -10,6 +10,9 @@ public class CanvasHUD : UICanvas
     [SerializeField] private TextMeshProUGUI aliveLeftText;
     [SerializeField] private TextMeshProUGUI countdownText;
 
+    [Header("Event Noti")]
+    [SerializeField] private UIElementAnim eventNoti;
+
     [Header("Setting")]
     [SerializeField] private Setting setting;
 
@@ -105,5 +108,11 @@ public class CanvasHUD : UICanvas
     public void UpdateAliveLeftText(int aliveLeftValue) {
 
         aliveLeftText.text = $"Alive: {aliveLeftValue}";
+    }
+
+    public void ShowEventNoti() {
+
+        eventNoti.ShowElement();
+        eventNoti.Invoke(nameof(eventNoti.HideElement), 2f);
     }
 }
