@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7770719484479233595}
-  - component: {fileID: 2076741837943682087}
+  - component: {fileID: 6113298373485372356}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7346188815143847878}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2076741837943682087
+--- !u!114 &6113298373485372356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +42,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 911965421911048115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca5caf276a790347a57c4a06b301c80, type: 3}
+  m_Script: {fileID: 11500000, guid: bc190633e577dd946aee22a937c1a0b2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PoolUnit
-  prefabKey: {fileID: 2076741837943682087}
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  prefabKey: {fileID: 6113298373485372356}
+  weaponVisual: {fileID: 7346188815143847878}
+  weaponMesh: {fileID: 762288127897203040}
 --- !u!1 &1006579043062924477
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,8 +114,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8659303113356582851, guid: 996cd43ced64bac4cae730b2def88661, type: 3}
-  - {fileID: 8852321937590121897, guid: 5040eef3eae504e48a15798fb8241766, type: 3}
+  - {fileID: 2100000, guid: 82bf9e71090832e44a3d047b634c12c2, type: 2}
+  - {fileID: 2100000, guid: 82bf9e71090832e44a3d047b634c12c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

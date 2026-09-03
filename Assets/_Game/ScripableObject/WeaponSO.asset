@@ -15,25 +15,75 @@ MonoBehaviour:
   weaponItemDataList:
   - weaponType: 0
     name: Knife
-    prefab: {fileID: 2076741837943682087, guid: f7894f168aca4e647ad57f8df39c09e0, type: 3}
-    prefabBullet: {fileID: -6259602838788733098, guid: 743d6ecfe49de5e4db8b70ce753c637a, type: 3}
-    goldPrice: 5
-    sprite: {fileID: 0}
+    price: 0
+    prefab: {fileID: 6113298373485372356, guid: f7894f168aca4e647ad57f8df39c09e0, type: 3}
+    bulletPrefab: {fileID: -6259602838788733098, guid: 743d6ecfe49de5e4db8b70ce753c637a, type: 3}
+    weaponSkinDataList:
+    - skinID: 0
+      skinTexture: {fileID: 2800000, guid: b5bf97cae3505ec4083b45f729900f51, type: 3}
+      skinSprite: {fileID: 21300000, guid: b37b786c1609fee47916e3e11dd440ce, type: 3}
+      price: 0
+      boosterDataList: []
+    - skinID: 1
+      skinTexture: {fileID: 2800000, guid: ee4954b911c15be45ab9c8353ddb9b88, type: 3}
+      skinSprite: {fileID: 21300000, guid: f787321060a726f46b13eac816d1b62f, type: 3}
+      price: 100
+      boosterDataList: []
   - weaponType: 1
-    name: Knife
-    prefab: {fileID: 0}
-    prefabBullet: {fileID: -6259602838788733098, guid: 743d6ecfe49de5e4db8b70ce753c637a, type: 3}
-    goldPrice: 5
-    sprite: {fileID: 0}
+    name: Hammer
+    price: 100
+    prefab: {fileID: 5206820687876484970, guid: 22d1d4f0c70073e4185fc2d8d17f50dc, type: 3}
+    bulletPrefab: {fileID: 7648629883111501040, guid: babc9fba4b773af4ca03047743a682bd, type: 3}
+    weaponSkinDataList:
+    - skinID: 0
+      skinTexture: {fileID: 2800000, guid: 3323c55a6b693d845961ec59e91374aa, type: 3}
+      skinSprite: {fileID: 21300000, guid: b12134b0f08565446a56ebb141fb5665, type: 3}
+      price: 0
+      boosterDataList: []
+    - skinID: 1
+      skinTexture: {fileID: 2800000, guid: fe300ea28121c974ca72de4d04887adb, type: 3}
+      skinSprite: {fileID: 21300000, guid: a2907af93708d684b98f7bf701ff6fa8, type: 3}
+      price: 150
+      boosterDataList: []
   - weaponType: 2
     name: Axe
-    prefab: {fileID: 8857496150109122371, guid: d080acf12f3e85e4291864bc85b1abe8, type: 3}
-    prefabBullet: {fileID: 7648629883111501040, guid: ebe5ea87309ae6f4ebf8b1b873068488, type: 3}
-    goldPrice: 5
-    sprite: {fileID: 0}
+    price: 200
+    prefab: {fileID: 5206820687876484970, guid: d080acf12f3e85e4291864bc85b1abe8, type: 3}
+    bulletPrefab: {fileID: 7648629883111501040, guid: ebe5ea87309ae6f4ebf8b1b873068488, type: 3}
+    weaponSkinDataList:
+    - skinID: 0
+      skinTexture: {fileID: 2800000, guid: 2f97f8f430958b9488671025e08fcd66, type: 3}
+      skinSprite: {fileID: 0}
+      price: 0
+      boosterDataList: []
+    - skinID: 1
+      skinTexture: {fileID: 2800000, guid: 77f4d3953779f3f4c95973ca7e19c96b, type: 3}
+      skinSprite: {fileID: 0}
+      price: 200
+      boosterDataList: []
+    - skinID: 2
+      skinTexture: {fileID: 2800000, guid: 55544310836d7f74f8b94cc9431c6041, type: 3}
+      skinSprite: {fileID: 0}
+      price: 200
+      boosterDataList: []
+    - skinID: 3
+      skinTexture: {fileID: 2800000, guid: 9f39d5b464739214c972e2097bdf1ed5, type: 3}
+      skinSprite: {fileID: 0}
+      price: 200
+      boosterDataList: []
   - weaponType: 3
     name: Boomerang
-    prefab: {fileID: 8793005263759760769, guid: 5c347a8393453514c843d08c8b416fd3, type: 3}
-    prefabBullet: {fileID: 2676541372853128188, guid: 975e6ebd41e3f164e8e9efa5b1225370, type: 3}
-    goldPrice: 5
-    sprite: {fileID: 0}
+    price: 300
+    prefab: {fileID: 6622308504106968296, guid: 5c347a8393453514c843d08c8b416fd3, type: 3}
+    bulletPrefab: {fileID: 2676541372853128188, guid: 975e6ebd41e3f164e8e9efa5b1225370, type: 3}
+    weaponSkinDataList:
+    - skinID: 0
+      skinTexture: {fileID: 2800000, guid: dd589d5d7d6b66747aa154f01a18c01a, type: 3}
+      skinSprite: {fileID: 0}
+      price: 0
+      boosterDataList: []
+    - skinID: 1
+      skinTexture: {fileID: 2800000, guid: 442287b825e5db34e8f0980050254e25, type: 3}
+      skinSprite: {fileID: 0}
+      price: 300
+      boosterDataList: []

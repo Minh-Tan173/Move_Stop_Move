@@ -19,7 +19,7 @@ public class CharacterVisual : MonoBehaviour
     [SerializeField] private Transform leftHandPlaceholder;
 
     private MaterialPropertyBlock propertyBlock;
-    private PoolUnit currentWeapon;
+    private Weapon currentWeapon;
     private PoolUnit currentHat;
     private PoolUnit currentAccessory;
 
@@ -62,16 +62,28 @@ public class CharacterVisual : MonoBehaviour
         
     }
 
-    public void ChangeWeapon(WeaponType weaponType) {
+    public void ChangeWeapon(WeaponType weaponType, int skinID) {
 
-        PoolUnit weaponPrefab = weaponSO.GetWeaponPrefab(weaponType);
+        if (currentWeapon != null) {
+            // Holding old weapon before
+
+            SimplePool.Despawn(currentWeapon);
+            currentWeapon = null;
+        }
+
+        Weapon weaponPrefab = weaponSO.GetWeaponPrefab(weaponType);
 
         Debug.Log($"spawn {weaponPrefab.gameObject.name}");
 
-        currentWeapon = SimplePool.Spawn<PoolUnit>(weaponPrefab, rightHandPlacedHolder.position, Quaternion.identity);
+        currentWeapon = SimplePool.Spawn<Weapon>(weaponPrefab, rightHandPlacedHolder.position, Quaternion.identity);
         currentWeapon.UnitTF.SetParent(rightHandPlacedHolder);
         currentWeapon.UnitTF.localPosition = Vector3.zero;
         currentWeapon.UnitTF.localRotation = Quaternion.identity;
+
+
+        WeaponSkinData skinData = weaponSO.GetWeaponSkinData(weaponType, skinID);
+
+        currentWeapon.ApplySkin(skinData.GetTexture());
     }
 
     public PantItemData ChangePants(CharacterBase parentChar ,int pantID = -1) {

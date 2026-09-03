@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6921166080426837345}
-  - component: {fileID: 7648629883111501040}
   - component: {fileID: 6185652891773791494}
+  - component: {fileID: 7648629883111501040}
   m_Layer: 0
   m_Name: AxeBullet
   m_TagString: Untagged
@@ -34,21 +34,6 @@ Transform:
   - {fileID: 8055222770818051462}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7648629883111501040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6344631730107551529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c43af8359b4c44e8c1433c26bbdd3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HammerBullet
-  prefabKey: {fileID: 7648629883111501040}
-  moveSpeed: 5
-  rotateSpeed: 800
 --- !u!65 &6185652891773791494
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70,6 +55,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55808556, y: 0.10828298, z: 1}
   m_Center: {x: -0.07013255, y: -0.006615132, z: 0}
+--- !u!114 &7648629883111501040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344631730107551529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c43af8359b4c44e8c1433c26bbdd3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HammerBullet
+  prefabKey: {fileID: 7648629883111501040}
+  moveSpeed: 5
+  weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
+  bulletRenderer: {fileID: 8055222770815627110}
+  rotateSpeed: 800
 --- !u!1001 &8055222770817660678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125,16 +127,21 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: 1c040a6e7d23e904b87e93fb9c66a037, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 8486936951020155453, guid: 7d22ba4646139ed499c8d6f6cba73b3e, type: 3}
+      objectReference: {fileID: 2100000, guid: 06d6d9d5d28b2ed4e9333abc6828248a, type: 2}
     - target: {fileID: 2300000, guid: 1c040a6e7d23e904b87e93fb9c66a037, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: -2063684936051385217, guid: 04aebbebac684444abecd94a90d29bec, type: 3}
+      objectReference: {fileID: 2100000, guid: 06d6d9d5d28b2ed4e9333abc6828248a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c040a6e7d23e904b87e93fb9c66a037, type: 3}
+--- !u!23 &8055222770815627110 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 1c040a6e7d23e904b87e93fb9c66a037, type: 3}
+  m_PrefabInstance: {fileID: 8055222770817660678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8055222770818051462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 1c040a6e7d23e904b87e93fb9c66a037, type: 3}

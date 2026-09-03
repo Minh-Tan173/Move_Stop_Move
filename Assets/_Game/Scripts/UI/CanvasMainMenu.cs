@@ -102,6 +102,12 @@ public class CanvasMainMenu : UICanvas
         
     }
 
+    public void OnWeaponShop() {
+
+        UIManager.Instance.CloseUI<CanvasMainMenu>(0.25f);
+        UIManager.Instance.OpenUI<CanvasWeaponShop>();
+    }
+
     public void OnSkinShop() {
 
         UIManager.Instance.CloseUI<CanvasMainMenu>(0.25f);

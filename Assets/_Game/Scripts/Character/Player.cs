@@ -161,9 +161,18 @@ public class Player : CharacterBase
 
         base.OnInit();
 
-        hatID = DataManager.GetGameData().GetPlayerData().EquippedHatID;
-        pantID = DataManager.GetGameData().GetPlayerData().EquippedPantID;
-        accessoryID = DataManager.GetGameData().GetPlayerData().EquippedAccessoryID;
+        PlayerData playerData = DataManager.GetGameData().GetPlayerData();
+
+        // Weapon Prepared
+        WeaponType weaponType = playerData.EquippedWeaponType;
+        int skinID = playerData.GetEquippedWeaponSkinID(weaponType);
+
+        characterCombat.SetWeaponType(weaponType, skinID);
+
+        // Item Prepared
+        hatID = playerData.EquippedHatID;
+        pantID = playerData.EquippedPantID;
+        accessoryID = playerData.EquippedAccessoryID;
 
         HatItemData hat = charVisual.ChangeHats(this, hatID);
         if (hat != null) { hat.ApplyBoosterFor(this); }

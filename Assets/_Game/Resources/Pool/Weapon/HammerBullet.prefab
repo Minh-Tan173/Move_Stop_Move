@@ -1,0 +1,149 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6344631730107551529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6921166080426837345}
+  - component: {fileID: 6185652891773791494}
+  - component: {fileID: 7648629883111501040}
+  m_Layer: 0
+  m_Name: HammerBullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6921166080426837345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344631730107551529}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3494383834142495675}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6185652891773791494
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344631730107551529}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5823451, y: 0.10828298, z: 1.0127357}
+  m_Center: {x: 0.0034169555, y: -0.006615132, z: -0.006367862}
+--- !u!114 &7648629883111501040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344631730107551529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c43af8359b4c44e8c1433c26bbdd3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HammerBullet
+  prefabKey: {fileID: 7648629883111501040}
+  moveSpeed: 5
+  weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
+  bulletRenderer: {fileID: 3494383834140201307}
+  rotateSpeed: 800
+--- !u!1001 &3494383834142099771
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6921166080426837345}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_Name
+      value: Hammer_Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 125a0dc163a64b940848ae34b9f4ac8e, type: 2}
+    - target: {fileID: 2300000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 125a0dc163a64b940848ae34b9f4ac8e, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+--- !u!23 &3494383834140201307 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+  m_PrefabInstance: {fileID: 3494383834142099771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3494383834142495675 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
+  m_PrefabInstance: {fileID: 3494383834142099771}
+  m_PrefabAsset: {fileID: 0}

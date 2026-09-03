@@ -69,7 +69,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Knife
   prefabKey: {fileID: -6259602838788733098}
   moveSpeed: 5
-  boxCollider: {fileID: 1010873069070809437}
+  weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
+  bulletRenderer: {fileID: 762288127897203040}
 --- !u!1 &1006579043062924477
 GameObject:
   m_ObjectHideFlags: 0

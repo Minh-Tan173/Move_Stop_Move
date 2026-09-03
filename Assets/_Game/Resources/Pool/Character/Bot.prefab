@@ -273,6 +273,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 7983582227235976245}
   navMeshAgent: {fileID: 5887153715476655363}
   idleDuration: 4
+  weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
 --- !u!114 &4246925344445636655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,7 +304,6 @@ MonoBehaviour:
   canScanWhileMoving: 1
   weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
   shootingPoint: {fileID: 8077340295940514469}
-  currentWeaponType: 0
 --- !u!114 &3090917831434315342
 MonoBehaviour:
   m_ObjectHideFlags: 0

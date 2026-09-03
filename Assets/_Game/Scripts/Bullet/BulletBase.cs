@@ -4,11 +4,19 @@ public class BulletBase : PoolUnit
 {
     [Header("Data")]
     [SerializeField] protected float moveSpeed;
+    [SerializeField] protected WeaponSO weaponSO;
+    [SerializeField] protected Renderer bulletRenderer;
 
     protected bool canMove;
     protected Vector3 moveDir;
     protected float sqrAttackRange;
     protected CharacterBase bulletOwner;
+
+    private MaterialPropertyBlock propertyBlock;
+
+    private void Awake() {
+        propertyBlock = new MaterialPropertyBlock();
+    }
 
 
     public void StartMove() {
@@ -21,6 +29,22 @@ public class BulletBase : PoolUnit
 
     public bool CanMove() { 
         return canMove;
+    }
+
+    public void ApplySkin(Texture2D texture) {
+
+        int materialCount = bulletRenderer.sharedMaterials.Length;
+
+        for (int i = 0; i < materialCount; i++) {
+
+            bulletRenderer.GetPropertyBlock(propertyBlock, i);
+
+            propertyBlock.SetTexture(CharacterConst.BASE_MAP, texture);
+
+            propertyBlock.SetColor("_BaseColor", Color.white);
+
+            bulletRenderer.SetPropertyBlock(propertyBlock, i);
+        }
     }
 
     public void InteractWithCollideChar(CharacterBase character) {

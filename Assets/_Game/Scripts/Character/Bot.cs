@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,6 +20,9 @@ public class Bot : CharacterBase
     [Header("Idle Behavior")]
     [SerializeField] private float idleDuration;
 
+    [Header("Weapon Info")]
+    [SerializeField] private WeaponSO weaponSO;
+ 
     private BotState currentState;
 
     #region Navmesh Setup
@@ -59,7 +63,18 @@ public class Bot : CharacterBase
         elapsedIdleDuration = LevelManager.Instance.IsGamePlaying() ? 0f : idleDuration;
         ChangeBotStateTo(BotStateSet.Idle);
 
-        // Visual
+        // WeaponPrepared
+        WeaponType randomWeapon = (WeaponType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(WeaponType)).Length);
+
+        WeaponItemData weaponData =weaponSO.GetWeaponItemData(randomWeapon);
+        List<WeaponSkinData> skins =weaponData.GetSkinDataList();
+
+        WeaponSkinData randomSkin = skins[UnityEngine.Random.Range(0, skins.Count)];
+
+
+        characterCombat.SetWeaponType(randomWeapon, randomSkin.GetItemID());
+
+        // Item Prepared
         PantItemData pant = charVisual.ChangePants(this);
         if (pant != null) { pant.ApplyBoosterFor(this); }
 

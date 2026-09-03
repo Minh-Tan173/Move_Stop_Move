@@ -11,9 +11,6 @@ public class CharacterCombat : MonoBehaviour
     [SerializeField] private WeaponSO weaponSO;
     [SerializeField] private Transform shootingPoint;
 
-    [Header("TEST -- REMOVE AFTER")]
-    [SerializeField] private WeaponType currentWeaponType;
-
     private CharacterBase character;
     private CharacterAnimator charAnimator;
 
@@ -21,6 +18,9 @@ public class CharacterCombat : MonoBehaviour
 
     private float elapsedAttackCD;
     private bool isAttacking;
+
+    private WeaponType currentWeaponType;
+    private int currentWeaponSkinID;
 
     private IEnumerator IELookToAttackTarget(Quaternion targetRot) {
 
@@ -63,8 +63,6 @@ public class CharacterCombat : MonoBehaviour
         elapsedAttackCD = 0f;
         isAttacking = false;
 
-        // Weapon Prepared
-        character.GetCharacterVisual().ChangeWeapon(currentWeaponType);
     }
 
     public void StartAttack() {
@@ -85,6 +83,10 @@ public class CharacterCombat : MonoBehaviour
 
         BulletBase bulletPrefab = weaponSO.GetBulletPrefab(currentWeaponType);
         BulletBase bullet = SimplePool.Spawn<BulletBase>(bulletPrefab, shootingPoint.position, Quaternion.identity);
+
+        WeaponSkinData skinData = weaponSO.GetWeaponSkinData(currentWeaponType, currentWeaponSkinID);
+
+        bullet.ApplySkin(skinData.GetTexture());
         bullet.ActiveThrow(character);
     }
 
@@ -166,5 +168,18 @@ public class CharacterCombat : MonoBehaviour
         }
 
         return !character.IsMoving() && !IsAttackTargetValid();
+    }
+
+    public void SetWeaponType(WeaponType weaponType, int skinID = 0) {
+        
+        currentWeaponType = weaponType;
+        currentWeaponSkinID = skinID;
+
+        character.GetCharacterVisual().ChangeWeapon(currentWeaponType, skinID);
+
+        // Apply booster
+        WeaponSkinData skinData = weaponSO.GetWeaponSkinData(weaponType, skinID);
+        skinData.ApplyBoosterFor(character);
+
     }
 }

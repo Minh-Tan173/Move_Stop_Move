@@ -16,11 +16,14 @@ public class Boomerang : BulletBase
     [SerializeField] private float returnSpeedMultiplier = 1.5f;
     [SerializeField] private float returnAcceleration = 10f;
     [SerializeField] private float returnTurnSpeed = 360f;
+    [SerializeField] private float catchDistance = 0.2f;
 
     private Vector3 startPosition;
-        
+    private Vector3 lastOwnerPosition;
+
     private BoomerangState currentState;
     private float currentMoveSpeed;
+
 
     public void OnTriggerEnter(Collider characterColl) {
 
@@ -77,10 +80,26 @@ public class Boomerang : BulletBase
 
     private void HandleReturningMovement() {
 
-        Vector3 bulletOwnerDir = (bulletOwner.UnitTF.position - this.UnitTF.position);
+        if (!bulletOwner.IsDead()) {
+            lastOwnerPosition = bulletOwner.UnitTF.position;
+        }
+
+        Vector3 targetPosition = bulletOwner.IsDead() ? lastOwnerPosition : bulletOwner.UnitTF.position;
+
+        Vector3 bulletOwnerDir = (targetPosition - this.UnitTF.position);
         bulletOwnerDir.y = 0f;
 
-        if (bulletOwnerDir.sqrMagnitude <= 0f) { return; } // Trigger bullet owner
+        if (bulletOwnerDir.sqrMagnitude <= catchDistance * catchDistance) {
+            // Reached bullet owner
+
+            if (bulletOwner.IsDead()) {
+                StopMove();
+                OnDespawn();
+            }
+            else {
+                return;
+            }
+        }
 
         bulletOwnerDir.Normalize();
 
