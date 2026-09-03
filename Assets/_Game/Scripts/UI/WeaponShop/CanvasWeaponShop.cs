@@ -30,6 +30,8 @@ public class CanvasWeaponShop : UICanvas
 
     public override void SetUp() {
 
+        CameraManager.Instance.SwitchCam(CameraType.ShopCamera);
+
         WeaponType equippedWeapon = DataManager.GetGameData().GetPlayerData().EquippedWeaponType;
 
         currentWeaponIndex = (int)equippedWeapon;
@@ -204,32 +206,35 @@ public class CanvasWeaponShop : UICanvas
             // If not unlocked --> Buy
 
             BuyWeapon();
-           
-            return;
-        }
-
-
-        if (!currentSelectedWeapon.IsEquippedWeapon()) {
-            // If not equipped current selected button --> Equipped
-
-            currentSelectedWeapon.EquipWeapon();
-            UpdateActionButton();
-
-            return;
-        }
-
-        int skinID = currentSelectedSkin.GetItemID();
-
-        if (currentSelectedWeapon.IsOwnedSkin(skinID)) {
-
-            currentSelectedWeapon.EquipSkin(skinID);
+          
         }
         else {
 
-            BuySkin();
-        }
+            if (!currentSelectedWeapon.IsEquippedWeapon()) {
+                // If not equipped current selected button --> Equipped
 
-        UpdateActionButton();
+                currentSelectedWeapon.EquipWeapon();
+                UpdateActionButton();
+
+                CharacterManager.Instance.GetPlayer().OnInit();
+                return;
+            }
+
+            int skinID = currentSelectedSkin.GetItemID();
+
+            if (currentSelectedWeapon.IsOwnedSkin(skinID)) {
+
+                currentSelectedWeapon.EquipSkin(skinID);
+
+                CharacterManager.Instance.GetPlayer().OnInit();
+            }
+            else {
+
+                BuySkin();
+            }
+
+            UpdateActionButton();
+        }
     }
 
     public void NextWeapon() {
@@ -248,5 +253,11 @@ public class CanvasWeaponShop : UICanvas
         currentWeaponIndex = (previousIndex + totalWeapon) % totalWeapon;
 
         LoadWeapon((WeaponType)currentWeaponIndex);
+    }
+
+    public void CloseShop() {
+
+        UIManager.Instance.CloseUI<CanvasWeaponShop>(0.25f);
+        UIManager.Instance.OpenUI<CanvasMainMenu>();
     }
 }

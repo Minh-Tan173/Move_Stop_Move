@@ -6,9 +6,13 @@ public class Player : CharacterBase
     [SerializeField] private float rotateSpeed;
 
     [Header("Check Obstacle Behavior")]
+    [SerializeField] private ObstacleFade obstacleFade;
     [SerializeField] private Transform obstacleCheckPoint;
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float checkDistance;
+
+    [Header("Highlight target")]
+    [SerializeField] private Transform highlightTarget;
 
     private bool isMoving;
     private Vector3 moveDir;
@@ -32,6 +36,8 @@ public class Player : CharacterBase
 
             UpdateAttack();
         }
+
+        UpdateHighLightTarget();
     }
 
     private void HandleMovement() {
@@ -123,6 +129,26 @@ public class Player : CharacterBase
         }
     }
 
+    private void UpdateHighLightTarget() {
+        
+        if (characterCombat.HasAttackTarget()) {
+            
+            if (!highlightTarget.gameObject.activeSelf) {
+
+                ShowHighlightTarget();
+            }
+
+            Vector3 targetPos = characterCombat.GetAttackTarget().UnitTF.position;
+            highlightTarget.position = new Vector3(targetPos.x, highlightTarget.position.y, targetPos.z);
+        }
+        else {
+            if (highlightTarget.gameObject.activeSelf) {
+
+                HideHighlightTarget();
+            }
+        }
+    }
+
     private bool IsBlockedByObstacle(Vector3 checkDir) {
 
         bool canMoveForward = !(Physics.Raycast(obstacleCheckPoint.position, checkDir, out RaycastHit hitInfo, checkDistance, obstacleLayer));
@@ -155,11 +181,19 @@ public class Player : CharacterBase
         lastMovingState = isMoving;
     }
 
+    private void ShowHighlightTarget() {
+        highlightTarget.gameObject.SetActive(true);
+    }
 
+    private void HideHighlightTarget() {
+        highlightTarget.gameObject.SetActive(false);
+    }
 
     public override void OnInit() {
 
         base.OnInit();
+
+        HideHighlightTarget();
 
         PlayerData playerData = DataManager.GetGameData().GetPlayerData();
 
@@ -185,7 +219,10 @@ public class Player : CharacterBase
 
     public override void OnDespawn() {
 
-        isDead = true;
+        base.OnDespawn();
+        obstacleFade.OnDespawn();
+
+        charVisual.OnDespawn();
     }
 
     public override bool IsMoving() {

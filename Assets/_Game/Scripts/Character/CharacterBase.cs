@@ -42,6 +42,8 @@ public class CharacterBase : PoolUnit
         charAnimator.ResetAnim();
 
         attackRangeVisual.OnInit();
+
+        isDead = false;
     }
 
     public virtual void OnGamePlaying() {
@@ -49,7 +51,7 @@ public class CharacterBase : PoolUnit
     }
 
     public virtual void OnDespawn() {
-        Debug.LogError("TRIGGER BASE CHARACTER!!");
+        isDead = true;
     }
 
     public virtual bool IsMoving() {

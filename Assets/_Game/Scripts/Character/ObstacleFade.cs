@@ -4,6 +4,7 @@ using UnityEngine;
 public class ObstacleFade : MonoBehaviour
 {
     [SerializeField] private Collider fadeZoneColl;
+
     private readonly Dictionary<Collider, Obstacle> obstacleDict = new();
     private readonly HashSet<Collider> fadedObstacleSet = new();
 
@@ -68,5 +69,11 @@ public class ObstacleFade : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnDespawn() {
+
+        obstacleDict.Clear();
+        fadedObstacleSet.Clear();
     }
 }

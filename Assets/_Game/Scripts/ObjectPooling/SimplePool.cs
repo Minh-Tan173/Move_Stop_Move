@@ -47,6 +47,11 @@ public class SimplePool : MonoBehaviour
         poolInstance[prefabKey].Depsawn(unit);
     }
 
+    public static void CollectAll() {
+        foreach (var pool in poolInstance.Values) {
+            pool.CollectAll();
+        }
+    }
 }
 
 public class Pool {
@@ -113,6 +118,7 @@ public class Pool {
 
             Depsawn(actives[0]);
         }
+
     }
 
     // Destroy all element in pool

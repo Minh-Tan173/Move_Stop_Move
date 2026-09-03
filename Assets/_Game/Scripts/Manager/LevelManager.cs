@@ -60,6 +60,8 @@ public class LevelManager : Singleton<LevelManager>
     public void OnDespawn() {
 
         CharacterManager.Instance.OnDespawn();
+
+        SimplePool.CollectAll();
     }
     
     public void OnPlay() {

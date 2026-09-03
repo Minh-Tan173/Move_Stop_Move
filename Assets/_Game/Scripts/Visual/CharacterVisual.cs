@@ -73,8 +73,6 @@ public class CharacterVisual : MonoBehaviour
 
         Weapon weaponPrefab = weaponSO.GetWeaponPrefab(weaponType);
 
-        Debug.Log($"spawn {weaponPrefab.gameObject.name}");
-
         currentWeapon = SimplePool.Spawn<Weapon>(weaponPrefab, rightHandPlacedHolder.position, Quaternion.identity);
         currentWeapon.UnitTF.SetParent(rightHandPlacedHolder);
         currentWeapon.UnitTF.localPosition = Vector3.zero;

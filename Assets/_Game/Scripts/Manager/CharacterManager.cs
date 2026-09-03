@@ -42,10 +42,16 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public void OnDespawn() {
 
+        StopAllCoroutines();
+
         for (int i = charActiveList.Count - 1; i >= 0; i--) {
 
-            DeadCharacter(charActiveList[i]);
+            CharacterBase character = charActiveList[i];
+
+            character.OnDespawn();
+            SimplePool.Despawn(character);
         }
+
 
         charActiveList.Clear();
         charDeactiveList.Clear();
@@ -89,7 +95,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
         charDeactiveList.Remove(player);
         charActiveList.Add(player);
-        
+
+        player.OnDespawn();
         player.OnInit();
 
         return player as Player;

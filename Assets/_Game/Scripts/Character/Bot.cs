@@ -58,8 +58,6 @@ public class Bot : CharacterBase
 
         moveTarget = Vector3.zero;
 
-        isDead = false;
-
         elapsedIdleDuration = LevelManager.Instance.IsGamePlaying() ? 0f : idleDuration;
         ChangeBotStateTo(BotStateSet.Idle);
 
@@ -86,9 +84,9 @@ public class Bot : CharacterBase
 
     public override void OnDespawn() {
 
-        characterCombat.OnAttackCompleted -= Bot_OnAttackCompleted;
+        base.OnDespawn();
 
-        isDead = true;
+        characterCombat.OnAttackCompleted -= Bot_OnAttackCompleted;
 
         currentState?.OnExit(this, charAnimator);
         currentState = null;
