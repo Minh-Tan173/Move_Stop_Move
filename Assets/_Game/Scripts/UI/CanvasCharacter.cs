@@ -30,6 +30,10 @@ public class CanvasCharacter : MonoBehaviour
         nameTag.gameObject.SetActive(false);
     }
 
+    public string GetName() {
+        return nameCharText.text;
+    }
+
     public Sprite GetIndexCharSprite() {
         return indexCharImage.sprite;
     }

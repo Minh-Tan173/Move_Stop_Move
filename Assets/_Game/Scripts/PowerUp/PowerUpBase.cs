@@ -127,6 +127,8 @@ public class PowerUpBase : PoolUnit
 
     public void ReleaseBooster() {
 
+        if (currentCharInteract.IsDead()) { return; }
+
         RemoveBoosterFor(currentCharInteract);
         currentCharInteract.UnregisterPowerUp(powerUpType);
 

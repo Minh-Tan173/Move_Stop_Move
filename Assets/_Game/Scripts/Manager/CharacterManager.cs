@@ -8,6 +8,9 @@ public class CharacterManager : Singleton<CharacterManager>
     [SerializeField] private CharacterBase playerPrefab;
     [SerializeField] private CharacterBase botPrefab;
 
+    [Header("Bot Name")]
+    [SerializeField] private NameBotSO nameBotSO;
+
     [Header("Spawn Bot Behavior")]
     [SerializeField] private Transform pooling;
     [SerializeField] private int maxBotCountInLevel = 50;
@@ -19,6 +22,7 @@ public class CharacterManager : Singleton<CharacterManager>
     private LevelBase currentLevel;
 
     private Player player;
+    private Bot killedPlayer;
     private int totalBotSpawned;
 
     private int currentCharacterOnField;
@@ -28,6 +32,8 @@ public class CharacterManager : Singleton<CharacterManager>
         currentLevel = LevelManager.Instance.GetCurrentLeveL();
 
         ResetTotalBotSpawned();
+
+        SetKilledPlayerIs(null);    
 
         player = SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
 
@@ -111,7 +117,10 @@ public class CharacterManager : Singleton<CharacterManager>
         IncreaseTotalBotSpawned();
 
         bot.OnInit();
+
+        bot.GetCanvasCharacter().SetName(nameBotSO.GetRandomName());
         bot.GetCanvasCharacter().SetIndex(totalBotSpawned);
+
         UIManager.Instance.GetUI<CanvasOffScreenIndicator>().Register(bot.GetCanvasCharacter());
 
         charDeactiveList.Remove(bot);
@@ -141,6 +150,12 @@ public class CharacterManager : Singleton<CharacterManager>
         charDeactiveList.Add(character);
 
         UpdateAliveUI(currentCharacterOnField - 1);
+
+        if (character == player) {
+            // If player is Dead
+            LevelManager.Instance.SetLoss();
+            LevelManager.Instance.OnFinish();
+        }
     }
 
     public List<CharacterBase> GetActiveCharacterList() {
@@ -149,5 +164,17 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public Player GetPlayer() {
         return player;
+    }
+
+    public Player GetPlayerPrefab() {
+        return playerPrefab as Player;
+    }
+
+    public void SetKilledPlayerIs(Bot bot) {
+        killedPlayer = bot;
+    }
+
+    public Bot GetKilledPlayer() {
+        return this.killedPlayer;
     }
 }

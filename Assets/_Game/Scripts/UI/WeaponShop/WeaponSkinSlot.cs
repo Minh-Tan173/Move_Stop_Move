@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -32,6 +33,14 @@ public class WeaponSkinSlot : MonoBehaviour, IPointerDownHandler
     }
 
     public void OnClickSlot() {
+
+        bool isOwnedWeapon = DataManager.GetGameData().GetPlayerData().IsOwnedWeapon(weaponData.WeaponType);
+        bool isUnlockSelectedSkin = DataManager.GetGameData().GetPlayerData().IsOwnedWeaponSkin(weaponData.WeaponType, skinData.GetItemID());
+        bool isEquippedWeapon = weaponData.IsEquippedWeapon();
+
+        // If Owned Weapon but current not equiped and not unlock current select skin
+        if (isOwnedWeapon && !isEquippedWeapon && !isUnlockSelectedSkin) { return; }
+
         owner.SelectSkin(this, skinData);
     }
 

@@ -20,6 +20,7 @@ public class CanvasWeaponShop : UICanvas
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI nameWeaponText;
+    [SerializeField] private TextMeshProUGUI goldTotalText;
 
     private WeaponItemData currentSelectedWeapon;
     private List<WeaponSkinSlot> skinSlotList = new List<WeaponSkinSlot>();
@@ -39,6 +40,14 @@ public class CanvasWeaponShop : UICanvas
         LoadWeapon(equippedWeapon);
 
         actionButton.OnInit(this);
+
+        UpdateCoin();
+    }
+
+    private void UpdateCoin() {
+
+        int totalGold = DataManager.GetGameData().GetPlayerData().CurrentGold;
+        goldTotalText.text = $"{totalGold}";
     }
 
     private void BuyWeapon() {
@@ -56,6 +65,8 @@ public class CanvasWeaponShop : UICanvas
         ShowWeaponUnlocked();
 
         LoadSkinSlots();
+
+        UpdateCoin();
     }
 
     private void BuySkin() {
@@ -72,6 +83,8 @@ public class CanvasWeaponShop : UICanvas
 
         // After Buy Skin
         RefreshSkinSlots();
+
+        UpdateCoin();
     }
 
     private void LoadWeapon(WeaponType weaponType) {

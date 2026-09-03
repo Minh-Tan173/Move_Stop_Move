@@ -39,6 +39,7 @@ public class CharacterBase : PoolUnit
 
         characterCombat.OnInit(this, charAnimator);
         characterStats.OnInit(this);
+        charVisual.OnInit();
         charAnimator.ResetAnim();
 
         attackRangeVisual.OnInit();
@@ -99,6 +100,8 @@ public class CharacterBase : PoolUnit
     }
 
     public void Dead() {
+
+        charVisual.PlayBlood();
 
         OnDespawn();
         charAnimator.TriggerDeadAnim();

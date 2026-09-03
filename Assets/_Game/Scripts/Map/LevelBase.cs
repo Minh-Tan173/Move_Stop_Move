@@ -1,4 +1,4 @@
-using Unity.AI.Navigation;
+﻿using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,14 +6,29 @@ public class LevelBase : MonoBehaviour
 {
     [SerializeField] private NavMeshSurface navMeshSurface;
 
+    [Header("Spawn Player")]
     [SerializeField] private Transform spawnPlayerPoint;
 
-    public void OnInit() {
+    [Header("Spawn Bot")]
+    [SerializeField] private float minDistanceToPlayer = 8f;
+    [SerializeField] private int maxTry = 20;
 
+    private bool IsPointOnScreen(Vector3 worldPos) {
+
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(worldPos);
+
+        if (viewportPos.z <= 0f) { return false; }
+
+        if (viewportPos.x < 0f || viewportPos.x > 1f) { return false; }
+
+        if (viewportPos.y < 0f || viewportPos.y > 1f) { return false; }
+
+        return true;
 
     }
 
-    public void OnGamePlaying() {
+    public void OnInit() {
+
 
     }
 
@@ -21,61 +36,54 @@ public class LevelBase : MonoBehaviour
 
     }
 
-    //public bool TryGetRandomSpawnPoint(out Vector3 spawnPos) {
-
-    //    spawnPos = Vector3.zero;
-
-    //    if (navMeshSurface.navMeshData == null) return false;
-
-    //    Bounds bounds = navMeshSurface.navMeshData.sourceBounds;
-
-    //    NavMeshQueryFilter filter = new NavMeshQueryFilter {
-    //        agentTypeID = navMeshSurface.agentTypeID,
-    //        areaMask = NavMesh.AllAreas
-    //    };
-
-    //    const int maxTry = 10;
-
-    //    for (int i = 0; i < maxTry; i++) {
-
-    //        float randomX = Random.Range(bounds.min.x, bounds.max.x);
-    //        float randomZ = Random.Range(bounds.min.z, bounds.max.z);
-    //        Vector3 randomPos = new Vector3(randomX, bounds.center.y, randomZ);
-
-    //        if (NavMesh.SamplePosition(randomPos, out NavMeshHit hit, 2f, filter)) {
-
-    //            spawnPos = hit.position;
-    //            return true;
-    //        }
-    //    }
-
-    //    return false;
-    //}
-
     public bool TryGetRandomSpawnPoint(out Vector3 spawnPos) {
 
-        spawnPos = Vector3.zero;
+        Player player = CharacterManager.Instance.GetPlayer();
+
+        Vector3 playerPos = player.UnitTF.position;
 
         NavMeshTriangulation navMeshData = NavMesh.CalculateTriangulation();
 
-        if (navMeshData.indices.Length < 3) return false;
-
         int triangleCount = navMeshData.indices.Length / 3;
-        int triangleIndex = Random.Range(0, triangleCount) * 3;
 
-        Vector3 a = navMeshData.vertices[navMeshData.indices[triangleIndex]];
-        Vector3 b = navMeshData.vertices[navMeshData.indices[triangleIndex + 1]];
-        Vector3 c = navMeshData.vertices[navMeshData.indices[triangleIndex + 2]];
 
-        float r1 = Mathf.Sqrt(Random.value);
-        float r2 = Random.value;
+        for (int i = 0; i < maxTry; i++) {
 
-        spawnPos = (1f - r1) * a + r1 * (1f - r2) * b + r1 * r2 * c;
+            int triangleIndex = Random.Range(0, triangleCount) * 3;
+
+            Vector3 a = navMeshData.vertices[navMeshData.indices[triangleIndex]];
+            Vector3 b = navMeshData.vertices[navMeshData.indices[triangleIndex + 1]];
+            Vector3 c = navMeshData.vertices[navMeshData.indices[triangleIndex + 2]];
+
+            float r1 = Mathf.Sqrt(Random.value);
+            float r2 = Random.value;
+
+            Vector3 randomPos = (1f - r1) * a + r1 * (1f - r2) * b + r1 * r2 * c;
+
+            if (Vector3.Distance(randomPos, playerPos) < minDistanceToPlayer) { continue; }
+
+
+            if (IsPointOnScreen(randomPos)) { continue; }
+
+            spawnPos = randomPos;
+            return true;
+        }
+
+        spawnPos = playerPos + Random.insideUnitSphere * 10f;
+        spawnPos.y = playerPos.y;
 
         return true;
     }
 
     public Vector3 GetSpawnPlayerPoint() {
+
+        if (NavMesh.SamplePosition(spawnPlayerPoint.position, out NavMeshHit hitGround, maxDistance: 10f, NavMesh.AllAreas)) {
+
+            float offset = CharacterManager.Instance.GetPlayerPrefab().GetComponent<CapsuleCollider>().height / 2f;
+
+            return hitGround.position + Vector3.up * offset;
+        }
+
         return spawnPlayerPoint.position;
     }
 

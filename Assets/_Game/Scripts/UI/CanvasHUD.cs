@@ -89,6 +89,8 @@ public class CanvasHUD : UICanvas
     public override void SetUp() {
 
         setting.OnInit(this);
+
+        eventNoti.gameObject.SetActive(false);
     }
 
     public void ActiveCountdown() {
@@ -115,5 +117,9 @@ public class CanvasHUD : UICanvas
         eventNoti.gameObject.SetActive(true);
         eventNoti.ShowElement();
         eventNoti.Invoke(nameof(eventNoti.HideElement), 2f);
+    }
+
+    public void StopUIAnimation() {
+        eventNoti.CancelInvoke();
     }
 }

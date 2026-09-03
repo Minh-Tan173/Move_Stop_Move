@@ -49,6 +49,12 @@ public class BulletBase : PoolUnit
 
     public void InteractWithCollideChar(CharacterBase character) {
 
+        if (character == CharacterManager.Instance.GetPlayer()) {
+            // If collide Player
+
+            CharacterManager.Instance.SetKilledPlayerIs(bulletOwner as Bot);
+        }
+
         CharacterManager.Instance.DeadCharacter(character);
     }
 

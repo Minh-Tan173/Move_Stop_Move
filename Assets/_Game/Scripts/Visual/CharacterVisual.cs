@@ -18,6 +18,9 @@ public class CharacterVisual : MonoBehaviour
     [SerializeField] private Transform topHeadPlaceholder;
     [SerializeField] private Transform leftHandPlaceholder;
 
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem bloodVFX;
+
     private MaterialPropertyBlock propertyBlock;
     private Weapon currentWeapon;
     private PoolUnit currentHat;
@@ -32,6 +35,12 @@ public class CharacterVisual : MonoBehaviour
         item.UnitTF.localPosition = Vector3.zero;
         item.UnitTF.localRotation = Quaternion.identity;
         item.UnitTF.localScale = Vector3.one;
+    }
+
+    public void OnInit() {
+
+        bloodVFX.Stop();
+        bloodVFX.Clear();
     }
 
     public void OnDespawn() {
@@ -180,5 +189,12 @@ public class CharacterVisual : MonoBehaviour
         currentAccessory.UnitTF.SetParent(leftHandPlaceholder);
         ResetItem(currentAccessory);
 
+    }
+
+    public void PlayBlood() {
+
+        bloodVFX.Stop();
+        bloodVFX.Clear();
+        bloodVFX.Play();
     }
 }

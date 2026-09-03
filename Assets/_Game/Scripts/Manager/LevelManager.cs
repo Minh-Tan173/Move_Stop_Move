@@ -17,6 +17,9 @@ public class LevelManager : Singleton<LevelManager>
     private LevelBase currentLevel;
     #endregion
 
+    private bool isWin;
+    private bool isLoss;
+
     private void Start() {
 
         OnStart();
@@ -38,6 +41,9 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     public void OnStart() {
+
+        isWin = false;
+        isLoss = true;
 
         DataManager.OnInit();
         currentLevelIndex = DataManager.GetGameData().GetPlayerData().CurrentLevelIndex;
@@ -75,11 +81,13 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnRestart() {
 
+        UIManager.Instance.GetUI<CanvasHUD>().StopUIAnimation();
+
         OnDespawn();
 
         OnStart();
         UIManager.Instance.CloseUI<CanvasMainMenu>(0f);
-        
+
         CanvasLoading canvasLoading = UIManager.Instance.OpenUI<CanvasLoading>();
         canvasLoading.ActiveLoading(() => {
 
@@ -89,16 +97,31 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnFinish() {
 
+        UIManager.Instance.GetUI<CanvasHUD>().StopUIAnimation();
         UIManager.Instance.CloseUI<CanvasHUD>(0.3f);
 
         ChangeLevelState(LevelState.Finish);
-        Invoke(nameof(OnComplete), 0.5f);
+
+        if (isWin) {
+            Invoke(nameof(OnWin), 0.5f);
+        }
+        else if (isLoss) {
+
+            Invoke(nameof(OnLoss), 0.5f);
+        }
     }
 
-    public void OnComplete() {
+    public void OnWin() {
+    
+    }
+
+    public void OnLoss() {
+
+        UIManager.Instance.OpenUI<CanvasLoss>();
 
         ChangeLevelState(LevelState.Complete);
     }
+
 
     public void ChangeLevelState(LevelState levelState) {
 
@@ -111,5 +134,13 @@ public class LevelManager : Singleton<LevelManager>
 
     public LevelBase GetCurrentLeveL() {
         return currentLevel;
+    }
+
+    public void SetWin() {
+        isWin = true;
+    }
+
+    public void SetLoss() {
+        isLoss = true;
     }
 }
