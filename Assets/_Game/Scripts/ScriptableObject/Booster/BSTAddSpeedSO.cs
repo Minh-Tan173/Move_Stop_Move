@@ -11,10 +11,12 @@ public class BSTAddSpeedSO : BoosterSO {
     public override void Remove(CharacterBase character, float value) {
 
         character.GetCharacterStats().AddMoveSpeed(-value);
+
     }
 
     public override string GetDescription(float value) {
 
-        return $"Speed {value}";
+        string valueText = value >= 0 ? $"+{value}" : $"{value}";
+        return $"Speed {valueText}";
     }
 }

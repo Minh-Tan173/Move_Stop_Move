@@ -22,6 +22,9 @@ public class CanvasWeaponShop : UICanvas
     [SerializeField] private TextMeshProUGUI nameWeaponText;
     [SerializeField] private TextMeshProUGUI goldTotalText;
 
+    [Header("Description Board")]
+    [SerializeField] private BSTDescriptionPanel bstDescriptionPanel;
+
     private WeaponItemData currentSelectedWeapon;
     private List<WeaponSkinSlot> skinSlotList = new List<WeaponSkinSlot>();
 
@@ -96,6 +99,7 @@ public class CanvasWeaponShop : UICanvas
         currentSelectedSkin = null;
         weaponPreview.ShowWeapon(currentSelectedWeapon);
 
+        bstDescriptionPanel.HidePanel();
 
         if (!currentSelectedWeapon.IsUnlocked()) {
             ClearSkinSlots();
@@ -186,6 +190,8 @@ public class CanvasWeaponShop : UICanvas
         actionButton.gameObject.SetActive(true);
 
         actionButton.SetBuy(currentSelectedWeapon.Price);
+
+        bstDescriptionPanel.HidePanel();
     }
 
     private void ShowWeaponUnlocked() {
@@ -210,6 +216,8 @@ public class CanvasWeaponShop : UICanvas
 
 
         UpdateActionButton();
+
+        bstDescriptionPanel.ShowPanel(skinData.GetBoosterDescription());
     }
 
     public void OnClickActionButton() {

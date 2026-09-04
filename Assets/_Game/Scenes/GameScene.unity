@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bebffa7d58fcf4d8ace60bb4ba9042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
-  baseOffset: {x: 0, y: 8.6, z: -6.5}
+  baseOffset: {x: 0, y: 9.5, z: -8.5}
   zoomSpeed: 5
   gamePlayCamRotation: {x: 50, y: 0, z: 0}
   mainMenuOffset: {x: 0, y: 5, z: 7}

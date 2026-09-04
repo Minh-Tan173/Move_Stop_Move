@@ -59,8 +59,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler,IPointerUpHandler, ID
 
     public void OnPointerUp(PointerEventData eventData) {
 
-        if (!LevelManager.Instance.IsGamePlaying()) { return; }
-
         OnDespawn();
 
         ExecuteEvents.Execute(onScreenStickObj, eventData, ExecuteEvents.pointerUpHandler);

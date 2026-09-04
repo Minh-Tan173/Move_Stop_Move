@@ -191,7 +191,10 @@ public class CharacterStats : MonoBehaviour
 
     public void AddExp(int expGet) {
 
-        expProgress += GetExpBonus(expGet);
+        int finalExp = GetExpBonus(expGet);
+        expProgress += finalExp;
+
+        character.GetCanvasCharacter().ShowEXPGain(finalExp);
 
         if (CanLevelUp()) {
 

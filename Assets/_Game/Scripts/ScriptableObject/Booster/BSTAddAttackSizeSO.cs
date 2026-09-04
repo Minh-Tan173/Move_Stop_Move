@@ -13,6 +13,7 @@ public class BSTAddAttackSizeSO : BoosterSO {
 
     public override string GetDescription(float value) {
 
+        string valueText = value >= 0 ? $"+{value}" : $"{value}";
         return $"Range {value}";
     }
 }

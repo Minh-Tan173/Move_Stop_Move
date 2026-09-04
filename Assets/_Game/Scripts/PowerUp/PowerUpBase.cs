@@ -127,12 +127,14 @@ public class PowerUpBase : PoolUnit
 
     public void ReleaseBooster() {
 
-        if (currentCharInteract.IsDead()) { return; }
+        if (currentCharInteract != null) {
 
-        RemoveBoosterFor(currentCharInteract);
-        currentCharInteract.UnregisterPowerUp(powerUpType);
+            RemoveBoosterFor(currentCharInteract);
 
-        currentCharInteract = null;
+            currentCharInteract.UnregisterPowerUp(powerUpType);
+
+            currentCharInteract = null;
+        }
 
         SimplePool.Despawn(this);
     }
@@ -164,5 +166,7 @@ public class PowerUpBase : PoolUnit
         currentCharInteract = character;
 
         ApplyBoosterFor(character);
+
+        character.RegisterPowerUp(powerUpType, this);
     }
 }

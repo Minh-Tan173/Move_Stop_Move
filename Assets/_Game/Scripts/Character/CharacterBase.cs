@@ -37,10 +37,16 @@ public class CharacterBase : PoolUnit
 
         immortalEndTime = 0f;
 
+        // Character Behavior
         characterCombat.OnInit(this, charAnimator);
         characterStats.OnInit(this);
+        
+        // Character Visual
         charVisual.OnInit();
         charAnimator.ResetAnim();
+
+        // Character Canvas
+        canvasCharacter.OnInit();
 
         attackRangeVisual.OnInit();
 
@@ -67,6 +73,9 @@ public class CharacterBase : PoolUnit
         capsuleCollider.height = defaultColliderHeight * newSize;
         capsuleCollider.radius = defaultColliderRadius * newSize;
         capsuleCollider.center = defaultColliderCenter * newSize;
+
+        // Update Character NameTag When Update BodySize
+        canvasCharacter.UpdateHeight(newSize);
     }
 
     public virtual void SetAttackTarget(CharacterBase target) {

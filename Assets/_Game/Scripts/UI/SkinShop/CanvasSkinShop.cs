@@ -25,8 +25,10 @@ public class CanvasSkinShop : UICanvas
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private TextMeshProUGUI warningNotiText;
-    [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI equipStatusText;
+
+    [Header("Description Board")]
+    [SerializeField] private BSTDescriptionPanel bstDescriptionPanel;
 
     private const string GOLD_WARNING = "Not Enough Gold!!";
     private const string EQUIP_ITEM = "Equip";
@@ -50,7 +52,7 @@ public class CanvasSkinShop : UICanvas
 
         UpdateActionButton();
 
-        UpdateDescriptionText(null);
+        bstDescriptionPanel.HidePanel();
 
         shopCategory.SelectedFirstTab();
 
@@ -123,7 +125,7 @@ public class CanvasSkinShop : UICanvas
 
     private void ShowItemListInShop(List<ShopItemViewData> itemList) {
 
-        UpdateDescriptionText(null);
+        bstDescriptionPanel.HidePanel();
 
         currentSelectedItem = null;
 
@@ -145,11 +147,6 @@ public class CanvasSkinShop : UICanvas
     private void HideWarningNoti() {
         
         warningNotiText.gameObject.SetActive(false);
-    }
-
-    private void UpdateDescriptionText(string newDescription) {
-
-        descriptionText.text = newDescription;
     }
 
     public void CloseShop() {
@@ -181,7 +178,7 @@ public class CanvasSkinShop : UICanvas
 
         UpdateActionButton();
 
-        UpdateDescriptionText(itemData.GetBoosterDescription());
+        bstDescriptionPanel.ShowPanel(itemData.GetBoosterDescription());
     }
 
     public void BuyCurrentItem() {

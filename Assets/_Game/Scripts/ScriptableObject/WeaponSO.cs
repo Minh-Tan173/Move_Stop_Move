@@ -182,6 +182,17 @@ public class WeaponSkinData {
         }
     }
 
+    public string GetBoosterDescription() {
+
+        List<string> descriptions = new List<string>();
+
+        foreach (BoosterData booster in boosterDataList) {
+            descriptions.Add(booster.GetDescription());
+        }
+
+        return string.Join("\n", descriptions);
+    }
+
     public bool IsSameID(int id) {
         return skinID == id;
     }
