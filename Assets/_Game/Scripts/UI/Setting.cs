@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Setting : MonoBehaviour
@@ -14,6 +15,10 @@ public class Setting : MonoBehaviour
     [Header("Button")]
     [SerializeField] private Button restartGameButton;
     [SerializeField] private Button homeButton;
+
+    [Header("Toggle")]
+    [SerializeField] private Toggle musicToggle;
+    [SerializeField] private Toggle sfxToggle;
 
     private Coroutine currentCoroutine;
     private bool isOpenSetting = false;
@@ -97,10 +102,14 @@ public class Setting : MonoBehaviour
                 element.anchoredPosition = Vector2.zero;
             }
         }
+
+        // Toggle Setup
+        GameData gameData = DataManager.GetGameData();
+        musicToggle.isOn = gameData.IsMutedMusic();
+        sfxToggle.isOn = gameData.IsMutedSFX();
     }
 
     public void TriggerSetting() {
-
 
         isOpenSetting = !isOpenSetting;
 
@@ -124,9 +133,12 @@ public class Setting : MonoBehaviour
 
     public void MutedMusic(bool isMutedMusic) {
 
+        Debug.Log("Click toggle");
+        MusicManager.Instance.SetMutedMusic(isMutedMusic);
     }
 
     public void MutedSFX(bool isMutedSFX) {
 
+        SoundManager.Instance.SetMutedSFX(isMutedSFX);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public static class DataManager
@@ -54,6 +55,30 @@ public static class DataManager
 
 
         return gameData;
+    }
+
+    public static void MutedSFX(bool isMuted) {
+
+        if (isMuted) {
+            
+            gameData.MutedSFX();
+        }
+        else {
+
+            gameData.UnMutedSFX();
+        }
+    }
+
+    public static void MutedMusic(bool isMuted) {
+
+        if (isMuted) {
+
+            gameData.MutedMusic();
+        }
+        else {
+
+            gameData.UnMutedMusic();
+        }
     }
 
     public static void UpdateSavedLevel(int newLevelIndex) {
@@ -381,5 +406,29 @@ public class GameData {
     
     public PlayerData GetPlayerData() {
         return playerData;
+    }
+
+    public bool IsMutedMusic() {
+        return isMutedMusic;
+    }
+
+    public bool IsMutedSFX() {
+        return isMutedSFX;
+    }
+
+    public void MutedSFX() {
+        this.isMutedSFX = true;
+    }
+
+    public void UnMutedSFX() {
+        this.isMutedSFX = false;
+    }
+
+    public void MutedMusic() {
+        this.isMutedMusic = true;
+    }
+
+    public void UnMutedMusic() {
+        this.isMutedMusic = false;
     }
 }

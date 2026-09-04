@@ -228,4 +228,11 @@ public class Player : CharacterBase
     public override bool IsMoving() {
         return isMoving;
     }
+
+    public override void Dead() {
+
+        SoundManager.Instance.PlaySound(this.UnitTF.position, SFXType.PlayerDead, audioIndex: 0);
+
+        base.Dead();
+    }
 }

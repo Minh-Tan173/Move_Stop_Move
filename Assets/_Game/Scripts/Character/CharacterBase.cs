@@ -73,8 +73,17 @@ public class CharacterBase : PoolUnit
 
         characterCombat.SetAttackTarget(target);
     }
+
     public virtual bool CanSelectTarget(CharacterBase target) {
         return characterCombat.IsTargetAvailable(target);
+    }
+
+    public virtual void Dead() {
+
+        charVisual.PlayBlood();
+
+        OnDespawn();
+        charAnimator.TriggerDeadAnim();
     }
 
     public void Idle() {
@@ -87,8 +96,6 @@ public class CharacterBase : PoolUnit
         charAnimator.TriggerRunAnim();
     }
 
-    #region Life Control
-
     public void TriggerImmortal(float duration) {   
 
         immortalEndTime = Time.time + duration;
@@ -99,19 +106,9 @@ public class CharacterBase : PoolUnit
         return Time.time < immortalEndTime;
     }
 
-    public void Dead() {
-
-        charVisual.PlayBlood();
-
-        OnDespawn();
-        charAnimator.TriggerDeadAnim();
-    }
-
     public bool IsDead() {
         return isDead;
     }
-
-    #endregion
 
     public void RegisterPowerUp(PowerUpType powerUpType, PowerUpBase powerUp) {
 

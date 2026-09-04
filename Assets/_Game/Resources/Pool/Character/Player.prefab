@@ -1079,6 +1079,85 @@ MonoBehaviour:
   nameCharText: {fileID: 1885335788894663074}
   indexCharImage: {fileID: 6249294379833287225}
   indexCharText: {fileID: 2249626021820147527}
+--- !u!1001 &2121107064206513542
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7889543452726006857}
+    m_Modifications:
+    - target: {fileID: 1609583310590790, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_Name
+      value: BloodExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199601237619899366, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199779376001870884, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199874548856899904, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+--- !u!4 &2125577258899375678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4572741483189176, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+  m_PrefabInstance: {fileID: 2121107064206513542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2292405738054989190 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198138027695693824, guid: 86caadc364352d84c88277ee5ba76b30, type: 3}
+  m_PrefabInstance: {fileID: 2121107064206513542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2884552497847320403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1822,6 +1901,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2125577258899375678}
     - targetCorrespondingSourceObject: {fileID: -8757011230347164249, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8077340295940514469}
@@ -1884,6 +1966,7 @@ MonoBehaviour:
   pantsRenderer: {fileID: 5809650692371459290}
   topHeadPlaceholder: {fileID: 5429427818562306035}
   leftHandPlaceholder: {fileID: 2076087393725841649}
+  bloodVFX: {fileID: 2292405738054989190}
 --- !u!114 &1644595293577107298
 MonoBehaviour:
   m_ObjectHideFlags: 0

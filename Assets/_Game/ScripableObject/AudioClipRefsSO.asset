@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c1f312fed231f4b8193abc7060180b, type: 3}
+  m_Name: AudioClipRefsSO
+  m_EditorClassIdentifier: Assembly-CSharp::AudioClipRefsSO
+  sfxList:
+  - sfxName: Knife Throw
+    sfxType: 0
+    audioClipList:
+    - {fileID: 8300000, guid: 06e7741864cd8984e9d269abf3aae9ae, type: 3}
+    - {fileID: 8300000, guid: 7a646551c824cc74d8f877a9321f1e43, type: 3}
+  - sfxName: Hammer Throw
+    sfxType: 1
+    audioClipList:
+    - {fileID: 8300000, guid: e05a5bfab765adc4590bfd4636dde7ab, type: 3}
+  - sfxName: Boomerang Throw
+    sfxType: 2
+    audioClipList:
+    - {fileID: 8300000, guid: b9a6e1b1a55b16843964d4062ea9f098, type: 3}
+  - sfxName: Player Dead
+    sfxType: 3
+    audioClipList:
+    - {fileID: 8300000, guid: 15e282fc9938ce144a3fdb5147f67cf1, type: 3}
+  - sfxName: Player Size Up
+    sfxType: 4
+    audioClipList:
+    - {fileID: 8300000, guid: 606a0b13e4d284d40896a714df85c1b5, type: 3}
+    - {fileID: 8300000, guid: 4f29c81be91afd548bb8e430ac83c7f2, type: 3}
+    - {fileID: 8300000, guid: 840d19647a06af64fae93fbf4b66a441, type: 3}
+    - {fileID: 8300000, guid: a67d6fe9a88458a4da8fa1448f93430f, type: 3}
+  music: {fileID: 8300000, guid: 8869f209a8e466d48a4e56b5a2dc49dc, type: 3}

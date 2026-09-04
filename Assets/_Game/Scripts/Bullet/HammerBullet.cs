@@ -61,5 +61,11 @@ public class HammerBullet : BulletBase
     public override void ActiveThrow(CharacterBase bulletOwner) {
 
         OnInit(bulletOwner);
+
+
+        if (bulletOwner == CharacterManager.Instance.GetPlayer()) {
+
+            SoundManager.Instance.PlaySound(this.UnitTF.position, SFXType.HammerThrow, audioIndex: 0);
+        }
     }
 }

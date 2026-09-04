@@ -59,6 +59,8 @@ public class LevelManager : Singleton<LevelManager>
 
         CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);
 
+        MusicManager.Instance.PlayGameTheme();
+
         ChangeLevelState(LevelState.Start);
     }
 
@@ -109,11 +111,14 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     public void OnWin() {
-    
+
+        MusicManager.Instance.StopPlayTheme();
+        UIManager.Instance.OpenUI<CanvasWin>();
     }
 
     public void OnLoss() {
 
+        MusicManager.Instance.StopPlayTheme();
         UIManager.Instance.OpenUI<CanvasLoss>();
 
         ChangeLevelState(LevelState.Complete);

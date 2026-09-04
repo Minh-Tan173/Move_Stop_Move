@@ -36,7 +36,6 @@ public class CanvasLoading : UICanvas
 
         if (isDelayClose) {
 
-            Debug.Log("Delay close");
             yield return new WaitForSeconds(0.25f);
         }
 

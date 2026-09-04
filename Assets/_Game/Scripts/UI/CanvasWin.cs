@@ -1,16 +1,25 @@
 using UnityEngine;
 
-public class CanvasWin : MonoBehaviour
+public class CanvasWin : UICanvas
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    [SerializeField] private ParticleSystem particleSystem;
+
+    public override void SetUp() {
+
+        PlayPartical();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void PlayPartical() {
+
+        StopPartical();
+        particleSystem.Play();
+
+        Invoke(nameof(StopPartical), 2.5f);
+
+    }
+
+    private void StopPartical() {
+        particleSystem.Stop();
+        particleSystem.Clear();
     }
 }
