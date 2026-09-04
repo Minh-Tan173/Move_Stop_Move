@@ -10,7 +10,7 @@ public class CanvasLoading : UICanvas
     [SerializeField] private float rotateDuration = 0.1f;
     [SerializeField] private RectTransform loadingImageRect;
 
-    private IEnumerator IELoading(Action callback) {
+    private IEnumerator IELoading(Action callback, bool isDelayClose = true) {
 
         float loadingTime = 0f;
         float elapsedRotate = 0f;
@@ -34,12 +34,17 @@ public class CanvasLoading : UICanvas
         yield return null;
         callback?.Invoke();
 
-        yield return new WaitForSeconds(0.25f);
+        if (isDelayClose) {
+
+            Debug.Log("Delay close");
+            yield return new WaitForSeconds(0.25f);
+        }
+
         UIManager.Instance.CloseUI<CanvasLoading>(0f);
     }
 
-    public void ActiveLoading(Action callback) {
-        StartCoroutine(IELoading(callback));
+    public void ActiveLoading(Action callback, bool isDelayClose = true) {
+        StartCoroutine(IELoading(callback, isDelayClose));
     }
 
 }

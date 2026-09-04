@@ -117,6 +117,11 @@ public class Setting : MonoBehaviour
         LevelManager.Instance.OnRestart();
     }
 
+    public void BackHome() {
+
+        LevelManager.Instance.BackToMainMenu();
+    }
+
     public void MutedMusic(bool isMutedMusic) {
 
     }

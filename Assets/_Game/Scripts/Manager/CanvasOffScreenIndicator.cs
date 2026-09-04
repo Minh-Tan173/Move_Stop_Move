@@ -30,8 +30,6 @@ public class CanvasOffScreenIndicator : UICanvas {
 
         if (targetChar == null) { return; }
 
-        if (!this.gameObject.activeSelf) { return; }
-
         for (int i = 0; i < indicatorArray.Length; i++) {
 
             if (indicatorArray[i].GetTargetChar() == targetChar) {

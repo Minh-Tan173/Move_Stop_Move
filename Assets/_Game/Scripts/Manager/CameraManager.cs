@@ -64,12 +64,10 @@ public class CameraManager : Singleton<CameraManager>
 
         Quaternion cameraRot = Quaternion.LookRotation(lookTarget - cameraPos);
 
-
         MoveCamTo(cameraPos, cameraRot);
     }
 
     private void UpdateShopCamera() {
-
 
         Vector3 cameraPos = target.position + target.TransformDirection(shopCameraOffset);
 
@@ -127,16 +125,5 @@ public class CameraManager : Singleton<CameraManager>
         currentCameraType = cameraType;
 
         isSwitching = true;
-
-        switch (cameraType) {
-
-            case CameraType.MainMenuCamera: break;
-
-            case CameraType.GamePlayCamera:
-
-                break;
-
-            case CameraType.ShopCamera: break;
-        }
     }
 }

@@ -19,7 +19,10 @@ public class CanvasLoss : UICanvas
     }
 
     public void RestartGame() {
-        LevelManager.Instance.OnRestart();
+
+        UIManager.Instance.CloseUI<CanvasLoss>(0.25f);
+
+        LevelManager.Instance.Invoke(nameof(LevelManager.Instance.OnRestart), 0.3f);
     }
     
     public void ReturnHome() {

@@ -38,7 +38,6 @@ public class CharacterManager : Singleton<CharacterManager>
         player = SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
 
         UpdateAliveUI(maxBotCountInLevel + 1); // Include Player
-        UIManager.Instance.CloseUI<CanvasHUD>(0f);
     }
 
     public void OnGamePlaying() {

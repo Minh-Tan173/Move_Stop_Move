@@ -89,6 +89,9 @@ public class UIManager : Singleton<UIManager>
 
             T prefab = GetUIPrefab<T>();
             T canvas = Instantiate(prefab, parent);
+
+            canvas.gameObject.SetActive(false);
+
             canvasActiveDict[typeof(T)] = canvas;
         }
 

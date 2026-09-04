@@ -55,7 +55,6 @@ public class LevelManager : Singleton<LevelManager>
         EventManager.Instance.OnInit();
 
         UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
-        UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
         UIManager.Instance.OpenUI<CanvasMainMenu>();
 
         CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);
@@ -82,6 +81,7 @@ public class LevelManager : Singleton<LevelManager>
     public void OnRestart() {
 
         UIManager.Instance.GetUI<CanvasHUD>().StopUIAnimation();
+        UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
 
         OnDespawn();
 
@@ -89,10 +89,7 @@ public class LevelManager : Singleton<LevelManager>
         UIManager.Instance.CloseUI<CanvasMainMenu>(0f);
 
         CanvasLoading canvasLoading = UIManager.Instance.OpenUI<CanvasLoading>();
-        canvasLoading.ActiveLoading(() => {
-
-            OnPlay();
-        });
+        canvasLoading.ActiveLoading(OnPlay);
     }
 
     public void OnFinish() {
@@ -120,6 +117,15 @@ public class LevelManager : Singleton<LevelManager>
         UIManager.Instance.OpenUI<CanvasLoss>();
 
         ChangeLevelState(LevelState.Complete);
+    }
+
+    public void BackToMainMenu() {
+
+        OnDespawn();
+
+        UIManager.Instance.CloseAllUI();
+        CanvasLoading canvasLoading = UIManager.Instance.OpenUI<CanvasLoading>();
+        canvasLoading.ActiveLoading(OnStart, isDelayClose: false);
     }
 
 
