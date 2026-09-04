@@ -64,6 +64,17 @@ public class HatItemData : IItemData
         return price;
     }
 
+    public string GetBoosterDescription() {
+
+        List<string> descriptions = new List<string>();
+
+        foreach (BoosterData booster in boosterDataList) {
+            descriptions.Add(booster.GetDescription());
+        }
+
+        return string.Join("\n", descriptions);
+    }
+
     public bool IsOwned() {
 
         return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedHat(hatID);

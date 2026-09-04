@@ -113,9 +113,10 @@ public class CharacterManager : Singleton<CharacterManager>
         Quaternion botRot = Quaternion.Euler(0f, randomYRot, 0f);
         CharacterBase bot = SimplePool.Spawn<CharacterBase>(botPrefab, spawnPos, botRot);
 
-        IncreaseTotalBotSpawned();
-
         bot.OnInit();
+
+        int spawnLevel = GetBotSpawnLevel();
+        bot.GetCharacterStats().SetSpawnLevel(spawnLevel);
 
         bot.GetCanvasCharacter().SetName(nameBotSO.GetRandomName());
         bot.GetCanvasCharacter().SetIndex(totalBotSpawned);
@@ -124,6 +125,40 @@ public class CharacterManager : Singleton<CharacterManager>
 
         charDeactiveList.Remove(bot);
         charActiveList.Add(bot);
+
+        IncreaseTotalBotSpawned();
+    }
+
+    private int GetBotSpawnLevel() {
+
+        float progress = Mathf.Clamp01((float)totalBotSpawned / maxBotCountInLevel);
+        float random = Random.value;
+
+        if (progress < 0.3f) {
+            // Phase 1: Early Game - 100% Bot Spawn With Level 1
+
+            return 1;
+        }
+        else if (progress >= 0.3f && progress < 0.7f) {
+            // Phase 2: Mid Game
+
+            if (random < 0.8f) {
+                // 80% Bot Spawn With Level 1
+                return 1;
+            }
+            else {
+                // 20% Bot Spawn With Level 2
+                return 2;
+            }
+        }
+        else {
+            // Phase 3: Late Game
+
+            if (random < 0.2f) { return 1; } // 20% Level 1
+            if (random < 0.8f) { return 2; } // 60% Level 2
+
+            return 3; // 20% Level 3
+        }
     }
 
     private void DespawnCharacter(CharacterBase character) {

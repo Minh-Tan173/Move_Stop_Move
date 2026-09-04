@@ -10,4 +10,9 @@ public class BSTAddAttackSizeSO : BoosterSO {
     public override void Remove(CharacterBase character, float value) {
         character.GetCharacterStats().AddAttackSize(-value);
     }
+
+    public override string GetDescription(float value) {
+
+        return $"Range {value}";
+    }
 }

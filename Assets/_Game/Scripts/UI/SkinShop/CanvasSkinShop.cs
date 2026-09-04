@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,8 +25,12 @@ public class CanvasSkinShop : UICanvas
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private TextMeshProUGUI warningNotiText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI equipStatusText;
 
     private const string GOLD_WARNING = "Not Enough Gold!!";
+    private const string EQUIP_ITEM = "Equip";
+    private const string EQUIPPED_ITEM = "Equipped";
 
     private List<ShopItemViewData> hatViewDataList = new List<ShopItemViewData>();
     private List<ShopItemViewData> pantViewDataList = new List<ShopItemViewData>();
@@ -44,6 +49,8 @@ public class CanvasSkinShop : UICanvas
         UpdateGoldText();
 
         UpdateActionButton();
+
+        UpdateDescriptionText(null);
 
         shopCategory.SelectedFirstTab();
 
@@ -67,13 +74,18 @@ public class CanvasSkinShop : UICanvas
         }
 
         bool isUnlocked = currentSelectedItem.IsUnlocked();
+        bool isEquipped = currentSelectedItem.IsEquipped();
 
+        // Buy Button Setup
         buyButton.gameObject.SetActive(!isUnlocked);
         if (!isUnlocked) {
             priceText.text = $"{currentSelectedItem.GetPrice()}";
         }
 
+        // Equip Button Setup
         equipButton.gameObject.SetActive(isUnlocked);
+        equipButton.interactable = !isEquipped;
+        equipStatusText.text = isEquipped ? EQUIPPED_ITEM : EQUIP_ITEM;
     }
 
     private void RegisterValueIntoViewList<T>(List<ShopItemViewData> viewDataList, List<T> itemDataList) where T : IItemData {
@@ -111,6 +123,8 @@ public class CanvasSkinShop : UICanvas
 
     private void ShowItemListInShop(List<ShopItemViewData> itemList) {
 
+        UpdateDescriptionText(null);
+
         currentSelectedItem = null;
 
         UpdateActionButton();
@@ -129,7 +143,13 @@ public class CanvasSkinShop : UICanvas
     }
 
     private void HideWarningNoti() {
+        
         warningNotiText.gameObject.SetActive(false);
+    }
+
+    private void UpdateDescriptionText(string newDescription) {
+
+        descriptionText.text = newDescription;
     }
 
     public void CloseShop() {
@@ -160,6 +180,8 @@ public class CanvasSkinShop : UICanvas
         currentSelectedItem.Preview(CharacterManager.Instance.GetPlayer());
 
         UpdateActionButton();
+
+        UpdateDescriptionText(itemData.GetBoosterDescription());
     }
 
     public void BuyCurrentItem() {
@@ -191,6 +213,8 @@ public class CanvasSkinShop : UICanvas
         if (!currentSelectedItem.IsUnlocked()) return;
 
         currentSelectedItem.Equip();
+
+        UpdateActionButton();
     }
 
 }

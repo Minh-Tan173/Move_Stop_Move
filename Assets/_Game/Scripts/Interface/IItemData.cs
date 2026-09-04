@@ -10,6 +10,8 @@ public interface IItemData
 
     public int GetItemPrice();
 
+    public string GetBoosterDescription();
+
     public bool IsOwned();
     
     public bool IsEquipped();

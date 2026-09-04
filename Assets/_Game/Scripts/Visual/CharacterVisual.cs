@@ -84,9 +84,8 @@ public class CharacterVisual : MonoBehaviour
 
         currentWeapon = SimplePool.Spawn<Weapon>(weaponPrefab, rightHandPlacedHolder.position, Quaternion.identity);
         currentWeapon.UnitTF.SetParent(rightHandPlacedHolder);
-        currentWeapon.UnitTF.localPosition = Vector3.zero;
-        currentWeapon.UnitTF.localRotation = Quaternion.identity;
 
+        ResetItem(currentWeapon);
 
         WeaponSkinData skinData = weaponSO.GetWeaponSkinData(weaponType, skinID);
 

@@ -133,7 +133,6 @@ public class Setting : MonoBehaviour
 
     public void MutedMusic(bool isMutedMusic) {
 
-        Debug.Log("Click toggle");
         MusicManager.Instance.SetMutedMusic(isMutedMusic);
     }
 

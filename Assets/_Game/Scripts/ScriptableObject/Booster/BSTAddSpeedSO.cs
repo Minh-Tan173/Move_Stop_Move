@@ -12,4 +12,9 @@ public class BSTAddSpeedSO : BoosterSO {
 
         character.GetCharacterStats().AddMoveSpeed(-value);
     }
+
+    public override string GetDescription(float value) {
+
+        return $"Speed {value}";
+    }
 }

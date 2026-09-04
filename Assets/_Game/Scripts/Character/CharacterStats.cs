@@ -10,7 +10,13 @@ public class CharacterStats : MonoBehaviour
     [Header("Data")]
     [SerializeField] private CharacterStatsSO characterStatsSO;
 
+    // Player Bonus
+    private const float playerAttackRangeBonus = 1f;
+    private float playerMoveSpeedBonus = 0.25f;
+    private float playerExpMultiplier = 1.15f;
+
     private float attackRange;
+    private float baseAttackRange;
 
     private float moveSpeed;
 
@@ -34,7 +40,14 @@ public class CharacterStats : MonoBehaviour
 
         float oldTrueRange = character.GetCharacterCombat().GetTrueAttackRange();
 
-        attackRange = value;
+        baseAttackRange = value;
+        attackRange = baseAttackRange;
+
+        if (character is Player) {
+
+            attackRange += playerAttackRangeBonus;
+        }
+
         attackRangeVisual.UpdateVisual();
 
         float newTrueRange = character.GetCharacterCombat().GetTrueAttackRange();
@@ -46,11 +59,11 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void AddAttackSize(float value) {
-        SetAttackSize(attackRange + value);
+        SetAttackSize(baseAttackRange + value);
     }
 
     public void UpAttackSize() {
-        SetAttackSize(attackRange + 1);
+        SetAttackSize(baseAttackRange + 1);
     }
 
     public void ResetAttackSize() {
@@ -87,7 +100,8 @@ public class CharacterStats : MonoBehaviour
 
     public void ResetMoveSpeed() {
 
-        SetMoveSpeed(characterStatsSO.GetMoveSpeed());
+        float bonusSpeed = character is Player ? playerMoveSpeedBonus : 0f;
+        SetMoveSpeed(characterStatsSO.GetMoveSpeed() + bonusSpeed);
     }
 
     public float GetMoveSpeed() {
@@ -116,6 +130,12 @@ public class CharacterStats : MonoBehaviour
         return expProgress >= expRequired;  // Enough EXP to Upgrade
     }
 
+    private void ApplyLevelData() {
+     
+        UpdateBodySize();
+        UpAttackSize();
+    }
+
     public void ResetLevel() {
         
         currentLevel = 1;
@@ -124,6 +144,31 @@ public class CharacterStats : MonoBehaviour
         UpdateBodySize();
     }
 
+    private int GetExpBonus(int exp) {
+
+        if (character is Player) {
+
+            return Mathf.RoundToInt(exp * playerExpMultiplier);
+        }
+
+        return exp;
+    }
+
+    public void SetSpawnLevel(int level) {
+
+        currentLevel = 1;
+        expProgress = 0;
+
+        while (currentLevel < level) {
+
+            currentLevel += 1;
+
+            if (!characterStatsSO.IsOverLevelList(currentLevel)) {
+
+                ApplyLevelData();
+            }
+        }
+    }
 
     public void LevelUp() {
 
@@ -134,19 +179,19 @@ public class CharacterStats : MonoBehaviour
         if (!characterStatsSO.IsOverLevelList(currentLevel)) {
             // If current level having data for setup
 
-            UpdateBodySize();
-            UpAttackSize();
+            ApplyLevelData();
         }
 
+        // Active Immortal State
         float immortalDuration = characterStatsSO.GetImmortalDuration();
-
         character.TriggerImmortal(immortalDuration);
+
         upgradeVFX.PlayVFX(immortalDuration, bodySizeScale);
     }
 
     public void AddExp(int expGet) {
 
-        expProgress += expGet;
+        expProgress += GetExpBonus(expGet);
 
         if (CanLevelUp()) {
 

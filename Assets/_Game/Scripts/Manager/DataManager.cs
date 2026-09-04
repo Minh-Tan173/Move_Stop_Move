@@ -67,6 +67,8 @@ public static class DataManager
 
             gameData.UnMutedSFX();
         }
+
+        SaveDataToPrefs();
     }
 
     public static void MutedMusic(bool isMuted) {
@@ -79,6 +81,8 @@ public static class DataManager
 
             gameData.UnMutedMusic();
         }
+
+        SaveDataToPrefs();
     }
 
     public static void UpdateSavedLevel(int newLevelIndex) {

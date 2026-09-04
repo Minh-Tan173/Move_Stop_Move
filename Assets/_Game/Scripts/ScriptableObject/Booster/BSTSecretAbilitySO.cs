@@ -34,4 +34,8 @@ public class BSTSecretAbilitySO : BoosterSO {
 
         ShowBotAttackRange(character, isShow: false);
     }
+
+    public override string GetDescription(float value) {
+        return "";
+    }
 }

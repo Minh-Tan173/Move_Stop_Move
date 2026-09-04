@@ -79,6 +79,10 @@ public class ShopItemViewData {
         return sourceItemData.GetItemPrice();
     }
 
+    public string GetBoosterDescription() {
+        return sourceItemData.GetBoosterDescription();
+    }
+
     public bool IsUnlocked() {
         return isUnlocked;
     }
