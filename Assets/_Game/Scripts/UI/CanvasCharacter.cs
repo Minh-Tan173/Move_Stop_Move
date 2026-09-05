@@ -72,6 +72,14 @@ public class CanvasCharacter : MonoBehaviour
         expGainText.gameObject.SetActive(false);
     }
 
+    public void OnDespawn() {
+
+        if (currentCoroutine != null) {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
+    }
+
     public void UpdateHeight(float bodyScale) {
 
         Vector2 pos = nameTag.anchoredPosition;
@@ -82,8 +90,6 @@ public class CanvasCharacter : MonoBehaviour
     }
 
     public void ShowEXPGain(int expGain) {
-
-        if (!this.gameObject.activeSelf) { return; }
 
         expGainText.gameObject.SetActive(true);
 

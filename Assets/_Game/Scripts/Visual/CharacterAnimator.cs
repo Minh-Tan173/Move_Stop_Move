@@ -6,10 +6,12 @@ public class CharacterAnimator : MonoBehaviour {
     [SerializeField] private Animator animator;
 
     private void ResetAllTriggers() {
+
         animator.ResetTrigger(CharacterConst.IDLE_ANIM);
         animator.ResetTrigger(CharacterConst.RUN_ANIM);
         animator.ResetTrigger(CharacterConst.ATTACK_ANIM);
         animator.ResetTrigger(CharacterConst.DEAD_ANIM);
+        animator.ResetTrigger(CharacterConst.WIN_ANIM);
     }
 
     #region Animation Event
@@ -51,5 +53,11 @@ public class CharacterAnimator : MonoBehaviour {
 
         ResetAllTriggers();
         animator.SetTrigger(CharacterConst.DEAD_ANIM);
+    }
+
+    public void TriggerWinAnim() {
+
+        ResetAllTriggers();
+        animator.SetTrigger(CharacterConst.WIN_ANIM);
     }
 }

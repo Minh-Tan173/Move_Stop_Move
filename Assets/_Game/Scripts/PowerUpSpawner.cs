@@ -51,7 +51,7 @@ public class PowerUpSpawner : PoolUnit
 
                 bool isSafe = true;
 
-                List<CharacterBase> characterActiveList = CharacterManager.Instance.GetActiveCharacterList();
+                List<CharacterBase> characterActiveList = new List<CharacterBase>(CharacterManager.Instance.GetActiveCharacterList());
 
                 foreach (CharacterBase character in characterActiveList) {
                     // Check if any character (bot / player) is in safeRadius

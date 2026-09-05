@@ -8,7 +8,7 @@ public class BSTSecretAbilitySO : BoosterSO {
 
         if (character is Bot) { return; } // Only can apply for Player
 
-        List<CharacterBase> botList = CharacterManager.Instance.GetActiveCharacterList();
+        List<CharacterBase> botList = new List<CharacterBase>(CharacterManager.Instance.GetActiveCharacterList());
         botList.Remove(character); // Remove Player out of list
 
         if (isShow) {

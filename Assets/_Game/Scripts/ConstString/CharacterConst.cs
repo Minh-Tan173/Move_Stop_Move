@@ -8,6 +8,7 @@ public static class CharacterConst
     public const string RUN_ANIM = "TriggerRun";
     public const string DEAD_ANIM = "TriggerDead";
     public const string ATTACK_ANIM = "TriggerAttack";
+    public const string WIN_ANIM = "TriggerWin";
     #endregion
 
     #region Skin Const

@@ -14,7 +14,7 @@ public static class PatrolState
 {
     private static CharacterBase GetNearestCharacter(Bot bot) {
 
-        List<CharacterBase> charList = CharacterManager.Instance.GetActiveCharacterList();
+        List<CharacterBase> charList = new List<CharacterBase>(CharacterManager.Instance.GetActiveCharacterList());
         if (charList.Count <= 1) { return null; }
 
         CharacterBase nearestCharacter = null;
@@ -38,7 +38,7 @@ public static class PatrolState
 
     private static CharacterBase GetRandomCharacter(Bot bot) {
 
-        List<CharacterBase> charList = CharacterManager.Instance.GetActiveCharacterList();
+        List<CharacterBase> charList = new List<CharacterBase>(CharacterManager.Instance.GetActiveCharacterList());
 
         if (charList.Count <= 1) return null;
 
@@ -73,11 +73,17 @@ public static class PatrolState
         
     }
 
-    public static void OnExcute(Bot bot, CharacterAnimator botAnimator) {
+    public static void OnExecute(Bot bot, CharacterAnimator botAnimator) {
 
-        if (!LevelManager.Instance.IsGamePlaying()) {
+        //if (!LevelManager.Instance.IsGamePlaying()) {
 
-            bot.ChangeBotStateTo(BotStateSet.Idle);
+        //    bot.ChangeBotStateTo(BotStateSet.Idle);
+        //    return;
+        //}
+
+        if (CharacterManager.Instance.IsLastAliveCharacter(bot)) {
+
+            bot.ChangeBotStateTo(BotStateSet.Win);
             return;
         }
 

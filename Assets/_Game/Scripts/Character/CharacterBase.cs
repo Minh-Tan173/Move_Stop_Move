@@ -58,7 +58,10 @@ public class CharacterBase : PoolUnit
     }
 
     public virtual void OnDespawn() {
+
         isDead = true;
+
+        canvasCharacter.OnDespawn();
     }
 
     public virtual bool IsMoving() {
@@ -103,6 +106,11 @@ public class CharacterBase : PoolUnit
     public void Run() {
 
         charAnimator.TriggerRunAnim();
+    }
+
+    public void Win() {
+
+        charAnimator.TriggerWinAnim();
     }
 
     public void TriggerImmortal(float duration) {   

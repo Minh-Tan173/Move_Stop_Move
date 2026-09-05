@@ -11,7 +11,13 @@ public static class IdleState
         bot.ChangeBotSMTo(BotSM.idle);
     }
 
-    public static void OnExcute(Bot bot, CharacterAnimator botAnimator) {
+    public static void OnExecute(Bot bot, CharacterAnimator botAnimator) {
+
+        if (CharacterManager.Instance.IsLastAliveCharacter(bot)) {
+
+            bot.ChangeBotStateTo(BotStateSet.Win);
+            return;
+        }
 
         if (bot.GetCharacterCombat().HasAttackTarget()) {
 

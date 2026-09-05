@@ -111,11 +111,12 @@ public class Bot : CharacterBase
 
     private void Update() {
 
-        if (!LevelManager.Instance.IsGamePlaying()) { return; }
+        if (LevelManager.Instance.IsGamePlaying() || LevelManager.Instance.IsGameFinished()) {
 
-        if (currentState != null) {
+            if (currentState != null) {
 
-            currentState?.OnExcute(this, charAnimator);
+                currentState?.OnExecute(this, charAnimator);
+            }
         }
     }
 

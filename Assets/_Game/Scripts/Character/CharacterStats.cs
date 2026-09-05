@@ -191,6 +191,8 @@ public class CharacterStats : MonoBehaviour
 
     public void AddExp(int expGet) {
 
+        if (character.IsDead()) { return; }
+
         int finalExp = GetExpBonus(expGet);
         expProgress += finalExp;
 

@@ -13,13 +13,19 @@ public static class AttackState
         bot.ChangeBotSMTo(BotSM.attack);
     }
 
-    public static void OnExcute(Bot bot, CharacterAnimator botAnimatort) {
+    public static void OnExecute(Bot bot, CharacterAnimator botAnimatort) {
 
         CharacterCombat botCombat = bot.GetCharacterCombat();
 
-        if (!LevelManager.Instance.IsGamePlaying()) {
+        //if (!LevelManager.Instance.IsGamePlaying()) {
 
-            bot.ChangeBotStateTo(BotStateSet.Idle);
+        //    bot.ChangeBotStateTo(BotStateSet.Idle);
+        //    return;
+        //}
+
+        if (CharacterManager.Instance.IsLastAliveCharacter(bot)) {
+
+            bot.ChangeBotStateTo(BotStateSet.Win);
             return;
         }
 

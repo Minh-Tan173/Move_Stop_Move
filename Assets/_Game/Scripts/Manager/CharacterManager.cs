@@ -192,7 +192,7 @@ public class CharacterManager : Singleton<CharacterManager>
         }
     }
 
-    public List<CharacterBase> GetActiveCharacterList() {
+    public IReadOnlyList<CharacterBase> GetActiveCharacterList() {
         return charActiveList;
     }
 
@@ -210,5 +210,9 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public Bot GetKilledPlayer() {
         return this.killedPlayer;
+    }
+
+    public bool IsLastAliveCharacter(CharacterBase character) {
+        return charActiveList.Count == 1 && !character.IsDead();
     }
 }

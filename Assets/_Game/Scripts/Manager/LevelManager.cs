@@ -143,6 +143,10 @@ public class LevelManager : Singleton<LevelManager>
         return this.currentState == LevelState.Playing;
     }
 
+    public bool IsGameFinished() {
+        return this.currentState == LevelState.Finish || this.currentState == LevelState.Complete;
+    }
+
     public LevelBase GetCurrentLeveL() {
         return currentLevel;
     }
