@@ -13,5 +13,6 @@ public static class CharacterConst
 
     #region Skin Const
     public const string BASE_MAP = "_BaseMap";
+    public const string BASE_COLOR = "_BaseColor";
     #endregion
 }

@@ -1931,6 +1931,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -9064325173771588411, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 2884552497847320403}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3405032516374079929 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8699012472884554006, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 2884552497847320403}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5429427818562306035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2062984104648900448, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
@@ -1958,11 +1963,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ab44bfc7a7bd5c42a3bd84a61e504f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterVisual
+  colorSO: {fileID: 11400000, guid: 633ba4ab46758a44dbe6c000da12147c, type: 2}
   weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
   pantSO: {fileID: 11400000, guid: d790eb1f97d70eb449c21f99a104c935, type: 2}
   hatSO: {fileID: 11400000, guid: a79fc9580de687044b7c5bf4612c97cd, type: 2}
   accessorySO: {fileID: 11400000, guid: 5f33a2b416f908b48827e046fbd5d47c, type: 2}
   visualTransform: {fileID: 7889543452726006857}
+  modelSkinMesh: {fileID: 3405032516374079929}
   rightHandPlacedHolder: {fileID: 8883593598501704490}
   pantsRenderer: {fileID: 5809650692371459290}
   topHeadPlaceholder: {fileID: 5429427818562306035}

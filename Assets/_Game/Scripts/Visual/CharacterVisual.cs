@@ -6,6 +6,7 @@ public class CharacterVisual : MonoBehaviour
 {
 
     [Header("Skin Data")]
+    [SerializeField] private ColorSO colorSO;
     [SerializeField] private WeaponSO weaponSO;
     [SerializeField] private PantSO pantSO;
     [SerializeField] private HatSO hatSO;
@@ -13,6 +14,7 @@ public class CharacterVisual : MonoBehaviour
 
     [Header("Child Ref")]
     [SerializeField] private Transform visualTransform;
+    [SerializeField] private SkinnedMeshRenderer modelSkinMesh;
     [SerializeField] private Transform rightHandPlacedHolder;
     [SerializeField] private SkinnedMeshRenderer pantsRenderer;
     [SerializeField] private Transform topHeadPlaceholder;
@@ -63,12 +65,31 @@ public class CharacterVisual : MonoBehaviour
     }
 
     public void UpdateSize(float newSize) {
+        
         visualTransform.localScale = Vector3.one * newSize;
     }
 
-    public void UpdateVisual() {
+    public void ApplySkinColorFor(CharacterBase parentChar) {
 
-        
+        int colorID = 0;
+
+        if (parentChar is Player) {
+
+            colorID = DataManager.GetGameData().GetPlayerData().EquippedColorID;
+        }
+        else {
+            // Is Bot
+
+            colorID = Random.Range(0, colorSO.GetTotalColor());
+        }
+
+        Color skinColor = colorSO.GetColorWithType((ColorType)colorID);
+
+        // Update Skin For Char
+        modelSkinMesh.GetPropertyBlock(propertyBlock);
+        propertyBlock.SetColor(CharacterConst.BASE_COLOR, skinColor);
+        modelSkinMesh.SetPropertyBlock(propertyBlock);
+
     }
 
     public void ChangeWeapon(WeaponType weaponType, int skinID) {
@@ -92,7 +113,7 @@ public class CharacterVisual : MonoBehaviour
         currentWeapon.ApplySkin(skinData.GetTexture());
     }
 
-    public PantItemData ChangePants(CharacterBase parentChar ,int pantID = -1) {
+    public PantItemData ChangePants(CharacterBase parentChar, int pantID = -1) {
 
         // Get Pant Texture
         if (pantID < 0) {
@@ -116,7 +137,7 @@ public class CharacterVisual : MonoBehaviour
         pantsRenderer.GetPropertyBlock(propertyBlock);
 
         propertyBlock.SetTexture(CharacterConst.BASE_MAP, pantsTexture);
-        propertyBlock.SetColor("_BaseColor", Color.white);
+        propertyBlock.SetColor(CharacterConst.BASE_COLOR, Color.white);
         pantsRenderer.SetPropertyBlock(propertyBlock);
 
         return pantSO.GetPantItemData(pantID);

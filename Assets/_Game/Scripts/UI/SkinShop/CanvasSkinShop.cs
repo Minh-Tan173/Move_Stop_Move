@@ -10,6 +10,7 @@ public class CanvasSkinShop : UICanvas
     [SerializeField] private ShopCategory shopCategory;
 
     [Header("Shop Grid")]
+    [SerializeField] private ShopColorGrids shopColorGrids;
     [SerializeField] private ShopItemGrids shopItemGrids;
 
     [Header("Item Data")]
@@ -55,6 +56,8 @@ public class CanvasSkinShop : UICanvas
         bstDescriptionPanel.HidePanel();
 
         shopCategory.SelectedFirstTab();
+
+        shopColorGrids.OnInit();
 
     }
 

@@ -28,7 +28,7 @@ public class Player : CharacterBase
 
     private void Update() {
 
-        if (CharacterManager.Instance.IsLastAliveCharacter(this) && !isWin) {
+        if (CharacterManager.Instance.IsLastAliveCharacter(this) && !isWin && LevelManager.Instance.IsGamePlaying()) {
 
             isWin = true;
             this.Win();
@@ -215,6 +215,8 @@ public class Player : CharacterBase
         int skinID = playerData.GetEquippedWeaponSkinID(weaponType);
 
         characterCombat.SetWeaponType(weaponType, skinID);
+
+        charVisual.ApplySkinColorFor(this);
 
         // Item Prepared
         hatID = playerData.EquippedHatID;

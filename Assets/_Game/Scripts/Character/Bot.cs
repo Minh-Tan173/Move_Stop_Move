@@ -72,6 +72,8 @@ public class Bot : CharacterBase
 
         characterCombat.SetWeaponType(randomWeapon, randomSkin.GetItemID());
 
+        charVisual.ApplySkinColorFor(this);
+
         // Item Prepared
         PantItemData pant = charVisual.ChangePants(this);
         if (pant != null) { pant.ApplyBoosterFor(this); }

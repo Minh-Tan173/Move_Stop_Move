@@ -193,11 +193,14 @@ public static class DataManager
 [System.Serializable]
 public class PlayerData {
 
-    public const int NONE_ITEM_ID = -1;
+    public const int NONE_ID = -1;
 
     #region Field
     [SerializeField] private int currentLevelIndex;
     [SerializeField] private int currentGold;
+
+    // Color Visual
+    [SerializeField] private int equippedColorID;
 
     // Current Equipped Item   
     [SerializeField] private int equippedHatID;
@@ -222,9 +225,11 @@ public class PlayerData {
         currentLevelIndex = 0;
         currentGold = 0;
 
-        equippedHatID = NONE_ITEM_ID;
-        equippedPantID = NONE_ITEM_ID;
-        equippedAccessoryID = NONE_ITEM_ID;
+        equippedColorID = 0;
+
+        equippedHatID = NONE_ID;
+        equippedPantID = NONE_ID;
+        equippedAccessoryID = NONE_ID;
 
     }
 
@@ -249,6 +254,7 @@ public class PlayerData {
     public int CurrentLevelIndex => currentLevelIndex;
     public int CurrentGold => currentGold;
 
+    public int EquippedColorID => equippedColorID;
     public int EquippedHatID => equippedHatID;
     public int EquippedPantID => equippedPantID;
     public int EquippedAccessoryID => equippedAccessoryID;
@@ -262,6 +268,8 @@ public class PlayerData {
 
     public void SetCurrentLevel(int value) { currentLevelIndex = value; }
     public void SetCurrentGold(int value) { currentGold = value; }
+
+    public void SetEquipColorIndex(int colorID) { equippedColorID = colorID; }
 
     public void SetEquippedHatID(int hatID) { equippedHatID = hatID; }
     public void SetEquippedPantID(int pantID) { equippedPantID = pantID; }
