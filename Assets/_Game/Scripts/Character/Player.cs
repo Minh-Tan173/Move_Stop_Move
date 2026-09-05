@@ -22,9 +22,20 @@ public class Player : CharacterBase
     private int pantID;
     private int accessoryID;
 
+    private bool isWin;
+
     private CharacterBase lastAttackTarget;
 
     private void Update() {
+
+        if (CharacterManager.Instance.IsLastAliveCharacter(this) && !isWin) {
+
+            isWin = true;
+            this.Win();
+
+            LevelManager.Instance.SetWin();
+            LevelManager.Instance.OnFinish();   
+        }
 
         if (IsDead() || !LevelManager.Instance.IsGamePlaying()) { return; }
 
@@ -196,6 +207,8 @@ public class Player : CharacterBase
         HideHighlightTarget();
 
         PlayerData playerData = DataManager.GetGameData().GetPlayerData();
+
+        isWin = false;
 
         // Weapon Prepared
         WeaponType weaponType = playerData.EquippedWeaponType;

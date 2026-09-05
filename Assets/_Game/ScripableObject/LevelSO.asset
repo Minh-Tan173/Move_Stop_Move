@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelSO
   levelBaseList:
   - {fileID: 2474225344028556224, guid: 0909b71fa9ad82d48b114fb822b763ab, type: 3}
+  - {fileID: 930739018410438732, guid: 7e42524a59f47ec43ab30e5e0c09ae2f, type: 3}

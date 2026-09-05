@@ -22,4 +22,18 @@ public class CanvasWin : UICanvas
         particleSystem.Stop();
         particleSystem.Clear();
     }
+
+    public void NextLevel() {
+
+        UIManager.Instance.CloseUI<CanvasWin>(0.25f);
+
+        LevelManager.Instance.Invoke(nameof(LevelManager.Instance.SwitchToNextLevel), 0.5f);
+    }
+
+    public void Home() {
+
+        UIManager.Instance.CloseUI<CanvasLoss>(0.25f);
+
+        LevelManager.Instance.BackToMainMenu();
+    }
 }

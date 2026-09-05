@@ -25,10 +25,6 @@ public class LevelManager : Singleton<LevelManager>
         OnStart();
     }
 
-    private void SwitchToNextLevel() {
-        currentLevelIndex += 1;
-    }
-
     private void LoadLevel() {
 
         if (currentLevel != null) {
@@ -43,7 +39,7 @@ public class LevelManager : Singleton<LevelManager>
     public void OnStart() {
 
         isWin = false;
-        isLoss = true;
+        isLoss = false;
 
         DataManager.OnInit();
         currentLevelIndex = DataManager.GetGameData().GetPlayerData().CurrentLevelIndex;
@@ -98,6 +94,7 @@ public class LevelManager : Singleton<LevelManager>
 
         UIManager.Instance.GetUI<CanvasHUD>().StopUIAnimation();
         UIManager.Instance.CloseUI<CanvasHUD>(0.3f);
+        UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
 
         ChangeLevelState(LevelState.Finish);
 
@@ -122,6 +119,24 @@ public class LevelManager : Singleton<LevelManager>
         UIManager.Instance.OpenUI<CanvasLoss>();
 
         ChangeLevelState(LevelState.Complete);
+    }
+
+    public void SwitchToNextLevel() {
+
+        // Update Next Level
+        int nextLevelIndex = currentLevelIndex + 1;
+        currentLevelIndex = nextLevelIndex % levelSO.TotalLevel();
+        DataManager.UpdateSavedLevel(currentLevelIndex);
+
+        // Reset Game base on new Level
+        OnDespawn();
+        OnStart();
+
+        UIManager.Instance.CloseUI<CanvasMainMenu>(0f);
+
+        CanvasLoading canvasLoading = UIManager.Instance.OpenUI<CanvasLoading>();
+        canvasLoading.ActiveLoading(OnPlay);
+
     }
 
     public void BackToMainMenu() {

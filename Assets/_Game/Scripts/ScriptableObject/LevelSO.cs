@@ -10,4 +10,8 @@ public class LevelSO : ScriptableObject {
 
         return levelBaseList[levelIndex];
     }
+
+    public int TotalLevel() {
+        return levelBaseList.Count;
+    }
 }
