@@ -5,7 +5,10 @@ public enum ColorType {
     White = 0,
     Yellow = 1,
     Red = 2,
-    Purple = 3
+    Purple = 3,
+    Cyan = 4,
+    Black = 5, 
+    Green = 6
 }
 
 [CreateAssetMenu()]

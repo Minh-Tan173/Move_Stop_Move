@@ -1,12 +1,17 @@
+using TMPro;
 using UnityEngine;
 
 public class CanvasWin : UICanvas
 {
     [SerializeField] private ParticleSystem particleSystem;
 
+    [SerializeField] private ScoreBoard scoreBoard;
+
     public override void SetUp() {
 
         PlayPartical();
+
+        scoreBoard.UpdateKillScore();
     }
 
     private void PlayPartical() {
@@ -19,6 +24,7 @@ public class CanvasWin : UICanvas
     }
 
     private void StopPartical() {
+
         particleSystem.Stop();
         particleSystem.Clear();
     }

@@ -7,18 +7,32 @@ public class KnifeBullet : BulletBase
 
     private void OnTriggerEnter(Collider other) {
 
-        CharacterBase character = LevelCache<Collider, CharacterBase>.GetValueWithKey(other);
+        if (other.CompareTag(GameTag.OBSTACLE)) {
+            // Collide with Obstacle
 
-        if (character == null || character == bulletOwner || character.IsDead() || character.IsImmortal()) { return; }
+            DisableDamage();
 
-        int expReward = character.GetCharacterStats().GetExpReward();
-        bulletOwner.GetCharacterStats().AddExp(expReward);
+            StopMove();
+            Invoke(nameof(OnDespawn), 3f);
+        }
+        else {
+            // Collide With Other Tag
+
+            if (!IsDamageActive()) { return; } // Skip if damage is inactive
+
+            CharacterBase character = LevelCache<Collider, CharacterBase>.GetValueWithKey(other);
+
+            if (character == null || character == bulletOwner || character.IsDead() || character.IsImmortal()) { return; }
+
+            int expReward = character.GetCharacterStats().GetExpReward();
+            bulletOwner.GetCharacterStats().AddExp(expReward);
 
 
-        InteractWithCollideChar(character);
+            HandleCharacterHit(character);
 
-        StopMove();
-        OnDespawn();
+            StopMove();
+            OnDespawn();
+        }
     }   
 
     private void Update() {

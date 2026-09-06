@@ -67,8 +67,13 @@ public class CharLevelData {
 
     [SerializeField] private int level;
     [SerializeField] private float bodyScaleSize;
+
+    [Header("EXP")]
     [SerializeField] private int expRequired;
     [SerializeField] private int expReward;
+
+    [Header("Score")]
+    [SerializeField] private int scoreReward;
 
     public bool IsSameLevel(int level) {
         return this.level == level;
@@ -88,5 +93,9 @@ public class CharLevelData {
 
     public int GetExpReward() {
         return expReward;
+    }
+
+    public int GetScoreReward() {
+        return scoreReward;
     }
 }

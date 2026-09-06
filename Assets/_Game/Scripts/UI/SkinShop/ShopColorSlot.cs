@@ -12,6 +12,8 @@ public class ShopColorSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnInit(ShopColorGrids owner, ColorType colorType, Color color) {
 
+        ShowHighlight(false);
+
         ownerGrids = owner;
         colorOfSlot = colorType;
         colorImage.color = color;

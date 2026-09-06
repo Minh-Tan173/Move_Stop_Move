@@ -10,6 +10,10 @@ public class CanvasMainMenu : UICanvas
     [SerializeField] private TextMeshProUGUI cointText;
     [SerializeField] private Setting setting;
 
+    [Header("Play Button Element")]
+    [SerializeField] private TextMeshProUGUI currentZoneText;
+    [SerializeField] private TextMeshProUGUI bestScoreText;
+
     #region Warning Text
     private const string INVALID_NAME = "Name is Invalid";
     private const string LETTER_REQUIRED = "Letter Required";
@@ -37,6 +41,12 @@ public class CanvasMainMenu : UICanvas
 
     private void UpdateCointText() {
         cointText.text = $"{DataManager.GetGameData().GetPlayerData().CurrentGold}";
+    }
+
+    private void UpdateElementOfPlayButton() {
+
+        currentZoneText.text = $"Zone: {DataManager.GetGameData().GetPlayerData().CurrentLevelIndex + 1}";
+        bestScoreText.text = $"Best: {DataManager.GetGameData().GetPlayerData().BestScore}";
     }
 
     private bool IsInputTextValid(string value) {
@@ -79,6 +89,7 @@ public class CanvasMainMenu : UICanvas
 
         UpdateCointText();
         HideWarningText();
+        UpdateElementOfPlayButton();
 
         setting.OnInit(this);
 

@@ -136,14 +136,6 @@ public class CharacterStats : MonoBehaviour
         UpAttackSize();
     }
 
-    public void ResetLevel() {
-        
-        currentLevel = 1;
-        expProgress = 0;
-
-        UpdateBodySize();
-    }
-
     private int GetExpBonus(int exp) {
 
         if (character is Player) {
@@ -152,6 +144,14 @@ public class CharacterStats : MonoBehaviour
         }
 
         return exp;
+    }
+
+    public void ResetLevel() {
+
+        currentLevel = 1;
+        expProgress = 0;
+
+        UpdateBodySize();
     }
 
     public void SetSpawnLevel(int level) {
@@ -207,6 +207,10 @@ public class CharacterStats : MonoBehaviour
     
     public int GetExpReward() {
         return characterStatsSO.GetCharLevelData(currentLevel).GetExpReward();
+    }
+
+    public int GetCurrentLevel() {
+        return this.currentLevel;
     }
 
     #endregion

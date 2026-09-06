@@ -20,16 +20,20 @@ MonoBehaviour:
     bodyScaleSize: 0
     expRequired: 2
     expReward: 1
+    scoreReward: 10
   - level: 2
     bodyScaleSize: 0.5
     expRequired: 8
     expReward: 2
+    scoreReward: 20
   - level: 3
     bodyScaleSize: 1
     expRequired: 14
     expReward: 3
+    scoreReward: 30
   - level: 4
     bodyScaleSize: 1.5
     expRequired: 17
     expReward: 4
+    scoreReward: 40
   immortalDuration: 2.5

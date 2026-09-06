@@ -103,6 +103,13 @@ public static class DataManager
         SaveDataToPrefs();
     }
 
+    public static void UpdateNewBestScore(int newBestScore) {
+
+        gameData.GetPlayerData().SetNewBestScore(newBestScore);
+
+        SaveDataToPrefs();
+    }
+
     #region Hat Item Saved
     public static void UnlockHat(int hatID) {
         
@@ -198,6 +205,7 @@ public class PlayerData {
     #region Field
     [SerializeField] private int currentLevelIndex;
     [SerializeField] private int currentGold;
+    [SerializeField] private int bestScore;
 
     // Color Visual
     [SerializeField] private int equippedColorID;
@@ -253,6 +261,7 @@ public class PlayerData {
     #region Getter
     public int CurrentLevelIndex => currentLevelIndex;
     public int CurrentGold => currentGold;
+    public int BestScore => bestScore;
 
     public int EquippedColorID => equippedColorID;
     public int EquippedHatID => equippedHatID;
@@ -268,6 +277,7 @@ public class PlayerData {
 
     public void SetCurrentLevel(int value) { currentLevelIndex = value; }
     public void SetCurrentGold(int value) { currentGold = value; }
+    public void SetNewBestScore(int newBestScore) { bestScore = newBestScore; }
 
     public void SetEquipColorIndex(int colorID) { equippedColorID = colorID; }
 

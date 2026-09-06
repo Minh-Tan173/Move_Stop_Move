@@ -4,6 +4,7 @@ public class Player : CharacterBase
 {
     [Header("Player's Info")]
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private PlayerScore playerScore;
 
     [Header("Check Obstacle Behavior")]
     [SerializeField] private ObstacleFade obstacleFade;
@@ -210,6 +211,8 @@ public class Player : CharacterBase
 
         isWin = false;
 
+        playerScore.OnInit();
+
         // Weapon Prepared
         WeaponType weaponType = playerData.EquippedWeaponType;
         int skinID = playerData.GetEquippedWeaponSkinID(weaponType);
@@ -249,5 +252,9 @@ public class Player : CharacterBase
         SoundManager.Instance.PlaySound(this.UnitTF.position, SFXType.PlayerDead, audioIndex: 0);
 
         base.Dead();
+    }
+
+    public PlayerScore GetPlayerScore() {
+        return this.playerScore;
     }
 }

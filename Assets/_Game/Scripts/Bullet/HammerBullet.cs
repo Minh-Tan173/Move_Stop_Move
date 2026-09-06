@@ -7,17 +7,31 @@ public class HammerBullet : BulletBase
 
     private void OnTriggerEnter(Collider other) {
 
-        CharacterBase collideChar = LevelCache<Collider, CharacterBase>.GetValueWithKey(other);
+        if (other.CompareTag(GameTag.OBSTACLE)) {
+            // Collide With Obstacle
 
-        if (collideChar == null || collideChar == bulletOwner || collideChar.IsDead() || collideChar.IsImmortal()) { return; }
+            DisableDamage();
+            StopMove();
 
-        int expReward = collideChar.GetCharacterStats().GetExpReward();
-        bulletOwner.GetCharacterStats().AddExp(expReward);
+            Invoke(nameof(OnDespawn), despawnDuration);
+        }
+        else {
+            // Collide With Other Tag
 
-        InteractWithCollideChar(collideChar);
+            if (!IsDamageActive()) { return; } // Skip if damage is inactive
 
-        StopMove();
-        OnDespawn();
+            CharacterBase collideChar = LevelCache<Collider, CharacterBase>.GetValueWithKey(other);
+
+            if (collideChar == null || collideChar == bulletOwner || collideChar.IsDead() || collideChar.IsImmortal()) { return; }
+
+            int expReward = collideChar.GetCharacterStats().GetExpReward();
+            bulletOwner.GetCharacterStats().AddExp(expReward);
+
+            HandleCharacterHit(collideChar);
+
+            StopMove();
+            OnDespawn();
+        }
     }
 
     private void Update() {

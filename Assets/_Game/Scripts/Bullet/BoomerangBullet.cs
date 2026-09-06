@@ -25,31 +25,45 @@ public class BoomerangBullet : BulletBase
     private float currentMoveSpeed;
 
 
-    public void OnTriggerEnter(Collider characterColl) {
+    public void OnTriggerEnter(Collider collideColl) {
 
-        CharacterBase character = LevelCache<Collider, CharacterBase>.GetValueWithKey(characterColl);
-        if (character == null) { return; }
 
-        if (character == bulletOwner) {
-            // If trigger bullet owner
+        if (collideColl.CompareTag(GameTag.OBSTACLE)) {
+            // Collide With Obstacle
 
-            if (currentState != BoomerangState.Returning) { return; } // If bullet is not currently return
+            DisableDamage();
+            StopMove();
 
-            // If bullet is returning
-            HandleCatchingByOwner();
-            return;
+            Invoke(nameof(OnDespawn), despawnDuration);
         }
         else {
-            // If trigger enemy
+            // Collide With Other Tag
 
-            if (character.IsDead() || character.IsImmortal()) { return; }
+            if (!IsDamageActive()) { return; } // Skip if damage is inactive
 
-            int expReward = character.GetCharacterStats().GetExpReward();
-            bulletOwner.GetCharacterStats().AddExp(expReward);
+            CharacterBase character = LevelCache<Collider, CharacterBase>.GetValueWithKey(collideColl);
+            if (character == null) { return; }
 
-            InteractWithCollideChar(character);
+            if (character == bulletOwner) {
+                // If trigger bullet owner
+
+                if (currentState != BoomerangState.Returning) { return; } // If bullet is not currently return
+
+                // If bullet is returning
+                HandleCatchingByOwner();
+                return;
+            }
+            else {
+                // If trigger enemy
+
+                if (character.IsDead() || character.IsImmortal()) { return; }
+
+                int expReward = character.GetCharacterStats().GetExpReward();
+                bulletOwner.GetCharacterStats().AddExp(expReward);
+
+                HandleCharacterHit(character);
+            }
         }
-
     }
 
     private void Update() {

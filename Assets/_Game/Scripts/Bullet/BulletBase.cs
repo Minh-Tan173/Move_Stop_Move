@@ -4,10 +4,12 @@ public class BulletBase : PoolUnit
 {
     [Header("Data")]
     [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float despawnDuration = 3f;
     [SerializeField] protected WeaponSO weaponSO;
     [SerializeField] protected Renderer bulletRenderer;
 
     protected bool canMove;
+    protected bool isDamageActive;
     protected Vector3 moveDir;
     protected float sqrAttackRange;
     protected CharacterBase bulletOwner;
@@ -19,16 +21,28 @@ public class BulletBase : PoolUnit
     }
 
 
-    public void StartMove() {
+    protected void StartMove() {
         canMove = true;
     }
 
-    public void StopMove() {
+    protected void StopMove() {
         canMove = false;
     }
 
-    public bool CanMove() { 
+    protected bool CanMove() { 
         return canMove;
+    }
+
+    protected void EnableDamage() {
+        isDamageActive = true;
+    }
+
+    protected void DisableDamage() {
+        isDamageActive = false;
+    }
+
+    protected bool IsDamageActive() {
+        return isDamageActive;
     }
 
     public void ApplySkin(Texture2D texture) {
@@ -41,28 +55,43 @@ public class BulletBase : PoolUnit
 
             propertyBlock.SetTexture(CharacterConst.BASE_MAP, texture);
 
-            propertyBlock.SetColor("_BaseColor", Color.white);
+            propertyBlock.SetColor(CharacterConst.BASE_COLOR, Color.white);
 
             bulletRenderer.SetPropertyBlock(propertyBlock, i);
         }
     }
 
-    public void InteractWithCollideChar(CharacterBase character) {
+    public void HandleCharacterHit(CharacterBase collideChar) {
 
-        if (character == CharacterManager.Instance.GetPlayer()) {
+        Player player = CharacterManager.Instance.GetPlayer();
+
+        if (collideChar == player) {
             // If collide Player
 
             CharacterManager.Instance.SetKilledPlayerIs(bulletOwner as Bot);
         }
 
-        CharacterManager.Instance.DeadCharacter(character);
+        if (bulletOwner == player) {
+            // If Owner is Player --> Player just kill someone
+
+            int levelOfCollideChar = collideChar.GetCharacterStats().GetCurrentLevel();
+
+            player.GetPlayerScore().AddKill(levelOfCollideChar);
+        }
+
+        CharacterManager.Instance.DeadCharacter(collideChar);
     }
 
     public virtual void HandleMovement() {
+
         Debug.LogError("Trigger baseBullet");
     }
 
     public virtual void OnInit(CharacterBase bulletOwner) {
+
+        CancelInvoke(nameof(OnDespawn));
+
+        EnableDamage();
 
         this.bulletOwner = bulletOwner;
 
