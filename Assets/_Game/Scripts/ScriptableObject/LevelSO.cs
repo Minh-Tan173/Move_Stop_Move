@@ -6,9 +6,13 @@ public class LevelSO : ScriptableObject {
 
     [SerializeField] private List<LevelData> levelList;
 
-    public LevelBase GetLeveLByIndex(int levelIndex) {
+    public LevelBase GetLeveLPrefabByIndex(int levelIndex) {
 
         return levelList[levelIndex].GetLevelPrefab();
+    }
+
+    public int GetGoldRewarByIndex(int levelIndex) {
+        return levelList[levelIndex].GetGoldReward();
     }
 
     public int TotalLevel() {
@@ -24,5 +28,9 @@ public class LevelData {
 
     public LevelBase GetLevelPrefab() {
         return levePrefab;
+    }
+
+    public int GetGoldReward() {
+        return goldReward;
     }
 }

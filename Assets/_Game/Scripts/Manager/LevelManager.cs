@@ -33,7 +33,7 @@ public class LevelManager : Singleton<LevelManager>
             LevelBase.DestroyLevel(currentLevel);
         }
 
-        currentLevel = LevelBase.SpawnLevel(levelSO.GetLeveLByIndex(currentLevelIndex));
+        currentLevel = LevelBase.SpawnLevel(levelSO.GetLeveLPrefabByIndex(currentLevelIndex));
     }
 
     public void OnStart() {
@@ -109,6 +109,10 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnWin() {
 
+        int goldReward = GetGoldRewardWithCurrentLevel();
+
+        DataManager.UpdateGold(goldReward);
+
         MusicManager.Instance.StopPlayTheme();
         UIManager.Instance.OpenUI<CanvasWin>();
     }
@@ -164,6 +168,10 @@ public class LevelManager : Singleton<LevelManager>
 
     public LevelBase GetCurrentLeveL() {
         return currentLevel;
+    }
+
+    public int GetGoldRewardWithCurrentLevel() {
+        return levelSO.GetGoldRewarByIndex(currentLevelIndex);
     }
 
     public void SetWin() {

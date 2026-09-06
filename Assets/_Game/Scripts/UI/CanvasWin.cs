@@ -4,14 +4,16 @@ using UnityEngine;
 public class CanvasWin : UICanvas
 {
     [SerializeField] private ParticleSystem particleSystem;
-
     [SerializeField] private ScoreBoard scoreBoard;
+    [SerializeField] private TextMeshProUGUI goldRewardText;
 
     public override void SetUp() {
 
-        PlayPartical();
+        PlayPartical(); 
 
         scoreBoard.UpdateKillScore();
+
+        goldRewardText.text = $"+{goldRewardText}";
     }
 
     private void PlayPartical() {
