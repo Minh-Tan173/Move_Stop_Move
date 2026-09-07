@@ -51,6 +51,9 @@ public class CanvasMainMenu : UICanvas
 
     private bool IsInputTextValid(string value) {
 
+        if (string.IsNullOrEmpty(inputField.text)) {
+            return true;
+        }
 
         bool hasChar = false;
 
@@ -106,9 +109,13 @@ public class CanvasMainMenu : UICanvas
 
             playerName = string.IsNullOrEmpty(inputField.text) ? $"{EMPTY_NAME}" : inputField.text;
 
+            Player player = CharacterManager.Instance.GetPlayer();
+            player.GetCanvasCharacter().SetName(playerName);
+
             UIManager.Instance.CloseUI<CanvasMainMenu>(0.5f);
 
             LevelManager.Instance.OnPlay();
+
         }
         
     }

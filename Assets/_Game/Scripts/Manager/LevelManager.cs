@@ -46,11 +46,14 @@ public class LevelManager : Singleton<LevelManager>
 
         LoadLevel();
 
-        CharacterManager.Instance.OnInit();
-
         EventManager.Instance.OnInit();
 
-        UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
+        UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
+        UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
+        //UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
+
+        CharacterManager.Instance.OnInit();
+
         UIManager.Instance.OpenUI<CanvasMainMenu>();
 
         CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);

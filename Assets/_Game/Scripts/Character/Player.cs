@@ -238,7 +238,10 @@ public class Player : CharacterBase
     public override void OnDespawn() {
 
         base.OnDespawn();
+
         obstacleFade.OnDespawn();
+
+        HideHighlightTarget();
 
         charVisual.OnDespawn();
     }

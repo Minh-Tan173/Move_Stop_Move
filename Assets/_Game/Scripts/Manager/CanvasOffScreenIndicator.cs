@@ -1,25 +1,42 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CanvasOffScreenIndicator : UICanvas {
 
-    [Header("Indicators")]
-    [SerializeField] private OffscreenIndicator[] indicatorArray;
-
-    [Header("Screen Edge")]
-    [SerializeField] private Vector2 edgePadding = new Vector2(50f, 50f);
+    [Header("Indicator")]
+    [SerializeField] private OffscreenIndicator indicatorPrefab;
+    [SerializeField] private int totalIndicator;
 
     private Camera mainCamera;
     private Camera MainCamera => mainCamera == null ? mainCamera = Camera.main : mainCamera;
 
+    private List<OffscreenIndicator> indicatorList = new List<OffscreenIndicator>();
+
+    public override void SetUp() {
+        
+        if (indicatorList.Count == 0) {
+            // Spawn Indicator
+
+            for (int i = 0; i < totalIndicator; i++) {
+
+                OffscreenIndicator indicator = Instantiate(indicatorPrefab, transform);
+
+                indicator.gameObject.SetActive(false);
+                indicator.GetIndicatorRect().anchoredPosition = Vector2.zero;
+
+                indicatorList.Add(indicator);
+            }
+        }
+
+    }
+
     private void LateUpdate() {
 
-        for (int i = 0; i < indicatorArray.Length; i++) {
+        for (int i = 0; i < indicatorList.Count; i++) {
 
-            OffscreenIndicator indicator = indicatorArray[i];
+            OffscreenIndicator indicator = indicatorList[i];
 
-            if (indicator.IsCharTargetAvailable()) {
-                continue;
-            }
+            if (!indicator.IsCharTargetAvailable()) { continue; }
 
             UpdateIndicator(indicator);
         }
@@ -30,25 +47,23 @@ public class CanvasOffScreenIndicator : UICanvas {
 
         if (targetChar == null) { return; }
 
-        for (int i = 0; i < indicatorArray.Length; i++) {
+        for (int i = 0; i < indicatorList.Count; i++) {
 
-            if (indicatorArray[i].GetTargetChar() == targetChar) {
+            if (indicatorList[i].GetTargetChar() == targetChar) {
                 // Not register with same char 2 times
                 return;
             }
         }
 
-        for (int i = 0; i < indicatorArray.Length; i++) {
+        for (int i = 0; i < indicatorList.Count; i++) {
 
-            OffscreenIndicator indicator = indicatorArray[i];
+            OffscreenIndicator indicator = indicatorList[i];
 
             if (!indicator.IsCharTargetAvailable()) {
-                continue;
+
+                indicator.Bind(targetChar);
+                return;
             }
-
-            indicator.Bind(targetChar);
-
-            return;
         }
     }
 
@@ -56,9 +71,9 @@ public class CanvasOffScreenIndicator : UICanvas {
         
         if (targetChar == null) { return; }
 
-        for (int i = 0; i < indicatorArray.Length; i++) {
+        for (int i = 0; i < indicatorList.Count; i++) {
 
-            OffscreenIndicator indicator = indicatorArray[i];
+            OffscreenIndicator indicator = indicatorList[i];
 
             if (indicator.GetTargetChar() != targetChar) {
                 continue;
@@ -102,6 +117,9 @@ public class CanvasOffScreenIndicator : UICanvas {
 
             Vector2 directionToIndicator = GetScreenDirection(viewportPos);
 
+            indicator.SetArrowDirection(directionToIndicator);
+            indicator.UpdateArrowPosition(directionToIndicator);
+
             Vector2 position = CalculateEdgePosition(directionToIndicator, indicator.GetIndicatorRect());
 
             indicator.GetIndicatorRect().anchoredPosition = position;
@@ -141,8 +159,8 @@ public class CanvasOffScreenIndicator : UICanvas {
         Vector2 localDir = new Vector2(viewportDirection.x * containerRect.width, viewportDirection.y * containerRect.height);
         Vector2 indicatorHalfSize = indicatorRect.rect.size * 0.5f;
 
-        float maxX = containerRect.width * 0.5f - edgePadding.x - indicatorHalfSize.x;
-        float maxY = containerRect.height * 0.5f - edgePadding.y - indicatorHalfSize.y;
+        float maxX = containerRect.width * 0.5f - indicatorHalfSize.x;
+        float maxY = containerRect.height * 0.5f - indicatorHalfSize.y;
 
         float scaleX = Mathf.Abs(localDir.x) > Mathf.Epsilon ? maxX / Mathf.Abs(localDir.x) : float.MaxValue;
         float scaleY = Mathf.Abs(localDir.y) > Mathf.Epsilon ? maxY / Mathf.Abs(localDir.y) : float.MaxValue;
