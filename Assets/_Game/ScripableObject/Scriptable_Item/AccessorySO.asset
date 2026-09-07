@@ -19,14 +19,20 @@ MonoBehaviour:
     accessorySprite: {fileID: 0}
     accessoryType: 0
     price: 0
-    boosterDataList: []
+    boosterDataList:
+    - booster: {fileID: 11400000, guid: 59a65cba7cae1f54d8db5f100e87354d, type: 2}
+      value: 1000
   - accessoryName: Captain Shield
     accessoryID: 1
     accessoryPrefab: {fileID: -7657332400220799181, guid: 43d32d53022e15549898cc5da5ca90fa, type: 3}
     accessorySprite: {fileID: 0}
     accessoryType: 0
     price: 0
-    boosterDataList: []
+    boosterDataList:
+    - booster: {fileID: 11400000, guid: 59a65cba7cae1f54d8db5f100e87354d, type: 2}
+      value: 1000
+    - booster: {fileID: 11400000, guid: 8cc483cffcbf2034baeaafa28d273a13, type: 2}
+      value: 3
   - accessoryName: Golden Sword
     accessoryID: 2
     accessoryPrefab: {fileID: 6232525271508430937, guid: 749aca77ba6994e45a3950ad14f3ee83, type: 3}

@@ -15,6 +15,7 @@ public class LevelManager : Singleton<LevelManager>
     #region Level Data
     private int currentLevelIndex;
     private LevelBase currentLevel;
+    private int goldReward;
     #endregion
 
     private bool isWin;
@@ -44,13 +45,15 @@ public class LevelManager : Singleton<LevelManager>
         DataManager.OnInit();
         currentLevelIndex = DataManager.GetGameData().GetPlayerData().CurrentLevelIndex;
 
+        goldReward = 0;
+        UpdateGoldReward(levelSO.GetGoldRewarByIndex(currentLevelIndex));
+
         LoadLevel();
 
         EventManager.Instance.OnInit();
 
         UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
         UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
-        //UIManager.Instance.GetUI<CanvasOffScreenIndicator>();
 
         CharacterManager.Instance.OnInit();
 
@@ -160,6 +163,10 @@ public class LevelManager : Singleton<LevelManager>
         canvasLoading.ActiveLoading(OnStart, isDelayClose: false);
     }
 
+    public void UpdateGoldReward(int goldBonus) {
+
+        goldReward += goldBonus;
+    }
 
     public void ChangeLevelState(LevelState levelState) {
 
@@ -179,7 +186,7 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     public int GetGoldRewardWithCurrentLevel() {
-        return levelSO.GetGoldRewarByIndex(currentLevelIndex);
+        return goldReward;
     }
 
     public void SetWin() {
