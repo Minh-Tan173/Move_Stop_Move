@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
 using UnityEngine;
 
-public class UpgradeVFX : MonoBehaviour
+public class ImmortalVFX : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem upgradeVFX;
+    [SerializeField] private ParticleSystem immortal;
     [SerializeField] private float baseSize;
 
     private Transform vfxTransform;
@@ -27,12 +27,12 @@ public class UpgradeVFX : MonoBehaviour
 
     private void ResetVFX() {
 
-        upgradeVFX.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
+        immortal.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
-    private void StopVFX() {
+    public void StopVFX() {
 
-        upgradeVFX.Stop();
+        immortal.Stop();
 
         SetActive(false);
     }
@@ -43,7 +43,7 @@ public class UpgradeVFX : MonoBehaviour
         SetActive(true);
 
         ResetVFX();
-        upgradeVFX.Play();
+        immortal.Play();
 
         Invoke(nameof(StopVFX), vfxDuration);
     }

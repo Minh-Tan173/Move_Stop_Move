@@ -179,7 +179,7 @@ public class CharacterVisual : MonoBehaviour
         return hatSO.GetHatData(hatID);
     }
 
-    public void ChangeAccessories(CharacterBase parentChar, int accessoryID = -1) {
+    public AccessoryItemData ChangeAccessories(CharacterBase parentChar, int accessoryID = -1) {
 
         if (currentAccessory != null) {
 
@@ -191,10 +191,10 @@ public class CharacterVisual : MonoBehaviour
 
             if (parentChar is Player) {
 
-                return;
+                return null;
             }
             else {
-                // If character is Bot
+                // If character is Bot 
 
                 int totalAccessory = accessorySO.accessoryItemDataList.Count;
                 accessoryID = Random.Range(0, totalAccessory);
@@ -203,12 +203,32 @@ public class CharacterVisual : MonoBehaviour
 
         PoolUnit accessoryPrefab = accessorySO.GetAccesoryPrefab(accessoryID);
 
-        // Setup Accessory
+        // Setup Accessory 
         currentAccessory = SimplePool.Spawn<PoolUnit>(accessoryPrefab, leftHandPlaceholder.position, Quaternion.identity);
-
         currentAccessory.UnitTF.SetParent(leftHandPlaceholder);
         ResetItem(currentAccessory);
 
+        // ---- SPECIAL ACESSORY ---- 
+        AccessoryItemData currentAccessoryData = accessorySO.GetAccessoryItemData(accessoryID);
+
+        if (currentAccessoryData.IsSpecialAccessory()) {
+
+            if (parentChar is Player) {
+                // Golden Sword 
+
+                GoldenSword goldenSword = currentAccessory.GetComponent<GoldenSword>();
+                if (goldenSword != null) { goldenSword.OnInit(this.transform);}
+            }
+            else {
+                // Bot cant using special accessory 
+
+                SimplePool.Despawn(currentAccessory);
+                currentAccessory = null;
+                return null;
+            }
+        }
+
+        return currentAccessoryData;
     }
 
     public void PlayBlood() {

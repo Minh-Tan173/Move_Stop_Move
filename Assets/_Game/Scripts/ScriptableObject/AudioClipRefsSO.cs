@@ -7,7 +7,11 @@ public enum SFXType {
     HammerThrow,
     BoomerangThrow,
     PlayerDead,
-    PlayerSizeUp
+    PlayerSizeUp,
+    Win,
+    Loss,
+    Countdown,
+    CountdownComplete
 }
 
 [CreateAssetMenu()]

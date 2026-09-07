@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -259,7 +260,15 @@ public class Bot : CharacterBase
 
     public void IgnoreCurrentAttackTarget() {
 
-        ignoredAttackTarget = characterCombat.GetAttackTarget();
+        if (CharacterManager.Instance.GetActiveCharacterList().Count() > 2) {
+            // Only ignore if there are other targets available
+
+            ignoredAttackTarget = characterCombat.GetAttackTarget();
+        }
+        else {
+            ignoredAttackTarget = null;
+        }
+
         SetAttackTarget(null);
     }
 

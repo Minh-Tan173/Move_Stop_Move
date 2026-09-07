@@ -13,9 +13,26 @@ MonoBehaviour:
   m_Name: AccessorySO
   m_EditorClassIdentifier: Assembly-CSharp::AccessorySO
   accessoryItemDataList:
-  - accessoryID: 0
-    accessoryName: Knight Shield
+  - accessoryName: Knight Shield
+    accessoryID: 0
     accessoryPrefab: {fileID: 3292287827393353624, guid: b75a6b37d7f9f8a4bb3cd329d4d241ec, type: 3}
-  - accessoryID: 1
-    accessoryName: Captain Shield
+    accessorySprite: {fileID: 0}
+    accessoryType: 0
+    price: 0
+    boosterDataList: []
+  - accessoryName: Captain Shield
+    accessoryID: 1
     accessoryPrefab: {fileID: -7657332400220799181, guid: 43d32d53022e15549898cc5da5ca90fa, type: 3}
+    accessorySprite: {fileID: 0}
+    accessoryType: 0
+    price: 0
+    boosterDataList: []
+  - accessoryName: Golden Sword
+    accessoryID: 2
+    accessoryPrefab: {fileID: 6232525271508430937, guid: 749aca77ba6994e45a3950ad14f3ee83, type: 3}
+    accessorySprite: {fileID: 0}
+    accessoryType: 1
+    price: 0
+    boosterDataList:
+    - booster: {fileID: 11400000, guid: 536a7d687b2d95445900510ad041a647, type: 2}
+      value: 10000000

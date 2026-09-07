@@ -19,8 +19,10 @@ public class CharacterCombat : MonoBehaviour
     private float elapsedAttackCD;
     private bool isAttacking;
 
+    private WeaponSkinData currentWeaponSkinData;
     private WeaponType currentWeaponType;
     private int currentWeaponSkinID;
+
 
     private IEnumerator IELookToAttackTarget(Quaternion targetRot) {
 
@@ -63,6 +65,7 @@ public class CharacterCombat : MonoBehaviour
         elapsedAttackCD = 0f;
         isAttacking = false;
 
+        currentWeaponSkinData = null;
     }
 
     public void StartAttack() {
@@ -171,15 +174,22 @@ public class CharacterCombat : MonoBehaviour
     }
 
     public void SetWeaponType(WeaponType weaponType, int skinID = 0) {
-        
+
+        //if (currentWeaponSkinData != null) {
+            
+        //    currentWeaponSkinData.RemoveBoosterFor(character);
+        //    currentWeaponSkinData = null;
+        //}
+
+
         currentWeaponType = weaponType;
         currentWeaponSkinID = skinID;
 
         character.GetCharacterVisual().ChangeWeapon(currentWeaponType, skinID);
 
         // Apply booster
-        WeaponSkinData skinData = weaponSO.GetWeaponSkinData(weaponType, skinID);
-        skinData.ApplyBoosterFor(character);
+        currentWeaponSkinData = weaponSO.GetWeaponSkinData(weaponType, skinID);
+        currentWeaponSkinData.ApplyBoosterFor(character);
 
     }
 }

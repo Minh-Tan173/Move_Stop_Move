@@ -78,6 +78,10 @@ public class CanvasHUD : UICanvas
             string notiText = i != 0 ? $"{i}" : $"{READY_TEXT}";
             countdownText.text = $"{notiText}";
 
+            SFXType countdownSFX = string.Equals(notiText, READY_TEXT) ? SFXType.CountdownComplete : SFXType.Countdown;
+
+            SoundManager.Instance.PlayUISound(countdownSFX);
+
             yield return PlayCountdownTextAnimation(notiText);
         }
 
@@ -120,6 +124,10 @@ public class CanvasHUD : UICanvas
     }
 
     public void StopUIAnimation() {
+
+        eventNoti.gameObject.SetActive(true);
+        eventNoti.StopAllCoroutines();
         eventNoti.CancelInvoke();
+        eventNoti.gameObject.SetActive(false);
     }
 }

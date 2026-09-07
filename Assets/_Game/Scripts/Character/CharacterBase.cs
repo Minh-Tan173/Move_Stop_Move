@@ -15,7 +15,13 @@ public class CharacterBase : PoolUnit
     [SerializeField] protected CharacterCombat characterCombat;
     [SerializeField] protected CapsuleCollider capsuleCollider;
 
-    private float immortalEndTime;
+    [Header("VFX")]
+    [SerializeField] protected ImmortalVFX immortalVFX;
+
+    // Immortal Stage
+    private float levelUpImmortalEndTime;
+    private float accessoryImmortalEndTime;
+
     protected bool isDead;
 
     private float defaultColliderHeight;
@@ -35,7 +41,8 @@ public class CharacterBase : PoolUnit
 
         appliedPowerupDict.Clear();
 
-        immortalEndTime = 0f;
+        levelUpImmortalEndTime = 0f;
+        accessoryImmortalEndTime = 0f;
 
         // Character Behavior
         characterCombat.OnInit(this, charAnimator);
@@ -113,14 +120,35 @@ public class CharacterBase : PoolUnit
         charAnimator.TriggerWinAnim();
     }
 
-    public void TriggerImmortal(float duration) {   
+    public void TriggerLevelUpImmortal(float duration) {
 
-        immortalEndTime = Time.time + duration;
+        if (IsImmortal()) { return; }
+
+        levelUpImmortalEndTime = Time.time + duration;
+
+        immortalVFX.PlayVFX(duration, characterStats.GetBodySizeScale());
+    }
+
+    public void TriggerAccessoryImmortal(float duration) {
+
+        accessoryImmortalEndTime = Time.time + duration;
+
+        immortalVFX.PlayVFX(duration, characterStats.GetBodySizeScale());
+    }
+
+    public void CancelImmortal() {
+
+        accessoryImmortalEndTime = 0f;
+
+        if (!IsImmortal()) {
+
+            immortalVFX.StopVFX();
+        }
     }
 
     public bool IsImmortal() {
 
-        return Time.time < immortalEndTime;
+        return Time.time < levelUpImmortalEndTime || Time.time < accessoryImmortalEndTime;
     }
 
     public bool IsDead() {

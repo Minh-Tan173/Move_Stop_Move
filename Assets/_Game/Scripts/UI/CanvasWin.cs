@@ -13,7 +13,7 @@ public class CanvasWin : UICanvas
 
         scoreBoard.UpdateKillScore();
 
-        goldRewardText.text = $"+{goldRewardText}";
+        goldRewardText.text = $"+{LevelManager.Instance.GetGoldRewardWithCurrentLevel()}";
     }
 
     private void PlayPartical() {

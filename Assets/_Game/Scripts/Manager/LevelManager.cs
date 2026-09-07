@@ -112,6 +112,8 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnWin() {
 
+        SoundManager.Instance.PlayUISound(SFXType.Win);
+
         int goldReward = GetGoldRewardWithCurrentLevel();
 
         DataManager.UpdateGold(goldReward);
@@ -121,6 +123,8 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     public void OnLoss() {
+
+        SoundManager.Instance.PlayUISound(SFXType.Loss);
 
         MusicManager.Instance.StopPlayTheme();
         UIManager.Instance.OpenUI<CanvasLoss>();
@@ -150,6 +154,7 @@ public class LevelManager : Singleton<LevelManager>
 
         OnDespawn();
 
+        UIManager.Instance.GetUI<CanvasHUD>().StopUIAnimation();
         UIManager.Instance.CloseAllUI();
         CanvasLoading canvasLoading = UIManager.Instance.OpenUI<CanvasLoading>();
         canvasLoading.ActiveLoading(OnStart, isDelayClose: false);

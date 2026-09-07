@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198035771847681936}
   - component: {fileID: 199252958827819914}
   m_Layer: 0
-  m_Name: UpgradeVFX
+  m_Name: ImmortalVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

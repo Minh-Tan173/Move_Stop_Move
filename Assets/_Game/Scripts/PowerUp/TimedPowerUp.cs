@@ -10,7 +10,6 @@ public class TimedPowerUp : PowerUpBase
 
     private void Update() {
 
-
         if (!isPowerUpInteract) { return; }
 
         elapsedDuration += Time.deltaTime;

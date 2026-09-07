@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AccessoryType {
+
+    Normal,
+    Special
+}
+
 [CreateAssetMenu()]
 public class AccessorySO : ScriptableObject
 {
@@ -8,7 +14,7 @@ public class AccessorySO : ScriptableObject
 
     public List<AccessoryItemData> accessoryItemDataList;
 
-    public PoolUnit GetAccesoryPrefab(int accessoryID) {
+    public AccessoryItemData GetAccessoryItemData(int accessoryID) {
 
         if (!accessoryItemDict.ContainsKey(accessoryID)) {
 
@@ -22,7 +28,12 @@ public class AccessorySO : ScriptableObject
             }
         }
 
-        return accessoryItemDict[accessoryID].GetPrefab();
+        return accessoryItemDict[accessoryID];
+    }
+
+    public PoolUnit GetAccesoryPrefab(int accessoryID) {
+
+        return GetAccessoryItemData(accessoryID).GetPrefab();
     }
 }
 
@@ -30,10 +41,13 @@ public class AccessorySO : ScriptableObject
 public class AccessoryItemData : IItemData
 {
     [Header("Base Data")]
-    [SerializeField] private int accessoryID;
     [SerializeField] private string accessoryName;
+    [SerializeField] private int accessoryID;
     [SerializeField] private PoolUnit accessoryPrefab;
     [SerializeField] private Sprite accessorySprite;
+
+    [Header("Accessory Type")]
+    [SerializeField] private AccessoryType accessoryType;
 
     [Header("Price")]
     [SerializeField] private int price;
@@ -59,6 +73,7 @@ public class AccessoryItemData : IItemData
     }
 
     public string GetBoosterDescription() {
+
         List<string> descriptions = new List<string>();
 
         foreach (BoosterData booster in boosterDataList) {
@@ -96,7 +111,24 @@ public class AccessoryItemData : IItemData
         return this.accessoryID == accessoryID;
     }
 
+    public bool IsSpecialAccessory() {
+        return accessoryType == AccessoryType.Special;
+    }
+
     public PoolUnit GetPrefab() {
         return accessoryPrefab;
+    }
+
+    public void ApplyBoosterFor(CharacterBase character) {
+
+        foreach (BoosterData booster in boosterDataList) {
+            booster.Apply(character);
+        }
+    }
+    public void RemoveBoosterFor(CharacterBase character) {
+
+        foreach (BoosterData booster in boosterDataList) {
+            booster.Remove(character);
+        }
     }
 }

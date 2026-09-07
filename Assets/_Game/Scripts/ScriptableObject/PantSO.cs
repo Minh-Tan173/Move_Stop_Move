@@ -111,4 +111,11 @@ public class PantItemData : IItemData{
             booster.Apply(character);
         }
     }
+
+    public void RemoveBoosterFor(CharacterBase character) {
+        
+        foreach (BoosterData booster in boosterDataList) {
+            booster.Remove(character);
+        }
+    }
 }

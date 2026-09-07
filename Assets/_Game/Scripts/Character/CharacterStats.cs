@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    [Header("Attack Range")]
     [SerializeField] protected AttackRangeVisual attackRangeVisual;
-
-    [Header("Ref")]
-    [SerializeField] private UpgradeVFX upgradeVFX;
 
     [Header("Data")]
     [SerializeField] private CharacterStatsSO characterStatsSO;
@@ -176,6 +174,13 @@ public class CharacterStats : MonoBehaviour
 
         currentLevel += 1;
 
+        if (character is Player) {
+
+            int soundIndex = currentLevel - 2; // Index of sound Less than level index = 2 index
+
+            SoundManager.Instance.PlaySound(character.UnitTF.position, SFXType.PlayerSizeUp, soundIndex);
+        }
+
         if (!characterStatsSO.IsOverLevelList(currentLevel)) {
             // If current level having data for setup
 
@@ -184,9 +189,7 @@ public class CharacterStats : MonoBehaviour
 
         // Active Immortal State
         float immortalDuration = characterStatsSO.GetImmortalDuration();
-        character.TriggerImmortal(immortalDuration);
-
-        upgradeVFX.PlayVFX(immortalDuration, bodySizeScale);
+        character.TriggerLevelUpImmortal(immortalDuration);
     }
 
     public void AddExp(int expGet) {
@@ -211,6 +214,10 @@ public class CharacterStats : MonoBehaviour
 
     public int GetCurrentLevel() {
         return this.currentLevel;
+    }
+
+    public float GetBodySizeScale() {
+        return this.bodySizeScale;
     }
 
     #endregion

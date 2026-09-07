@@ -39,11 +39,7 @@ public class CharacterManager : Singleton<CharacterManager>
 
         UpdateAliveUI(maxBotCountInLevel + 1); // Include Player
     }
-
-    public void OnGamePlaying() {
-
-
-    }
+    
 
     public void OnDespawn() {
 
@@ -174,6 +170,8 @@ public class CharacterManager : Singleton<CharacterManager>
 
     public void DeadCharacter(CharacterBase character) {
 
+        if (character.IsDead()) { return; }
+
         UIManager.Instance.GetUI<CanvasOffScreenIndicator>().UnRegister(character.GetCanvasCharacter());
 
         character.Dead();
@@ -183,13 +181,24 @@ public class CharacterManager : Singleton<CharacterManager>
         charActiveList.Remove(character);
         charDeactiveList.Add(character);
 
-        UpdateAliveUI(currentCharacterOnField - 1);
+        currentCharacterOnField -= 1;
+        if (currentCharacterOnField >= 10) {
+
+            UpdateAliveUI(charActiveList.Count);
+        }
+        else {
+
+            UpdateAliveUI(currentCharacterOnField);
+        }
+
 
         if (character == player) {
             // If player is Dead
+
             LevelManager.Instance.SetLoss();
             LevelManager.Instance.OnFinish();
         }
+
     }
 
     public IReadOnlyList<CharacterBase> GetActiveCharacterList() {

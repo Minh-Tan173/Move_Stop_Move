@@ -232,7 +232,8 @@ public class Player : CharacterBase
         PantItemData pant = charVisual.ChangePants(this, pantID);
         if (pant != null) { pant.ApplyBoosterFor(this); }
 
-        charVisual.ChangeAccessories(this, accessoryID);
+        AccessoryItemData accessory = charVisual.ChangeAccessories(this, accessoryID);
+        if (accessory != null) { accessory.ApplyBoosterFor(this); }
     }
 
     public override void OnDespawn() {

@@ -37,4 +37,20 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 4f29c81be91afd548bb8e430ac83c7f2, type: 3}
     - {fileID: 8300000, guid: 840d19647a06af64fae93fbf4b66a441, type: 3}
     - {fileID: 8300000, guid: a67d6fe9a88458a4da8fa1448f93430f, type: 3}
+  - sfxName: Win
+    sfxType: 5
+    audioClipList:
+    - {fileID: 8300000, guid: d17bb24de4ce4bd43b5ecd84ecb22314, type: 3}
+  - sfxName: Loss
+    sfxType: 6
+    audioClipList:
+    - {fileID: 8300000, guid: 358ebae6d7de5b8478e6e324061a6ca8, type: 3}
+  - sfxName: Countdown
+    sfxType: 7
+    audioClipList:
+    - {fileID: 8300000, guid: 0126df6bc3090bc46834d6c0801baa3e, type: 3}
+  - sfxName: Countdown Complete
+    sfxType: 8
+    audioClipList:
+    - {fileID: 8300000, guid: e843e290ee3efc94f8ce737cdc55357b, type: 3}
   music: {fileID: 8300000, guid: 8869f209a8e466d48a4e56b5a2dc49dc, type: 3}

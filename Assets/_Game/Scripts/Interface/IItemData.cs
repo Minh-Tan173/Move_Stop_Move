@@ -21,4 +21,8 @@ public interface IItemData
     public void Equip();
 
     public void Preview(CharacterBase character);
+
+    void ApplyBoosterFor(CharacterBase character);
+
+    void RemoveBoosterFor(CharacterBase character);
 }

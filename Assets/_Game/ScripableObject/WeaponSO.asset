@@ -23,7 +23,9 @@ MonoBehaviour:
       skinTexture: {fileID: 2800000, guid: b5bf97cae3505ec4083b45f729900f51, type: 3}
       skinSprite: {fileID: 21300000, guid: b37b786c1609fee47916e3e11dd440ce, type: 3}
       price: 0
-      boosterDataList: []
+      boosterDataList:
+      - booster: {fileID: 11400000, guid: 830b84688d3074c40980ecd84c4e6ddc, type: 2}
+        value: 3
     - skinID: 1
       skinTexture: {fileID: 2800000, guid: ee4954b911c15be45ab9c8353ddb9b88, type: 3}
       skinSprite: {fileID: 21300000, guid: f787321060a726f46b13eac816d1b62f, type: 3}
