@@ -38,77 +38,36 @@ public class AccessorySO : ScriptableObject
 }
 
 [System.Serializable]
-public class AccessoryItemData : IItemData
+public class AccessoryItemData : ItemDataBase
 {
-    [Header("Base Data")]
-    [SerializeField] private string accessoryName;
-    [SerializeField] private int accessoryID;
+    [Header("Visual Data")]
     [SerializeField] private PoolUnit accessoryPrefab;
-    [SerializeField] private Sprite accessorySprite;
 
     [Header("Accessory Type")]
     [SerializeField] private AccessoryType accessoryType;
 
-    [Header("Price")]
-    [SerializeField] private int price;
+    public override bool IsOwned() {
 
-    [Header("Booster")]
-    [SerializeField] private List<BoosterData> boosterDataList;
-
-    public int GetItemID() {
-        return accessoryID;
+        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedAccessory(itemID);
     }
 
-    public Sprite GetItemSprite() {
-        return accessorySprite;
+    public override bool IsEquipped() {
+
+        return DataManager.GetGameData().GetPlayerData().EquippedAccessoryID == itemID;
     }
 
-    public string GetItemName() {
-        return accessoryName;
+    public override void Preview(CharacterBase character) {
+        character.GetCharacterVisual().ChangeAccessories(character, itemID);
     }
 
+    public override void Unlock() {
 
-    public int GetItemPrice() {
-        return price;
+        DataManager.UnlockAccess(itemID);
     }
 
-    public string GetBoosterDescription() {
+    public override void Equip() {
 
-        List<string> descriptions = new List<string>();
-
-        foreach (BoosterData booster in boosterDataList) {
-            descriptions.Add(booster.GetDescription());
-        }
-
-        return string.Join("\n", descriptions);
-    }
-
-    public bool IsOwned() {
-
-        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedAccessory(accessoryID);
-    }
-
-    public bool IsEquipped() {
-
-        return DataManager.GetGameData().GetPlayerData().EquippedAccessoryID == accessoryID;
-    }
-
-    public void Preview(CharacterBase character) {
-        character.GetCharacterVisual().ChangeAccessories(character, accessoryID);
-    }
-
-    public void Unlock() {
-
-        DataManager.UnlockAccess(accessoryID);
-    }
-
-    public void Equip() {
-
-        DataManager.ChangeEquippedAccessoryTo(accessoryID);
-    }
-
-    public bool IsSameID(int accessoryID) {
-        return this.accessoryID == accessoryID;
+        DataManager.ChangeEquippedAccessoryTo(itemID);
     }
 
     public bool IsSpecialAccessory() {
@@ -117,18 +76,5 @@ public class AccessoryItemData : IItemData
 
     public PoolUnit GetPrefab() {
         return accessoryPrefab;
-    }
-
-    public void ApplyBoosterFor(CharacterBase character) {
-
-        foreach (BoosterData booster in boosterDataList) {
-            booster.Apply(character);
-        }
-    }
-    public void RemoveBoosterFor(CharacterBase character) {
-
-        foreach (BoosterData booster in boosterDataList) {
-            booster.Remove(character);
-        }
     }
 }

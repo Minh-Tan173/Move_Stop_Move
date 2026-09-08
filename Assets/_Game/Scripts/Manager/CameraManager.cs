@@ -106,11 +106,15 @@ public class CameraManager : Singleton<CameraManager>
     }
 
 
-    public void UpdateZoom(float currentValue, float oldValue) {
+    public void UpdateZoom(float currentRange, float defaultRange) {
 
-        if (target == null || oldValue <= 0f) { return; }
+        if (target == null || defaultRange <= 0f) { return; }
 
-        targetOffset *= currentValue / oldValue;
+        //Debug.Log($"cam scale: {newValue / oldValue}");
+
+        float scale = currentRange / defaultRange;
+
+        targetOffset = baseOffset * scale;
     }
 
     public void SetTracking(Transform targetTracking) {

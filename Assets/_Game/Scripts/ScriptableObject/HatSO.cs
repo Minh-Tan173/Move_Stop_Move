@@ -33,93 +33,37 @@ public class HatSO : ScriptableObject
 }
 
 [System.Serializable]
-public class HatItemData : IItemData
+public class HatItemData : ItemDataBase
 {
-    [Header("Base Data")]
-    [SerializeField] private int hatID;
-    [SerializeField] private string hatName;
+    [Header("Visual Data")]
     [SerializeField] private PoolUnit hatPrefab;
-    [SerializeField] private Sprite hatSprite;
 
-    [Header("Price")]
-    [SerializeField] private int price;
+    public override bool IsOwned() {
 
-    [Header("Booster")]
-    [SerializeField] private List<BoosterData> boosterDataList;
-
-
-    public int GetItemID() {
-        return hatID;
+        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedHat(itemID);
     }
 
-    public Sprite GetItemSprite() {
-        return hatSprite;
+    public override bool IsEquipped() {
+
+        return DataManager.GetGameData().GetPlayerData().EquippedHatID == itemID;
     }
 
-    public string GetItemName() {
-        return hatName;
+    public override void Unlock() {
+
+        DataManager.UnlockHat(itemID);
     }
 
-    public int GetItemPrice() {
-        return price;
+    public override void Equip() {
+
+        DataManager.ChangeEquippedHatTo(itemID);
     }
 
-    public string GetBoosterDescription() {
+    public override void Preview(CharacterBase character) {
 
-        List<string> descriptions = new List<string>();
-
-        foreach (BoosterData booster in boosterDataList) {
-            descriptions.Add(booster.GetDescription());
-        }
-
-        return string.Join("\n", descriptions);
-    }
-
-    public bool IsOwned() {
-
-        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedHat(hatID);
-    }
-
-    public bool IsEquipped() {
-
-        return DataManager.GetGameData().GetPlayerData().EquippedHatID == hatID;
-    }
-
-    public void Unlock() {
-
-        DataManager.UnlockHat(hatID);
-    }
-
-    public void Equip() {
-
-        DataManager.ChangeEquippedHatTo(hatID);
-    }
-
-    public void Preview(CharacterBase character) {
-
-        character.GetCharacterVisual().ChangeHats(character, hatID);
-    }
-
-
-    public bool IsSameID(int hatID) {
-        return this.hatID == hatID;
+        character.GetCharacterVisual().ChangeHats(character, itemID);
     }
 
     public PoolUnit GetPrefab() {
         return hatPrefab;
-    }
-
-    public void ApplyBoosterFor(CharacterBase character) {
-        
-        foreach (BoosterData booster in boosterDataList) {
-            booster.Apply(character);
-        }
-    }
-
-    public void RemoveBoosterFor(CharacterBase character) {
-        
-        foreach (BoosterData booster in boosterDataList) {
-            booster.Remove(character);
-        }
     }
 }

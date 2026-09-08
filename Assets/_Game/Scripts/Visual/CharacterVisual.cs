@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class CharacterVisual : MonoBehaviour
 {
@@ -28,7 +27,10 @@ public class CharacterVisual : MonoBehaviour
     private PoolUnit currentHat;
     private PoolUnit currentAccessory;
 
+    private GoldenSword goldenSword;
+
     private void Awake() {
+
         propertyBlock = new MaterialPropertyBlock();
     }
 
@@ -183,6 +185,13 @@ public class CharacterVisual : MonoBehaviour
 
         if (currentAccessory != null) {
 
+            if (goldenSword != null) {
+                // Own Special Accessory
+
+                parentChar.CancelImmortal();
+                goldenSword = null;
+            }
+
             SimplePool.Despawn(currentAccessory);
             currentAccessory = null;
         }
@@ -211,12 +220,13 @@ public class CharacterVisual : MonoBehaviour
         // ---- SPECIAL ACESSORY ---- 
         AccessoryItemData currentAccessoryData = accessorySO.GetAccessoryItemData(accessoryID);
 
+
         if (currentAccessoryData.IsSpecialAccessory()) {
 
             if (parentChar is Player) {
                 // Golden Sword 
 
-                GoldenSword goldenSword = currentAccessory.GetComponent<GoldenSword>();
+                goldenSword = currentAccessory.GetComponent<GoldenSword>();
                 if (goldenSword != null) { goldenSword.OnInit(this.transform);}
             }
             else {

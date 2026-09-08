@@ -32,90 +32,39 @@ public class PantSO : ScriptableObject
 }
 
 [System.Serializable]
-public class PantItemData : IItemData{
-
-    [Header("Base Data")]
-    [SerializeField] private int pantID;
-    [SerializeField] private string pantName;
+public class PantItemData : ItemDataBase
+{
+    [Header("Visual Data")]
     [SerializeField] private Texture2D pantTexture;
     [SerializeField] private Sprite pantSprite;
 
-    [Header("Price")]
-    [SerializeField] private int price;
 
-    [Header("Booster")]
-    [SerializeField] private List<BoosterData> boosterDataList;
+    public override bool IsOwned() {
 
-    public int GetItemID() {
-        return pantID;
+        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedPant(itemID);
     }
 
-    public Sprite GetItemSprite() {
-        return pantSprite;
+    public override bool IsEquipped() {
+
+        return DataManager.GetGameData().GetPlayerData().EquippedPantID == itemID;
     }
 
-    public string GetItemName() {
-        return pantName;
+    public override void Unlock() {
+
+        DataManager.UnlockPant(itemID);
     }
 
-    public int GetItemPrice() {
-        return price;
+    public override void Equip() {
+
+        DataManager.ChangeEquippedPantTo(itemID);
     }
 
-    public string GetBoosterDescription() {
-        List<string> descriptions = new List<string>();
+    public override void Preview(CharacterBase character) {
 
-        foreach (BoosterData booster in boosterDataList) {
-            descriptions.Add(booster.GetDescription());
-        }
-
-        return string.Join("\n", descriptions);
-    }
-
-    public bool IsOwned() {
-
-        return DataManager.GetGameData().GetPlayerData().IsPlayerOwnedPant(pantID);
-    }
-
-    public bool IsEquipped() {
-
-        return DataManager.GetGameData().GetPlayerData().EquippedPantID == pantID;
-    }
-
-    public void Unlock() {
-
-        DataManager.UnlockPant(pantID);
-    }
-
-    public void Equip() {
-
-        DataManager.ChangeEquippedPantTo(pantID);
-    }
-
-    public void Preview(CharacterBase character) {
-
-        character.GetCharacterVisual().ChangePants(character, pantID);
-    }
-
-    public bool IsSameID(int pantID) {
-        return this.pantID == pantID;
+        character.GetCharacterVisual().ChangePants(character, itemID);
     }
 
     public Texture2D GetTexture() {
         return pantTexture;
-    }
-
-    public void ApplyBoosterFor(CharacterBase character) {
-
-        foreach (BoosterData booster in boosterDataList) {
-            booster.Apply(character);
-        }
-    }
-
-    public void RemoveBoosterFor(CharacterBase character) {
-        
-        foreach (BoosterData booster in boosterDataList) {
-            booster.Remove(character);
-        }
     }
 }

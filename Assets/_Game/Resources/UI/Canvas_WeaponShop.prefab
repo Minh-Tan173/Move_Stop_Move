@@ -169,7 +169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 620, y: 873}
+  m_AnchoredPosition: {x: 620, y: 831}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6334669159699841455
@@ -589,7 +589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 72.8, y: 0}
+  m_AnchoredPosition: {x: 106.37, y: 0}
   m_SizeDelta: {x: 76, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2270799796692044545
@@ -667,8 +667,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9.699951, y: -267}
-  m_SizeDelta: {x: 356.78003, y: 104}
+  m_AnchoredPosition: {x: -150, y: -247}
+  m_SizeDelta: {x: 441.2622, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2288311707401805259
 CanvasRenderer:
@@ -726,8 +726,8 @@ MonoBehaviour:
   appearDuration: 0.35
   hideDuration: 0.25
   axis: 0
-  startPos: 190
-  endPos: -118
+  startPos: 240
+  endPos: -150
 --- !u!1 &2584820553211135128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,8 +1014,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.7, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -52.946106, y: 0.0000066757}
+  m_SizeDelta: {x: 242.6356, y: 88.6007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6361324466358416420
 CanvasRenderer:
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1000
+  m_text: 1000000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f11abf11a85f5554a97a960cb79774d7, type: 2}
   m_sharedMaterial: {fileID: 6232575676222371010, guid: f11abf11a85f5554a97a960cb79774d7, type: 2}
@@ -1091,7 +1091,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0

@@ -14,6 +14,8 @@ public class Weapon : PoolUnit
 
     public void ApplySkin(Texture2D texture) {
 
+        propertyBlock = propertyBlock == null ? new MaterialPropertyBlock() : propertyBlock;
+
         int materialCount = weaponMesh.sharedMaterials.Length;
 
         for (int i = 0; i < materialCount; i++) {

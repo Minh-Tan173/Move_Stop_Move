@@ -36,8 +36,6 @@ public class CharacterStats : MonoBehaviour
     #region Attack Range
     public void SetAttackSize(float value) {
 
-        float oldTrueRange = character.GetCharacterCombat().GetTrueAttackRange();
-
         baseAttackRange = value;
         attackRange = baseAttackRange;
 
@@ -48,15 +46,16 @@ public class CharacterStats : MonoBehaviour
 
         attackRangeVisual.UpdateVisual();
 
-        float newTrueRange = character.GetCharacterCombat().GetTrueAttackRange();
-
         if (character is Player) {
 
-            CameraManager.Instance.UpdateZoom(newTrueRange, oldTrueRange);
+            float defaultTrueRange = characterStatsSO.GetARDefault() + playerAttackRangeBonus;
+
+            CameraManager.Instance.UpdateZoom(attackRange, defaultTrueRange);
         }
     }
 
     public void AddAttackSize(float value) {
+
         SetAttackSize(baseAttackRange + value);
     }
 

@@ -211,21 +211,6 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-  - m_Index: 30
-    m_Metrics:
-      m_Width: 49.140625
-      m_Height: 64.71875
-      m_HorizontalBearingX: 1.078125
-      m_HorizontalBearingY: 64.171875
-      m_HorizontalAdvance: 51.203125
-    m_GlyphRect:
-      m_X: 130
-      m_Y: 10
-      m_Width: 50
-      m_Height: 66
-    m_Scale: 1
-    m_AtlasIndex: 0
-    m_ClassDefinitionType: 0
   - m_Index: 93
     m_Metrics:
       m_Width: 63.359375
@@ -238,6 +223,21 @@ MonoBehaviour:
       m_Y: 180
       m_Width: 65
       m_Height: 68
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 30
+    m_Metrics:
+      m_Width: 49.140625
+      m_Height: 64.71875
+      m_HorizontalBearingX: 1.078125
+      m_HorizontalBearingY: 64.171875
+      m_HorizontalAdvance: 51.203125
+    m_GlyphRect:
+      m_X: 130
+      m_Y: 10
+      m_Width: 50
+      m_Height: 66
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -283,12 +283,12 @@ MonoBehaviour:
     m_GlyphIndex: 29
     m_Scale: 1
   - m_ElementType: 1
-    m_Unicode: 57
-    m_GlyphIndex: 30
-    m_Scale: 1
-  - m_ElementType: 1
     m_Unicode: 120
     m_GlyphIndex: 93
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 57
+    m_GlyphIndex: 30
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 3817877408649587621}
@@ -341,14 +341,14 @@ MonoBehaviour:
     m_Y: 85
     m_Width: 68
     m_Height: 85
-  - m_X: 120
-    m_Y: 0
-    m_Width: 69
-    m_Height: 85
   - m_X: 133
     m_Y: 170
     m_Width: 84
     m_Height: 87
+  - m_X: 120
+    m_Y: 0
+    m_Width: 69
+    m_Height: 85
   m_FreeGlyphRects:
   - m_X: 53
     m_Y: 0
@@ -370,6 +370,10 @@ MonoBehaviour:
     m_Y: 257
     m_Width: 887
     m_Height: 766
+  - m_X: 217
+    m_Y: 0
+    m_Width: 806
+    m_Height: 1023
   - m_X: 75
     m_Y: 170
     m_Width: 58
@@ -386,10 +390,6 @@ MonoBehaviour:
     m_Y: 0
     m_Width: 834
     m_Height: 170
-  - m_X: 217
-    m_Y: 0
-    m_Width: 806
-    m_Height: 1023
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []

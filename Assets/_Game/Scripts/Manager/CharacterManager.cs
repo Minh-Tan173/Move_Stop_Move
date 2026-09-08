@@ -97,6 +97,9 @@ public class CharacterManager : Singleton<CharacterManager>
         charDeactiveList.Remove(player);
         charActiveList.Add(player);
 
+        CameraManager.Instance.SetTracking(player.UnitTF);
+
+
         player.OnDespawn();
         player.OnInit();
 
@@ -157,10 +160,6 @@ public class CharacterManager : Singleton<CharacterManager>
         }
     }
 
-    private void DespawnCharacter(CharacterBase character) {
-        SimplePool.Despawn(character);
-    }
-
     private IEnumerator IEDespawnCharacter(CharacterBase character) {
 
         yield return new WaitForSeconds(1.1f);
@@ -182,7 +181,7 @@ public class CharacterManager : Singleton<CharacterManager>
         charDeactiveList.Add(character);
 
         currentCharacterOnField -= 1;
-        if (currentCharacterOnField >= 10) {
+        if (currentCharacterOnField <= 10) {
 
             UpdateAliveUI(charActiveList.Count);
         }

@@ -52,14 +52,12 @@ public class LevelManager : Singleton<LevelManager>
 
         EventManager.Instance.OnInit();
 
+        UIManager.Instance.OpenUI<CanvasMainMenu>();
+
         UIManager.Instance.OpenUI<CanvasOffScreenIndicator>();
         UIManager.Instance.CloseUI<CanvasOffScreenIndicator>(0f);
 
         CharacterManager.Instance.OnInit();
-
-        UIManager.Instance.OpenUI<CanvasMainMenu>();
-
-        CameraManager.Instance.SetTracking(CharacterManager.Instance.GetPlayer().UnitTF);
 
         MusicManager.Instance.PlayGameTheme();
 

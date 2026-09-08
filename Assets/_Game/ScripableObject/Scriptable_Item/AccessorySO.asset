@@ -13,32 +13,32 @@ MonoBehaviour:
   m_Name: AccessorySO
   m_EditorClassIdentifier: Assembly-CSharp::AccessorySO
   accessoryItemDataList:
-  - accessoryName: Knight Shield
-    accessoryID: 0
-    accessoryPrefab: {fileID: 3292287827393353624, guid: b75a6b37d7f9f8a4bb3cd329d4d241ec, type: 3}
-    accessorySprite: {fileID: 0}
-    accessoryType: 0
+  - itemName: 
+    itemID: 0
+    itemSprite: {fileID: 0}
     price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 59a65cba7cae1f54d8db5f100e87354d, type: 2}
       value: 1000
-  - accessoryName: Captain Shield
-    accessoryID: 1
-    accessoryPrefab: {fileID: -7657332400220799181, guid: 43d32d53022e15549898cc5da5ca90fa, type: 3}
-    accessorySprite: {fileID: 0}
+    accessoryPrefab: {fileID: 3292287827393353624, guid: b75a6b37d7f9f8a4bb3cd329d4d241ec, type: 3}
     accessoryType: 0
+  - itemName: 
+    itemID: 1
+    itemSprite: {fileID: 0}
     price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 59a65cba7cae1f54d8db5f100e87354d, type: 2}
       value: 1000
     - booster: {fileID: 11400000, guid: 8cc483cffcbf2034baeaafa28d273a13, type: 2}
       value: 3
-  - accessoryName: Golden Sword
-    accessoryID: 2
-    accessoryPrefab: {fileID: 6232525271508430937, guid: 749aca77ba6994e45a3950ad14f3ee83, type: 3}
-    accessorySprite: {fileID: 0}
-    accessoryType: 1
+    accessoryPrefab: {fileID: -7657332400220799181, guid: 43d32d53022e15549898cc5da5ca90fa, type: 3}
+    accessoryType: 0
+  - itemName: 
+    itemID: 2
+    itemSprite: {fileID: 0}
     price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 536a7d687b2d95445900510ad041a647, type: 2}
       value: 10000000
+    accessoryPrefab: {fileID: 6232525271508430937, guid: 749aca77ba6994e45a3950ad14f3ee83, type: 3}
+    accessoryType: 1

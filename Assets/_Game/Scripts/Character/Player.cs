@@ -181,6 +181,7 @@ public class Player : CharacterBase
                 Run();
             }
             else {
+
                 Idle();
             }
         }
