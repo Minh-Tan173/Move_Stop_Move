@@ -17,3 +17,5 @@ MonoBehaviour:
     goldReward: 2000
   - levePrefab: {fileID: 930739018410438732, guid: 7e42524a59f47ec43ab30e5e0c09ae2f, type: 3}
     goldReward: 2000
+  - levePrefab: {fileID: 930739018410438732, guid: 5748c30aae8047d4ea5e35cf98ffb85c, type: 3}
+    goldReward: 2000
