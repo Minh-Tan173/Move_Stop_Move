@@ -47,6 +47,7 @@ public static class PatrolState
         int randomIndex = Random.Range(0, charList.Count - 1);
 
         if (randomIndex >= botIndex) {
+            
             randomIndex += 1;
         }
 
@@ -56,6 +57,7 @@ public static class PatrolState
     private static Transform GetTargetByType(FindDestinationType findType, Bot bot) {
 
         switch (findType) {
+
             case FindDestinationType.NearestCharacter: return GetNearestCharacter(bot).UnitTF;
             case FindDestinationType.RandomCharacter: return GetRandomCharacter(bot).UnitTF;
         }
@@ -68,22 +70,21 @@ public static class PatrolState
         bot.RollFindType();
 
         bot.Run();
-
-        bot.ChangeBotSMTo(BotSM.patrol);
         
     }
 
     public static void OnExecute(Bot bot, CharacterAnimator botAnimator) {
 
-        //if (!LevelManager.Instance.IsGamePlaying()) {
-
-        //    bot.ChangeBotStateTo(BotStateSet.Idle);
-        //    return;
-        //}
-
         if (CharacterManager.Instance.IsLastAliveCharacter(bot)) {
 
             bot.ChangeBotStateTo(BotStateSet.Win);
+            return;
+        }
+
+        if (bot.IsStuck()) {
+
+            bot.ResetMoveTarget();
+
             return;
         }
 

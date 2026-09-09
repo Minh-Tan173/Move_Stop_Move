@@ -9,19 +9,11 @@ public static class AttackState
         bot.RollMaxAttackCount();
 
         bot.GetCharacterCombat().StartAttack();
-
-        bot.ChangeBotSMTo(BotSM.attack);
     }
 
     public static void OnExecute(Bot bot, CharacterAnimator botAnimatort) {
 
         CharacterCombat botCombat = bot.GetCharacterCombat();
-
-        //if (!LevelManager.Instance.IsGamePlaying()) {
-
-        //    bot.ChangeBotStateTo(BotStateSet.Idle);
-        //    return;
-        //}
 
         if (CharacterManager.Instance.IsLastAliveCharacter(bot)) {
 

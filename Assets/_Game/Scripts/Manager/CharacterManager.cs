@@ -190,14 +190,15 @@ public class CharacterManager : Singleton<CharacterManager>
             UpdateAliveUI(currentCharacterOnField);
         }
 
+        Debug.Log($"Char Dead is: {character} with ID: {character.GetEntityId()}");
+        Debug.Log($"charOnField: {currentCharacterOnField} - charActiveListCount: {charActiveList.Count}");
 
         if (character == player) {
-            // If player is Dead
+            // If player is dead
 
             LevelManager.Instance.SetLoss();
             LevelManager.Instance.OnFinish();
         }
-
     }
 
     public IReadOnlyList<CharacterBase> GetActiveCharacterList() {

@@ -5,13 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-// TEST
-public enum BotSM {
-    idle,
-    patrol,
-    attack
-}
-
 public class Bot : CharacterBase
 {
 
@@ -23,7 +16,11 @@ public class Bot : CharacterBase
 
     [Header("Weapon Info")]
     [SerializeField] private WeaponSO weaponSO;
- 
+
+    [Header("Stuck")]
+    [SerializeField] private float stuckTime = 2f;
+    [SerializeField] private float minMoveDistance = 0.1f;
+
     private BotState currentState;
 
     #region Navmesh Setup
@@ -46,8 +43,8 @@ public class Bot : CharacterBase
     private CharacterBase ignoredAttackTarget;
     #endregion
 
-    // TEST
-    private BotSM currentSM;
+    private Vector3 lastPosition;
+    private float stuckTimer;
 
     public override void OnInit() {
 
@@ -58,6 +55,8 @@ public class Bot : CharacterBase
         ActiveNavMesh();
 
         moveTarget = Vector3.zero;
+        lastPosition = this.UnitTF.position;
+
 
         elapsedIdleDuration = LevelManager.Instance.IsGamePlaying() ? 0f : idleDuration;
         ChangeBotStateTo(BotStateSet.Idle);
@@ -211,9 +210,14 @@ public class Bot : CharacterBase
 
     public void StopMovement() {
 
+        navMeshAgent.isStopped = true;
+
         moveTarget = Vector3.zero;
         navMeshAgent.ResetPath();
         navMeshAgent.velocity = Vector3.zero;
+
+        navMeshAgent.isStopped = false;
+        
     }
 
     public bool HasMoveTarget() {
@@ -258,6 +262,43 @@ public class Bot : CharacterBase
         return attackCount >= maxAttackCount;
     }
 
+    public bool IsStuck() {
+
+        float movedDistance = Vector3.Distance(transform.position, lastPosition);
+
+        if (movedDistance < minMoveDistance) {
+
+            stuckTimer += Time.deltaTime;
+        }
+        else {
+            stuckTimer = 0f;
+        }
+
+        lastPosition = transform.position;
+
+        return stuckTimer >= stuckTime;
+    }
+
+    public void ResetStuck() {
+
+        stuckTimer = 0f;
+        lastPosition = transform.position;
+    }
+
+    public void ResetMoveTarget() {
+
+        moveTarget = Vector3.zero;
+
+        if (navMeshAgent.enabled && navMeshAgent.isOnNavMesh) {
+
+            navMeshAgent.ResetPath();
+
+            navMeshAgent.velocity = Vector3.zero;
+        }
+
+        ResetStuck();
+    }
+
     public void IgnoreCurrentAttackTarget() {
 
         if (CharacterManager.Instance.GetActiveCharacterList().Count() > 2) {
@@ -282,11 +323,5 @@ public class Bot : CharacterBase
 
     public bool IsOverIdleDuration() {
         return elapsedIdleDuration >= idleDuration;
-    }
-
-    // TEST ONLY
-    public void ChangeBotSMTo(BotSM botSM) {
-
-        currentSM = botSM;
     }
 }

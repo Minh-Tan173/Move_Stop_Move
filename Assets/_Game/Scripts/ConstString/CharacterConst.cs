@@ -2,6 +2,8 @@ using UnityEngine;
 
 public static class CharacterConst
 {
+    public const string DEAD_ZONE_NAME = "Dead Zone";
+
     #region Animator Const
     public const string IS_MOVING = "IsMoving";
     public const string IDLE_ANIM = "TriggerIdle";

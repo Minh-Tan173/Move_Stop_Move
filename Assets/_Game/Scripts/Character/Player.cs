@@ -27,6 +27,14 @@ public class Player : CharacterBase
 
     private CharacterBase lastAttackTarget;
 
+    private void OnCollisionEnter(Collision collision) {
+        
+        if (collision.collider.CompareTag(GameTag.DEAD_ZONE)) {
+
+            CharacterManager.Instance.DeadCharacter(this);
+        }
+    }
+
     private void Update() {
 
         if (CharacterManager.Instance.IsLastAliveCharacter(this) && !isWin && LevelManager.Instance.IsGamePlaying()) {
@@ -246,6 +254,7 @@ public class Player : CharacterBase
         HideHighlightTarget();
 
         charVisual.OnDespawn();
+
     }
 
     public override bool IsMoving() {

@@ -7,8 +7,6 @@ public static class IdleState
         bot.StopMovement();
 
         bot.Idle();
-
-        bot.ChangeBotSMTo(BotSM.idle);
     }
 
     public static void OnExecute(Bot bot, CharacterAnimator botAnimator) {
