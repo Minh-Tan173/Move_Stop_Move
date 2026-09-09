@@ -15,7 +15,7 @@ MonoBehaviour:
   hatItemDataList:
   - itemName: Crown
     itemID: 0
-    itemSprite: {fileID: 0}
+    itemSprite: {fileID: 21300000, guid: 64d45b263f0f4f14db0dea1aa7dcc153, type: 3}
     price: 0
     boosterDataList:
     - booster: {fileID: 11400000, guid: 8cc483cffcbf2034baeaafa28d273a13, type: 2}
@@ -23,7 +23,7 @@ MonoBehaviour:
     hatPrefab: {fileID: 8055549267166021858, guid: d7c1c542bd3e0d949a15044dd32da9b4, type: 3}
   - itemName: Cap
     itemID: 1
-    itemSprite: {fileID: 0}
+    itemSprite: {fileID: 21300000, guid: 20943fec7ed498b438b0469397e32a97, type: 3}
     price: 0
     boosterDataList: []
     hatPrefab: {fileID: 1516482078903752188, guid: ee418cb14b7d33746958326a4d98e2f9, type: 3}

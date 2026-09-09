@@ -26,17 +26,11 @@ public class SoundManager : Singleton<SoundManager>
         sfxVolume = GetSFXVolume();
     }
 
-    public void PlaySound(Vector3 position, SFXType sfxType, int audioIndex) {
+    public void PlayUISound(SFXType sfxType, int audioIndex = 0) {
+
 
         int totalAudioOfSFX = audioClipRefsSO.GetAudioClipListWithType(sfxType).Count;
         int trueAudioIndex = audioIndex % totalAudioOfSFX;
-
-        AudioClip audioClip = audioClipRefsSO.GetAudioClipListWithTypeAndIndex(sfxType, trueAudioIndex);
-        AudioSource.PlayClipAtPoint(audioClip, position, sfxVolume);
-
-    }
-
-    public void PlayUISound(SFXType sfxType, int audioIndex = 0) {
 
         AudioClip audioClip = audioClipRefsSO.GetAudioClipListWithTypeAndIndex(sfxType, audioIndex);
         audioSource.PlayOneShot(audioClip, sfxVolume);

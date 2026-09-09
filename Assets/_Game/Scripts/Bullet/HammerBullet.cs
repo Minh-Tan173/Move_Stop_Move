@@ -79,7 +79,7 @@ public class HammerBullet : BulletBase
 
         if (bulletOwner == CharacterManager.Instance.GetPlayer()) {
 
-            SoundManager.Instance.PlaySound(this.UnitTF.position, SFXType.HammerThrow, audioIndex: 0);
+            SoundManager.Instance.PlayUISound(SFXType.HammerThrow);
         }
     }
 }

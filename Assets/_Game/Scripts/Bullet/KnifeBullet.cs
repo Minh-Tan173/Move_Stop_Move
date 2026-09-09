@@ -80,7 +80,7 @@ public class KnifeBullet : BulletBase
             int totalAudioOfKnife = SoundManager.Instance.GetAudioClipRefsSO().GetAudioClipListWithType(SFXType.KnifeThrow).Count;
             int audioIndex = Random.Range(0, totalAudioOfKnife);
 
-            SoundManager.Instance.PlaySound(this.UnitTF.position, SFXType.KnifeThrow, audioIndex);
+            SoundManager.Instance.PlayUISound(SFXType.KnifeThrow);
         }
     }
 }

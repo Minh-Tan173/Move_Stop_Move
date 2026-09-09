@@ -263,7 +263,7 @@ public class Player : CharacterBase
 
     public override void Dead() {
 
-        SoundManager.Instance.PlaySound(this.UnitTF.position, SFXType.PlayerDead, audioIndex: 0);
+        SoundManager.Instance.PlayUISound(SFXType.PlayerDead);
 
         base.Dead();
     }

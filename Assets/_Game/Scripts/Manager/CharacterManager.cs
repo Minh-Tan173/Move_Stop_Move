@@ -190,8 +190,8 @@ public class CharacterManager : Singleton<CharacterManager>
             UpdateAliveUI(currentCharacterOnField);
         }
 
-        Debug.Log($"Char Dead is: {character} with ID: {character.GetEntityId()}");
-        Debug.Log($"charOnField: {currentCharacterOnField} - charActiveListCount: {charActiveList.Count}");
+        //Debug.Log($"Char Dead is: {character} with ID: {character.GetEntityId()}");
+        //Debug.Log($"charOnField: {currentCharacterOnField} - charActiveListCount: {charActiveList.Count}");
 
         if (character == player) {
             // If player is dead

@@ -36,5 +36,8 @@ public class CanvasLoss : UICanvas
     
     public void ReturnHome() {
 
+        UIManager.Instance.CloseUI<CanvasLoss>(0.25f);
+
+        LevelManager.Instance.BackToMainMenu();
     }
 }

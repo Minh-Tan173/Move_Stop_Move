@@ -40,7 +40,7 @@ public class CanvasWin : UICanvas
 
     public void Home() {
 
-        UIManager.Instance.CloseUI<CanvasLoss>(0.25f);
+        UIManager.Instance.CloseUI<CanvasWin>(0.25f);
 
         LevelManager.Instance.BackToMainMenu();
     }

@@ -177,7 +177,7 @@ public class CharacterStats : MonoBehaviour
 
             int soundIndex = currentLevel - 2; // Index of sound Less than level index = 2 index
 
-            SoundManager.Instance.PlaySound(character.UnitTF.position, SFXType.PlayerSizeUp, soundIndex);
+            SoundManager.Instance.PlayUISound(SFXType.PlayerSizeUp);
         }
 
         if (!characterStatsSO.IsOverLevelList(currentLevel)) {
