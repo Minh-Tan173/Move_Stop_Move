@@ -35,7 +35,11 @@ public class CharacterManager : Singleton<CharacterManager>
 
         SetKilledPlayerIs(null);    
 
+        // Spawn Player 1st
         player = SpawnPlayer(currentLevel.GetSpawnPlayerPoint());
+
+        // Spawn Bot 2nd
+        SpawnInitialBots();
 
         UpdateAliveUI(maxBotCountInLevel + 1); // Include Player
     }
@@ -58,21 +62,23 @@ public class CharacterManager : Singleton<CharacterManager>
         charDeactiveList.Clear();
     }
 
-    private void Update() {
+    private void SpawnInitialBots() {
 
+        for (int i = 0; i < maxBotCountRuntime; i++) {
 
-        if (totalBotSpawned < maxBotCountInLevel) {
-            // Total character can't over 50 (includes player)
-
-            if (charActiveList.Count < maxBotCountRuntime) {
-                // If not enough character on field
-
-               if (currentLevel.TryGetRandomSpawnPoint(out Vector3 spawnPos)) {
-
-                    SpawnBot(spawnPos);
-                }
-            }
+            SpawnBot();
         }
+    }
+
+    private void SpawnReplacementBot() {
+
+        if (totalBotSpawned >= maxBotCountInLevel)
+            return;
+
+        if (charActiveList.Count - 1 >= maxBotCountRuntime)
+            return;
+
+        SpawnBot();
     }
 
     private void UpdateAliveUI(int aliveValue) {
@@ -104,6 +110,14 @@ public class CharacterManager : Singleton<CharacterManager>
         player.OnInit();
 
         return player as Player;
+    }
+
+    private void SpawnBot() {
+
+        if (currentLevel.TryGetRandomSpawnPoint(out Vector3 spawnPos)) {
+
+            SpawnBot(spawnPos);
+        }
     }
 
     private void SpawnBot(Vector3 spawnPos) {
@@ -164,7 +178,14 @@ public class CharacterManager : Singleton<CharacterManager>
 
         yield return new WaitForSeconds(1.1f);
 
+        // Despawn Bot is dead back to pool
         SimplePool.Despawn(character);
+
+        // After despawn 1 bot --> spawn new one base on total bot on field and total bot in level
+        if (character != player) {
+
+            SpawnReplacementBot();
+        }
     }
 
     public void DeadCharacter(CharacterBase character) {
@@ -175,23 +196,17 @@ public class CharacterManager : Singleton<CharacterManager>
 
         character.Dead();
 
-        StartCoroutine(IEDespawnCharacter(character));
-
         charActiveList.Remove(character);
         charDeactiveList.Add(character);
 
+        StartCoroutine(IEDespawnCharacter(character));  
+
         currentCharacterOnField -= 1;
-        if (currentCharacterOnField <= 10) {
+        UIManager.Instance.GetUI<CanvasHUD>().UpdateAliveLeftText(currentCharacterOnField);
 
-            UpdateAliveUI(charActiveList.Count);
-        }
-        else {
 
-            UpdateAliveUI(currentCharacterOnField);
-        }
-
-        //Debug.Log($"Char Dead is: {character} with ID: {character.GetEntityId()}");
-        //Debug.Log($"charOnField: {currentCharacterOnField} - charActiveListCount: {charActiveList.Count}");
+        Debug.Log($"Char Dead is: {character} with ID: {character.GetEntityId()}");
+        Debug.Log($"charOnField: {currentCharacterOnField} - charActiveListCount: {charActiveList.Count}");
 
         if (character == player) {
             // If player is dead

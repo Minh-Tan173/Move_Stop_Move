@@ -89,6 +89,7 @@ public class PlayerData {
     public void SetEquippedPantID(int pantID) { equippedPantID = pantID; }
     public void SetEquippedAccessoryID(int accessoryID) { equippedAccessoryID = accessoryID; }
 
+    #region Unlock
     public void UnlockNewHatID(int hatID) {
         ownedHatIDList.Add(hatID);
     }
@@ -100,6 +101,24 @@ public class PlayerData {
     public void UnlockNewAccessoryID(int accessoryID) {
         ownedAccessoryIDList.Add(accessoryID);
     }
+
+    public void UnlockWeapon(WeaponType weaponType) {
+
+        WeaponSaveData weaponData = GetWeaponSaveData(weaponType);
+
+        weaponData.UnlockWeapon();
+    }
+
+    public void UnlockWeaponSkin(WeaponType weaponType, int skinID) {
+
+        WeaponSaveData weaponData = GetWeaponSaveData(weaponType);
+
+        if (!weaponData.IsOwnedSkin(skinID)) {
+
+            weaponData.AddNewSkin(skinID);
+        }
+    }
+    #endregion
 
     public bool IsPlayerOwnedHat(int hatID) {
         return ownedHatIDList.Contains(hatID);
@@ -136,23 +155,6 @@ public class PlayerData {
     public int GetEquippedWeaponSkinID(WeaponType weaponType) {
 
         return GetWeaponSaveData(weaponType).EquippedSkinID;
-    }
-
-    public void UnlockWeapon(WeaponType weaponType) {
-
-        WeaponSaveData weaponData = GetWeaponSaveData(weaponType);
-
-        weaponData.UnlockWeapon();
-    }
-
-    public void UnlockWeaponSkin(WeaponType weaponType, int skinID) {
-
-        WeaponSaveData weaponData = GetWeaponSaveData(weaponType);
-
-        if (!weaponData.IsOwnedSkin(skinID)) {
-
-            weaponData.AddNewSkin(skinID);
-        }
     }
 
     public void EquipWeaponSkinOfType(WeaponType weaponType, int skinID) {
