@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Diep
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f11abf11a85f5554a97a960cb79774d7, type: 2}
-  m_sharedMaterial: {fileID: 6232575676222371010, guid: f11abf11a85f5554a97a960cb79774d7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8bc84f13dcffe3b4fa34303b74cb8c9e, type: 2}
+  m_sharedMaterial: {fileID: 6232575676222371010, guid: 8bc84f13dcffe3b4fa34303b74cb8c9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -275,6 +275,8 @@ MonoBehaviour:
   navMeshAgent: {fileID: 5887153715476655363}
   idleDuration: 4
   weaponSO: {fileID: 11400000, guid: 74b80ebf0d234c040a0e5b69797c2e8e, type: 2}
+  stuckTime: 2
+  minMoveDistance: 0.1
 --- !u!114 &4246925344445636655
 MonoBehaviour:
   m_ObjectHideFlags: 0

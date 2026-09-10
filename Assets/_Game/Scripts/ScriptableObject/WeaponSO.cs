@@ -58,8 +58,8 @@ public class WeaponSO : ScriptableObject
 public class WeaponItemData {
 
     [Header("Base Data")]
-    [SerializeField] private WeaponType weaponType;
     [SerializeField] private string name;
+    [SerializeField] private WeaponType weaponType;
     [SerializeField] private int price;
 
     [Header("Prefab")]
