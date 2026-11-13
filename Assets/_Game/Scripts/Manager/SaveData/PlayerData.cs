@@ -76,7 +76,7 @@ public class PlayerData {
     public List<int> OwnedPantIDList => ownedPantIDList;
     public List<int> OwnedAccessoryIDList => ownedAccessoryIDList;
 
-    public WeaponType EquippedWeaponType => equippedWeaponType;
+    public WeaponType EquippedWeaponType => equippedWeaponType;     
     #endregion
 
     public void SetCurrentLevel(int value) { currentLevelIndex = value; }
